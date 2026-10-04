@@ -44,3 +44,5 @@ La pantalla de preparación fue rechazada y eliminada. El jugador construirá su
 ## Rendimiento
 
 Primera pasada medida: terreno retenido y mallas reutilizadas. Resultados, diagnóstico optativo y límites en [PERFORMANCE.md](PERFORMANCE.md). Punto recuperable de esta pasada: `checkpoint-v0.1.1`.
+
+Investigación para contenido futuro: [ASSET_PERFORMANCE_PLAN.md](ASSET_PERFORMANCE_PLAN.md). Recomendaciones técnicas para recursos, sprites, efectos y sectores; aún no implementadas ni certificadas.

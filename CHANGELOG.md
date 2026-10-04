@@ -1,5 +1,10 @@
 # Registro de cambios
 
+## Investigación posterior a 0.1.1 · 3 de octubre de 2026
+
+- Documentación oficial consultada sobre carga asíncrona, importación, batching, partículas, visibilidad y Compatibility.
+- Propuestas y orden de avance en `ASSET_PERFORMANCE_PLAN.md`; sin cambiar código de juego ni afirmar nuevas mejoras de FPS.
+
 ## 0.1.0 · 3 de octubre de 2026 · punto recuperable del prototipo
 
 - Combate automático, Priorizar/Retener, ATB y cola prevista con actores repetidos.
