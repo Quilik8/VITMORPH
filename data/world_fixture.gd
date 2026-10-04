@@ -15,21 +15,27 @@ const MOVEMENT_BOUNDS := Rect2(80, 80, 3920, 1920)
 
 static func locations() -> Array[Dictionary]:
 	return [
-		{"id": "zone_1", "name": "Grupo cercano", "center": Vector2(720,245), "approach": Vector2(520,245), "enemies": [Vector2(690,150), Vector2(770,210)]},
-		{"id": "zone_2", "confronts": true, "name": "Grupo perseguidor", "center": Vector2(1540,250), "approach": Vector2(1290,320), "enemies": [Vector2(1450,380),Vector2(1780,180)]},
-		{"id": "zone_3", "name": "Grupo separado", "center": Vector2(2420,280), "approach": Vector2(2160,240), "enemies": [Vector2(2320,130),Vector2(2610,360)]},
+		{"id": "zone_1", "name": "Claro de copia", "center": Vector2(720,245), "approach": Vector2(520,245), "enemies": [Vector2(690,150)]},
+		{"id": "zone_2", "confronts": true, "name": "Paso de dos bestias", "center": Vector2(1540,250), "approach": Vector2(1290,320), "enemies": [Vector2(1450,380),Vector2(1780,180)]},
+		{"id": "zone_3", "name": "Encuentro final", "center": Vector2(2420,280), "approach": Vector2(2160,240), "enemies": [Vector2(2320,130)]},
 	]
 
 static func populate() -> Array[Dictionary]:
-	var result: Array[Dictionary] = [Fixture.actor("main", "Principal", 10.0, START_POSITION, Fixture.abilities())]
+	var catalog := preload("res://data/catalog.gd").new()
+	var builds := preload("res://systems/build_service.gd").new(catalog)
+	var result: Array[Dictionary] = [Fixture.actor("main","Principal",10.0,START_POSITION,Fixture.abilities())]
 	for zone in locations():
 		for index in zone.enemies.size():
-			var abilities: Array[Dictionary] = [{"id": "enemy_hit", "name": "Ataque técnico", "slot": "FIJA", "damage": ENEMY_DAMAGE, "shield": 0, "range": 600.0, "cooldown": 0}]
-			var enemy: Dictionary = Fixture.actor("%s_%d" % [zone.id,index], "Enemigo %d" % (index+1), 8.0 if index == 0 else 12.0, zone.enemies[index], abilities)
-			enemy.hp = ENEMY_HP
-			enemy.max_hp = ENEMY_HP
-			enemy["zone_id"] = zone.id
-			enemy["home"] = enemy.position
+			var definition_id := "residual_beast" if zone.id=="zone_1" or (zone.id=="zone_2" and index==0) else "ranged_beast"
+			var definition: Dictionary = catalog.beast(definition_id)
+			var beast := {"id":"world_"+zone.id+str(index),"definition_id":definition_id}
+			var build: Dictionary = builds.empty_build(definition.modular)
+			var abilities: Array[Dictionary] = builds.preview_build(beast,build,{}).abilities
+			var enemy := Fixture.actor("%s_%d"%[zone.id,index],definition.name,definition.speed,zone.enemies[index],abilities)
+			enemy["definition_id"]=definition_id
+			enemy["build"]=build
+			enemy["zone_id"]=zone.id
+			enemy["home"]=enemy.position
 			result.append(enemy)
 	return result
 

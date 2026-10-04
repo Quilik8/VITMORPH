@@ -202,11 +202,12 @@ func _draw_body() -> void:
 		centered(font, "Un principal · decisiones automáticas", Vector2(w*.5,h*.52), 20, MUTED)
 		return
 	for actor in visible_actors:
+		if actor.get("retired",false): continue
 		var base := point(actor)
 		if base.x < -120 or base.x > size.x + 120 or base.y < -120 or base.y > size.y + 120:
 			continue
 		var center := screen_actor(actor)
-		var color: Color = MAIN if actor.id == "main" else ENEMY
+		var color: Color = MAIN if actor.get("is_principal",false) else ENEMY
 		if actor.hp <= 0:
 			color = Color("556358")
 		draw_mesh(shadow_mesh, null, Transform2D(0.0, base + Vector2(0,26)), Color(0.05,0.08,0.06,0.55))
@@ -215,7 +216,7 @@ func _draw_body() -> void:
 			draw_polyline(PackedVector2Array([base+Vector2(-6,-86), base+Vector2(0,-80), base+Vector2(6,-86)]), INK, 2.0)
 		if acting:
 			draw_mesh(footprint_mesh, null, Transform2D(0.0, base), MAIN)
-		draw_mesh(main_mesh if actor.id == "main" else enemy_mesh, null, Transform2D(0.0, center), color)
+		draw_mesh(main_mesh if actor.get("is_principal",false) else enemy_mesh, null, Transform2D(0.0, center), color)
 		if combat.running:
 			if actor.shield > 0:
 				draw_mesh(shield_mesh, null, Transform2D(0.0, center), Color("86bbb0"))

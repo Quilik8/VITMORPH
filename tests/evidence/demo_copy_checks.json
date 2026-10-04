@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"checks\":[{\"name\":\"copy above threshold rejected\",\"passed\":true},{\"name\":\"copy request accepted\",\"passed\":true},{\"name\":\"second request rejected\",\"passed\":true},{\"name\":\"pending cancellable\",\"passed\":true},{\"name\":\"support replaces skill opportunity\",\"passed\":true},{\"name\":\"process begins on resolution\",\"passed\":true},{\"name\":\"combat continuous before completion\",\"passed\":true},{\"name\":\"copy success and live withdrawal\",\"passed\":true},{\"name\":\"last withdrawal wins\",\"passed\":true},{\"name\":\"unlocks deduplicated library\",\"passed\":true},{\"name\":\"copy starts clean\",\"passed\":true},{\"name\":\"unique owned identity\",\"passed\":true},{\"name\":\"repeat acquires new instance no library duplicate\",\"passed\":true},{\"name\":\"dispatch revalidates uses ordinary opportunity\",\"passed\":true},{\"name\":\"due damage before simultaneous completion\",\"passed\":true},{\"name\":\"failed copy explained\",\"passed\":true},{\"name\":\"main defeat fails process\",\"passed\":true}],\"count\":17,\"failures\":[],\"passed\":true}}"
+    }
+  ]
+}

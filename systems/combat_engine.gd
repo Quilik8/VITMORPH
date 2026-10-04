@@ -12,6 +12,17 @@ const Fixture = preload("res://data/combat_fixture.gd")
 const Status = preload("res://systems/status_system.gd")
 const EPS := 0.000001
 var time_debt := 0.0
+var copy_service := preload("res://systems/copy_service.gd").new()
+
+func request_copy(target_id: String) -> Dictionary:
+	if not running: return {"ok":false,"error":"Solo durante combate"}
+	var request := copy_service.request(actor_by_id(target_id),principal_actor())
+	state_changed.emit()
+	return request
+
+func cancel_copy_request() -> void:
+	copy_service.cancel()
+	state_changed.emit()
 signal states_changed
 const AI = preload("res://systems/combat_ai.gd")
 var actors: Array[Dictionary] = []
@@ -46,6 +57,7 @@ func start(which: int) -> void:
 	initialize_atb()
 
 func initialize_atb() -> void:
+	copy_service.reset()
 	combat_clock = 0.0
 	time_debt = 0.0
 	resolved = true
@@ -83,6 +95,7 @@ func advance(delta: float) -> void:
 		if not pending.is_empty():
 			step=minf(step,maxf(0.0,action_seconds-elapsed))
 			if not resolved: step=minf(step,maxf(0.0,resolve_seconds-elapsed))
+		if not copy_service.process.is_empty(): step=minf(step,maxf(0.0,copy_service.process.finish-combat_clock))
 		for actor in actors:
 			if not Status.active(actor) or actor.ready_time>=0 or (not pending.is_empty() and pending.actor_id==actor.id): continue
 			actor.atb=minf(100.0,actor.atb+Status.speed(actor,combat_clock)*step)
@@ -99,6 +112,10 @@ func advance(delta: float) -> void:
 				apply_damage(actor,int(dot.intensity))
 		if not running: break
 		if not pending.is_empty() and not resolved and elapsed>=resolve_seconds-EPS: resolve_pending()
+		if not running: break
+		if not copy_service.process.is_empty():
+			copy_service.update(actor_by_id(copy_service.process.target_id),principal_actor(),combat_clock)
+			check_finish()
 		if not running: break
 		for actor in actors:
 			for kind in actor.states.keys():
@@ -195,7 +212,10 @@ func choose_next() -> void:
 	if actor.is_empty():
 		return
 	actor.turns += 1
-	pending = AI.choose(actor, actors, priority, retained)
+	pending = {}
+	if actor.get("is_principal",false) and copy_service.pending_id!="":
+		pending=copy_service.dispatch(actor_by_id(copy_service.pending_id),actor)
+	if pending.is_empty(): pending = AI.choose(actor, actors, priority, retained)
 	actor.atb = 0.0
 	actor.ready_time = -1.0
 	elapsed = 0.0
@@ -211,7 +231,9 @@ func resolve_pending() -> void:
 	var completed: Dictionary = pending.duplicate(true)
 	var actor := actor_by_id(completed.actor_id)
 	var skill: Dictionary = completed.skill
-	if not skill.is_empty() and Status.active(actor):
+	if completed.get("kind","")=="copy":
+		copy_service.begin(actor_by_id(completed.target_id),principal_actor(),combat_clock)
+	elif not skill.is_empty() and Status.active(actor):
 		var target := actor_by_id(completed.target_id)
 		if not target.is_empty() and Status.active(target):
 			if skill.shield>0: target.shield=skill.shield; message.emit("%s obtiene %d de protección"%[target.name,skill.shield])
@@ -229,6 +251,7 @@ func resolve_pending() -> void:
 
 func finish(outcome: String) -> void:
 	running = false
+	if copy_service.pending_id!="" or not copy_service.process.is_empty(): copy_service.fail("Encuentro terminado")
 	for actor in actors: actor.states.clear()
 	pending = {}
 	resolved = true
@@ -299,5 +322,5 @@ func forecast(count: int = 7) -> Array[Dictionary]:
 	return sequence
 
 func snapshot() -> Dictionary:
-	return {"running": running, "result": result, "priority": priority, "retained": retained,
+	return {"copy":copy_service.snapshot(combat_clock),"running": running, "result": result, "priority": priority, "retained": retained,
 		"clock": combat_clock, "atb": atb_snapshot(), "elapsed": elapsed, "resolved": resolved, "pending": pending.duplicate(true), "actors": actors.duplicate(true), "actions": action_count, "history_retained": history.size(), "history_limit": HISTORY_LIMIT, "scenario": scenario}

@@ -117,7 +117,7 @@ func _process_body(delta: float) -> void:
 				if zones[index].get("confronts", false):
 					update_pursuit(zones[index], enemies, main, delta)
 				for enemy in enemies:
-					if enemy.hp <= 0:
+					if enemy.hp <= 0 or enemy.get("retired",false):
 						continue
 					if alerted_groups.get(zones[index].id, "idle") != "returning" and main.position.distance_to(enemy.position) <= World.ENCOUNTER_RADIUS and Geometry.segment_clear(main.position, enemy.position, obstacles):
 						zone_index = index
@@ -203,7 +203,7 @@ func _notification(what: int) -> void:
 func group_for(zone_id: String) -> Array[Dictionary]:
 	var group: Array[Dictionary] = []
 	for actor in group_members.get(zone_id, []):
-		if actor.hp > 0:
+		if actor.hp > 0 and not actor.get("retired",false):
 			group.append(actor)
 	return group
 

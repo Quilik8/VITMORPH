@@ -87,3 +87,89 @@ func recover() -> void:
 
 func export_data() -> Dictionary:
 	return {"collection":collection.duplicate(true),"library":library.duplicate(),"inventory":inventory.duplicate(),"principal_id":principal_id,"next_id":next_id,"objectives":objectives.duplicate(),"copied_skills":copied_skills.duplicate()}
+
+func validate_data(data: Dictionary) -> Dictionary:
+	for key in ["collection","library","copied_skills"]:
+		if not data.get(key) is Array: return {"ok":false,"error":"Lista persistente inválida: "+key}
+	for key in ["inventory","objectives"]:
+		if not data.get(key) is Dictionary: return {"ok":false,"error":"Datos persistentes inválidos: "+key}
+	if data.collection.is_empty() or not data.get("principal_id") is String or not number(data.get("next_id")):
+		return {"ok":false,"error":"Identidad persistente inválida"}
+	var ids := {}
+	var skills := {}
+	for id in data.library:
+		if not id is String or catalog.skill(id).is_empty() or not catalog.skill(id).get("modular",false) or skills.has(id): return {"ok":false,"error":"Biblioteca incompatible"}
+		skills[id]=true
+	for id in data.copied_skills:
+		if id not in data.library: return {"ok":false,"error":"Habilidad copiada incompatible"}
+	for id in data.inventory:
+		if not id is String or id=="" or not data.inventory[id] is String or catalog.get_value("modifier:"+data.inventory[id]).is_empty(): return {"ok":false,"error":"Inventario incompatible"}
+	for beast in data.collection:
+		if not beast is Dictionary or not beast.get("id") is String or not beast.get("definition_id") is String or not beast.get("name") is String: return {"ok":false,"error":"Bestia persistente inválida"}
+		var definition: Dictionary = catalog.beast(beast.definition_id)
+		if definition.is_empty() or ids.has(beast.id) or beast.id=="": return {"ok":false,"error":"Definición o identidad incompatible"}
+		ids[beast.id]=true
+		if not beast.get("build") is Dictionary or not beast.get("ready_at") is Dictionary: return {"ok":false,"error":"Build persistente inválida"}
+		for key in ["hp","shield","turns"]:
+			if not number(beast.get(key)) or beast[key]<0 or floor(beast[key])!=beast[key]: return {"ok":false,"error":"Valor persistente inválido: "+key}
+		if beast.hp>definition.max_hp: return {"ok":false,"error":"Vida fuera del perfil"}
+		for id in beast.ready_at:
+			if not id is String or catalog.skill(id).is_empty() or not number(beast.ready_at[id]) or beast.ready_at[id]<0: return {"ok":false,"error":"Reutilización incompatible"}
+		for slots in ["modular","normal","special"]:
+			if not beast.build.get(slots) is Array: return {"ok":false,"error":"Ranuras inválidas"}
+			for id in beast.build[slots]:
+				if not id is String: return {"ok":false,"error":"Referencia de ranura inválida"}
+		for key in ["priority","retained"]:
+			if not beast.get(key) is String or (beast[key]!="" and beast[key] not in definition.fixed+beast.build.modular): return {"ok":false,"error":"Marca incompatible"}
+	for beast in data.collection:
+		var validation: Dictionary=builds.validate_build(beast,beast.build,data.library,data.inventory,data.collection)
+		if not validation.ok: return {"ok":false,"error":"Build incompatible: "+"; ".join(validation.errors)}
+	if not ids.has(data.principal_id) or data.next_id<=0 or floor(data.next_id)!=data.next_id: return {"ok":false,"error":"Principal o secuencia incompatible"}
+	for id in ids:
+		if id.begins_with("copy_") and int(id.trim_prefix("copy_"))>=data.next_id: return {"ok":false,"error":"Secuencia de identidades incompatible"}
+	for key in ["copied","new_modular_used","final_won","completed"]:
+		if not data.objectives.get(key) is bool: return {"ok":false,"error":"Hitos incompatibles"}
+	if data.objectives.completed!=(data.objectives.copied and data.objectives.new_modular_used and data.objectives.final_won): return {"ok":false,"error":"Hitos incoherentes"}
+	return {"ok":true}
+
+static func number(value) -> bool:
+	return (value is int or value is float) and is_finite(float(value))
+
+func restore_data(data: Dictionary) -> Dictionary:
+	var validation:=validate_data(data)
+	if not validation.ok: return validation
+	collection.assign(data.collection.duplicate(true))
+	library=data.library.duplicate()
+	inventory=data.inventory.duplicate()
+	principal_id=data.principal_id
+	next_id=int(data.next_id)
+	objectives=data.objectives.duplicate()
+	copied_skills=data.copied_skills.duplicate()
+	combat_locked=false
+	library_changed.emit(); principal_changed.emit(); build_changed.emit()
+	return {"ok":true}
+
+func acquire_actor(actor: Dictionary) -> Dictionary:
+	var build: Dictionary = actor.build.duplicate(true)
+	for index in build.normal.size():
+		var instance: String = build.normal[index]
+		if instance=="": continue
+		var source: String = actor.get("modifier_definitions",{}).get(instance,inventory.get(instance,""))
+		if source=="": return {}
+		var fresh := "mod_%06d_%d"%[next_id,index]
+		inventory[fresh]=source
+		build.normal[index]=fresh
+	var before := library.duplicate()
+	var beast := acquire(actor.definition_id,build)
+	if beast.is_empty(): return {}
+	objectives.copied=true
+	for id in library:
+		if id not in before and id not in copied_skills: copied_skills.append(id)
+	update_objectives()
+	return beast
+
+func record_skill(id: String) -> void:
+	if id in copied_skills: objectives.new_modular_used=true; update_objectives()
+
+func update_objectives() -> void:
+	objectives.completed=objectives.copied and objectives.new_modular_used and objectives.final_won

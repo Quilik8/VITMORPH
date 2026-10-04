@@ -33,6 +33,10 @@ var intervention_strip: VBoxContainer
 var atb_strip: Control
 var exploration_help: Label
 var skill_buttons: Array[Button] = []
+var copy_targets: OptionButton
+var copy_button: Button
+var copy_label: Label
+var copy_target_ids: Array[String] = []
 var selected_skill := "basic"
 var log_lines: Array[String] = []
 
@@ -59,6 +63,10 @@ func _ready() -> void:
 	editor.closed.connect(func():route.menu_paused=false;route.held_keys.clear();build_button.grab_focus())
 	editor.applied.connect(on_build_applied)
 	editor.main_selected.connect(on_build_applied)
+	combat.copy_service.completed.connect(func(actor):session.acquire_actor(actor); refresh())
+	combat.copy_service.changed.connect(refresh)
+	combat.action_executed.connect(func(action):
+		if combat.actor_by_id(action.actor_id).get("is_principal",false) and not action.skill.is_empty() and action.get("kind","")!="copy": session.record_skill(action.skill.id))
 	combat.state_changed.connect(refresh)
 	combat.action_chosen.connect(on_action)
 	combat.message.connect(add_message)
@@ -168,20 +176,24 @@ func build_screen() -> void:
 	intervention_strip = footer
 	footer.name = "Interventions"
 	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	footer.offset_top = -124
+	footer.offset_top = -170
 	arena.add_child(footer)
 	exploration_help = label("WASD / flechas · desplazarte", 14, MUTED)
 	exploration_help.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	exploration_help.offset_top = -28
 	exploration_help.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	arena.add_child(exploration_help)
-	var skill_row := HBoxContainer.new()
+	var skill_row := GridContainer.new()
+	skill_row.columns=4
+	arena.resized.connect(func(): skill_row.columns=2 if arena.size.x<950 else 4; footer.offset_top=-224 if arena.size.x<950 else -170)
 	skill_row.name = "Skills"
 	footer.add_child(skill_row)
-	for skill in Fixture.abilities():
-		var item := button(skill.name, func(): select_skill(skill.id), skill.id.capitalize())
+	for index in 4:
+		var slot := index
+		var skill: Dictionary = Fixture.abilities()[index]
+		var item := button(skill.name, func(): select_skill(equipped_skills()[slot].id), skill.id.capitalize())
 		item.toggle_mode = true
-		item.custom_minimum_size = Vector2(210, 52)
+		item.custom_minimum_size = Vector2(0,52)
 		item.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		item.tooltip_text = "Seleccionar %s para Priorizar o Retener" % skill.name
 		skill_row.add_child(item)
@@ -197,6 +209,18 @@ func build_screen() -> void:
 	command_row.add_child(priority_button)
 	retain_button = button("Retener  [R]", func(): toggle_command("retain"), "Retain")
 	command_row.add_child(retain_button)
+	var support := HBoxContainer.new()
+	footer.add_child(support)
+	copy_targets=OptionButton.new()
+	copy_targets.name="CopyTargets"
+	copy_targets.item_selected.connect(func(_i):refresh())
+	support.add_child(copy_targets)
+	copy_button=button("Copiar [X]",copy_selected,"Copy")
+	support.add_child(copy_button)
+	copy_label=label("",14,TEAL)
+	copy_label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	copy_label.clip_text=true
+	support.add_child(copy_label)
 	footer.add_child(label("1–4 seleccionar  ·  P priorizar  ·  R retener  ·  Tab navegar    /    Figuras y reglas provisionales", 12, MUTED))
 	# El diagnóstico se superpone; abrirlo no reduce el campo ni pausa el combate.
 	var diag_surface := PanelContainer.new()
@@ -291,6 +315,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		toggle_command("priority")
 	elif key == KEY_R:
 		toggle_command("retain")
+	elif key == KEY_X:
+		copy_selected()
 	elif key == KEY_F3:
 		toggle_diagnostics()
 	else:
@@ -354,7 +380,9 @@ func refresh_body() -> void:
 			action_label.text = "Recorrido completado"
 		elif route.state == "failed":
 			action_label.text = "Recorrido detenido"
+	refresh_copy()
 	var skills := equipped_skills()
+	if selected_skill not in skills.map(func(skill):return skill.id): selected_skill=skills[0].id
 	for index in skill_buttons.size():
 		var skill: Dictionary = skills[index]
 		var marks: Array[String] = []
@@ -378,7 +406,7 @@ func refresh_body() -> void:
 	if combat.running:
 		var actor: Dictionary = combat.actor_by_id("main")
 		availability = AI.blocked_reason(actor, selected, combat.actors, combat.retained, actor.turns + 1)
-		if not combat.resolved and not combat.pending.skill.is_empty() and combat.pending.actor_id == "main" and combat.pending.skill.id == selected_skill and selected.cooldown > 0 and availability.is_empty():
+		if not combat.resolved and not combat.pending.is_empty() and not combat.pending.skill.is_empty() and combat.pending.actor_id == "main" and combat.pending.skill.id == selected_skill and selected.cooldown > 0 and availability.is_empty():
 			availability = "En curso; reutilización después"
 	detail_label.text = effect + (" · " + availability if not availability.is_empty() else "")
 	detail_label.tooltip_text = "%s · alcance %d · reutilización %d elecciones" % [effect, selected.range, selected.cooldown]
@@ -392,6 +420,9 @@ func _process(delta: float) -> void:
 
 func _process_body(delta: float) -> void:
 	if combat != null and combat.running:
+		if not combat.copy_service.process.is_empty():
+			var percent: int = int(combat.copy_service.snapshot(combat.combat_clock).progress*100)
+			copy_label.text="Copiando · %d %% · mantener vivo"%percent
 		var phase := "Cargando ATB" if combat.pending.is_empty() else "Recuperación"
 		if not combat.resolved:
 			phase = "Anticipación" if combat.elapsed < combat.resolve_seconds * 0.64 else "Ejecución"
@@ -427,6 +458,9 @@ func run_demo_checks() -> Dictionary:
 func run_combat_demo_checks() -> Dictionary:
 	return preload("res://tests/combat_demo.gd").new().run()
 
+func run_copy_demo_checks() -> Dictionary:
+	return preload("res://tests/copy_demo.gd").new().run()
+
 func open_build(collection_mode: bool) -> void:
 	if combat.running or route.state != "travelling" or not route.visible_world: return
 	session.sync_actor(route.actors[0],combat.priority,combat.retained)
@@ -442,3 +476,28 @@ func on_build_applied() -> void:
 	combat.priority = session.principal().priority
 	combat.retained = session.principal().retained
 	refresh()
+
+func copy_selected() -> void:
+	if not combat.running: return
+	if combat.copy_service.pending_id!="": combat.cancel_copy_request(); return
+	if copy_targets.selected<0 or copy_targets.selected>=copy_target_ids.size(): return
+	var result: Dictionary = combat.request_copy(copy_target_ids[copy_targets.selected])
+	if not result.ok: copy_label.text=result.error
+	refresh_copy()
+
+func refresh_copy() -> void:
+	if copy_targets==null: return
+	var selected_id := copy_target_ids[copy_targets.selected] if copy_targets.selected>=0 and copy_targets.selected<copy_target_ids.size() else ""
+	copy_targets.clear(); copy_target_ids.clear()
+	var main: Dictionary = combat.principal_actor()
+	for actor in combat.actors:
+		if main.is_empty() or actor.team==main.team or actor.hp<=0 or actor.get("retired",false): continue
+		copy_target_ids.append(actor.id)
+		copy_targets.add_item(actor.name+" · %d PV"%actor.hp)
+		if actor.id==selected_id: copy_targets.select(copy_target_ids.size()-1)
+	var busy: bool = not combat.copy_service.process.is_empty()
+	copy_button.text="Cancelar solicitud [X]" if combat.copy_service.pending_id!="" else "Copiar [X]"
+	var reason := ""
+	if copy_targets.selected>=0: reason=combat.copy_service.eligibility(combat.actor_by_id(copy_target_ids[copy_targets.selected]),main)
+	copy_button.disabled=not combat.running or busy or (combat.copy_service.pending_id=="" and (copy_targets.selected<0 or reason!=""))
+	copy_label.text=combat.copy_service.message if combat.copy_service.message!="" else reason
