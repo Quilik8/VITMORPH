@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"checks\":[{\"name\":\"snapshot references valid\",\"passed\":true},{\"name\":\"checkpoint queued\",\"passed\":true},{\"name\":\"write confirmed\",\"passed\":true},{\"name\":\"JSON roundtrip valid\",\"passed\":true},{\"name\":\"last valid backup retained\",\"passed\":true},{\"name\":\"corrupt main uses valid backup\",\"passed\":true},{\"name\":\"repair preserves usable backup\",\"passed\":true},{\"name\":\"latest write wins\",\"passed\":true},{\"name\":\"unknown definition rejected\",\"passed\":true},{\"name\":\"invalid saved build rejected\",\"passed\":true},{\"name\":\"invalid coordinates rejected\",\"passed\":true},{\"name\":\"copy retained in session\",\"passed\":true},{\"name\":\"restore pre encounter reverts copy\",\"passed\":true},{\"name\":\"restore keeps HP state\",\"passed\":true},{\"name\":\"write failure never reports saved\",\"passed\":true},{\"name\":\"incompatible schema preserves file\",\"passed\":true},{\"name\":\"incompatible not silently overwritten\",\"passed\":true},{\"name\":\"refuge rest valid\",\"passed\":true},{\"name\":\"rest resets health and encounters\",\"passed\":true},{\"name\":\"three milestones complete demo\",\"passed\":true},{\"name\":\"rest preserves completion and library\",\"passed\":true},{\"name\":\"continuous world ready after rest\",\"passed\":true}],\"count\":22,\"failures\":[],\"passed\":true}}"
+    }
+  ]
+}

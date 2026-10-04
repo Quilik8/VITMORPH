@@ -24,9 +24,13 @@ func _draw() -> void:
 			profile.record("world_ground:_draw", Time.get_ticks_usec() - stamp)
 		return
 	polygon([Vector2(0,80),Vector2(500,40),Vector2(1050,60),Vector2(1500,90),Vector2(2000,20),Vector2(4050,70),Vector2(4050,2050),Vector2(2150,2050),Vector2(1550,2050),Vector2(750,2050),Vector2(0,2050)], Color("20392a"))
+	polygon([Vector2(90,110),Vector2(325,90),Vector2(345,460),Vector2(110,485)],Color("324b3a"))
+	draw_string(ThemeDB.fallback_font,project(Vector2(125,190)),"REFUGIO",HORIZONTAL_ALIGNMENT_LEFT,-1,17,Color("d4bb79"))
+	draw_string(ThemeDB.fallback_font,project(Vector2(125,225)),"Descansar · E",HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("a5aa9b"))
 	var path := PackedVector2Array([project(route.actors[0].get("route_start",Vector2(150,260)))])
 	for zone in route.zones:
 		path.append(project(zone.approach))
+		draw_string(ThemeDB.fallback_font,project(zone.center+Vector2(-55,-90)),zone.name,HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("a5aa9b"))
 		draw_circle(project(zone.center), 8.0, Color("4b6248"))
 	draw_polyline(path, Color("2d4934"), 44.0)
 	for obstacle in route.obstacles:

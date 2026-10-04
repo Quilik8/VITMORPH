@@ -1,6 +1,8 @@
 extends Node
 var profile: Node
 ## Recorrido, encuentro y retorno al recorrido comparten actores y escena.
+signal before_encounter
+signal settled
 signal route_changed
 signal world_rebuilt
 signal travelling_started
@@ -208,6 +210,7 @@ func group_for(zone_id: String) -> Array[Dictionary]:
 	return group
 
 func begin_encounter(enemies: Array[Dictionary]) -> void:
+	before_encounter.emit()
 	state = "battle"
 	held_keys.clear()
 	var participants: Array[Dictionary] = [actors[0]]
@@ -225,15 +228,87 @@ func on_combat_finished(outcome: String) -> void:
 	if outcome == "Victoria":
 		cleared += 1
 		var id: String = zones[zone_index].id
+		if session!=null and id=="zone_3": session.objectives.final_won=true; session.update_objectives()
 		cleared_groups[id] = true
 		active_groups -= int(alerted_groups.get(id, "idle") != "idle")
 		alerted_groups.erase(id)
 		aftermath = 0.0
 		state = "aftermath"
 	else:
-		state = "failed"
+		if session!=null:
+			session.sync_actor(actors[0],combat.priority,combat.retained)
+			session.recover()
+		start()
+		combat.message.emit("Derrota · regreso al refugio · colección conservada")
+	settled.emit()
 	route_changed.emit()
 
 func snapshot() -> Dictionary:
 	return {"state": state, "visible_world": visible_world, "zone_index": zone_index, "cleared": cleared,
 		"spatial_events": spatial_events.duplicate(true), "obstacles": obstacles, "camera_x": camera_x, "camera_y": camera_y, "route_recalculations": route_recalculations, "spatial_scans": spatial_scans, "active_groups": active_groups, "spatial_event_limit": SPATIAL_EVENT_LIMIT, "encounter_log_limit": ENCOUNTER_LOG_LIMIT, "confrontation": confrontation, "alerted_groups": alerted_groups.duplicate(), "actors": actors.duplicate(true), "encounters": encounter_record.duplicate(true)}
+
+func at_refuge() -> bool:
+	return visible_world and state=="travelling" and preload("res://data/demo_rules.gd").REFUGE.has_point(actors[0].position)
+
+func rest() -> Dictionary:
+	if not at_refuge() or menu_paused: return {"ok":false,"error":"Descansa en el refugio fuera de combate"}
+	if session!=null: session.sync_actor(actors[0],combat.priority,combat.retained); session.recover()
+	start()
+	settled.emit()
+	return {"ok":true}
+
+func export_data() -> Dictionary:
+	var enemies: Array=[]
+	for actor in actors:
+		if actor.get("is_principal",false): continue
+		enemies.append({"id":actor.id,"hp":actor.hp,"shield":actor.shield,"turns":actor.turns,"ready_at":actor.ready_at.duplicate(),"retired":actor.get("retired",false),"position":[actor.position.x,actor.position.y]})
+	return {"position":[actors[0].position.x,actors[0].position.y],"cleared_groups":cleared_groups.keys(),"enemies":enemies}
+
+func validate_data(data: Dictionary) -> Dictionary:
+	if not coordinate(data.get("position")) or not data.get("cleared_groups") is Array or not data.get("enemies") is Array: return {"ok":false,"error":"Recorrido persistente inválido"}
+	if not World.MOVEMENT_BOUNDS.has_point(Vector2(data.position[0],data.position[1])): return {"ok":false,"error":"Posición fuera del mundo"}
+	var expected: Dictionary={}
+	for actor in World.populate():
+		if not actor.get("is_principal",false): expected[actor.id]=actor
+	var ids: Dictionary={}
+	for enemy in data.enemies:
+		if not enemy is Dictionary or not enemy.get("id") is String or not expected.has(enemy.id) or ids.has(enemy.id): return {"ok":false,"error":"Encuentro incompatible"}
+		ids[enemy.id]=true
+		for key in ["hp","shield","turns"]:
+			if not preload("res://systems/demo_session.gd").number(enemy.get(key)) or enemy[key]<0 or floor(enemy[key])!=enemy[key]: return {"ok":false,"error":"Estado de encuentro inválido"}
+		if enemy.hp>expected[enemy.id].max_hp or not enemy.get("retired") is bool or not enemy.get("ready_at") is Dictionary or not coordinate(enemy.get("position")): return {"ok":false,"error":"Enemigo persistente inválido"}
+		if enemy.retired and enemy.hp<=0: return {"ok":false,"error":"Retirada incompatible"}
+		for id in enemy.ready_at:
+			if not id is String or session.catalog.skill(id).is_empty() or not preload("res://systems/demo_session.gd").number(enemy.ready_at[id]) or enemy.ready_at[id]<0: return {"ok":false,"error":"Reutilización de enemigo inválida"}
+	if ids.size()!=expected.size(): return {"ok":false,"error":"Faltan actores del recorrido"}
+	var groups: Dictionary={}
+	for zone in World.locations(): groups[zone.id]=true
+	var cleared_ids: Dictionary={}
+	for id in data.cleared_groups:
+		if not id is String or not groups.has(id) or cleared_ids.has(id): return {"ok":false,"error":"Grupo incompatible"}
+		cleared_ids[id]=true
+	for zone in World.locations():
+		var alive := false
+		for enemy in data.enemies:
+			if expected[enemy.id].zone_id==zone.id and enemy.hp>0 and not enemy.retired: alive=true
+		if cleared_ids.has(zone.id)==alive: return {"ok":false,"error":"Progreso de grupo incoherente"}
+	return {"ok":true}
+
+static func coordinate(value) -> bool:
+	return value is Array and value.size()==2 and preload("res://systems/demo_session.gd").number(value[0]) and preload("res://systems/demo_session.gd").number(value[1])
+
+func restore_data(data: Dictionary) -> void:
+	start()
+	actors[0].position=Vector2(data.position[0],data.position[1])
+	for saved in data.enemies:
+		for actor in actors:
+			if actor.id!=saved.id: continue
+			for key in ["hp","shield","turns","retired"]: actor[key]=saved[key]
+			actor.ready_at=saved.ready_at.duplicate()
+			actor.position=Vector2(saved.position[0],saved.position[1])
+	for id in data.cleared_groups: cleared_groups[id]=true
+	cleared=cleared_groups.size()
+	last_scanned_position=actors[0].position
+	camera_x=maxf(0,actors[0].position.x-200)
+	camera_y=maxf(0,actors[0].position.y-260)
+	route_changed.emit()

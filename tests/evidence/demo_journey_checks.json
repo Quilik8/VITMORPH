@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"checks\":[{\"name\":\"new game applies build\",\"passed\":true},{\"name\":\"natural damage reaches copy eligibility\",\"passed\":true},{\"name\":\"new game completes copy\",\"passed\":true},{\"name\":\"copied library incorporated\",\"passed\":true},{\"name\":\"new modular used in actual decisions\",\"passed\":true},{\"name\":\"final encounter beaten\",\"passed\":true},{\"name\":\"full demo milestone cycle\",\"passed\":true},{\"name\":\"completed session restored\",\"passed\":true},{\"name\":\"resolved defeat preserves acquired copies\",\"passed\":true},{\"name\":\"refuge recovery retains builds\",\"passed\":true}],\"count\":10,\"failures\":[],\"passed\":true}}"
+    }
+  ]
+}

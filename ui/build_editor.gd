@@ -149,6 +149,9 @@ func render() -> void:
 			var skill_id: String = id
 			var skill: Dictionary = session.catalog.skill(id)
 			var button := choice(skill.name,func(): draft.modular[selected]=skill_id; render())
+			button.tooltip_text = "%d daño · alcance %.0f · reutilización %d"%[skill.damage,skill.range,skill.cooldown]
+			if skill.get("status","")=="dot": button.tooltip_text += " · Residuo: 4 daño cada 4 s durante 12 s"
+			if skill.get("status","")=="slow": button.tooltip_text += " · Ralentización: −25 % ATB durante 8 s"
 			button.disabled = id in draft.modular and id!=draft.modular[selected]
 			if button.disabled: button.text += " · Ya equipada"
 			context.add_child(button)

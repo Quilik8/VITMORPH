@@ -10,6 +10,7 @@ var message := ""
 func eligibility(actor: Dictionary, main: Dictionary) -> String:
 	if actor.is_empty() or not Status.active(actor): return "Objetivo no disponible"
 	if main.is_empty() or actor.team==main.team: return "Selecciona un enemigo"
+	if not actor.has("definition_id") or not actor.has("build"): return "Escenario de diagnóstico · copia no disponible"
 	if actor.hp>actor.max_hp*Rules.COPY_THRESHOLD: return "Debilita hasta ≤30 % PV"
 	return ""
 

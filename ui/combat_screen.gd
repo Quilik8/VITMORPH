@@ -11,6 +11,9 @@ const INK := Color("eee5d3")
 const MUTED := Color("a5aa9b")
 const GOLD := Color("d4bb79")
 const TEAL := Color("86bbb0")
+var save_service: Node
+var save_label: Label
+var diagnostic_mode := false
 var session := preload("res://systems/demo_session.gd").new()
 var editor: Control
 var build_button: Button
@@ -74,8 +77,20 @@ func _ready() -> void:
 	combat.combat_finished.connect(on_finished)
 	route.route_changed.connect(refresh)
 	route.travelling_started.connect(arena.reset_feedback)
+	save_service=preload("res://systems/save_service.gd").new()
+	save_service.name="SaveService"
+	add_child(save_service)
+	save_service.saved.connect(func(_sequence): save_label.text=save_service.status)
+	save_service.failed.connect(func(reason): save_label.text=reason; save_label.tooltip_text=reason)
+	route.before_encounter.connect(create_checkpoint)
+	route.settled.connect(func():call_deferred("create_checkpoint"))
+	get_tree().auto_accept_quit=false
 	on_mode_selected(3)
 	begin()
+	var restored: Dictionary=save_service.restore_checkpoint(validate_snapshot)
+	if restored.ok: restore_checkpoint(restored.snapshot)
+	elif not restored.found: create_checkpoint()
+	save_label.text=save_service.status
 	refresh()
 
 func underline(color: Color, fill: Color = Color(0,0,0,0)) -> StyleBoxFlat:
@@ -124,7 +139,7 @@ func build_screen() -> void:
 	root.name = "Body"
 	root.add_theme_constant_override("separation", 10)
 	margins.add_child(root)
-	var header := HBoxContainer.new()
+	var header := HFlowContainer.new()
 	header.name = "Header"
 	root.add_child(header)
 	var title := label("VITMORPH  /  campo de prueba", 19, GOLD)
@@ -153,6 +168,9 @@ func build_screen() -> void:
 	arena.route = route
 	arena.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	root.add_child(arena)
+	save_label=label("",12,MUTED)
+	save_label.clip_text=true
+	root.add_child(save_label)
 	atb_strip = ATBStrip.new()
 	atb_strip.name = "ATB"
 	atb_strip.profile = profile
@@ -266,7 +284,8 @@ func begin() -> void:
 	log_lines.clear()
 	arena.reset_feedback()
 	if selection.selected == 3:
-		route.start()
+		if route.is_active(): route.rest()
+		else: route.start()
 	else:
 		route.visible_world = false
 		combat.start(selection.selected)
@@ -275,6 +294,7 @@ func begin() -> void:
 func on_mode_selected(index: int) -> void:
 	if combat.running or route.state == "aftermath":
 		return
+	diagnostic_mode=index!=3
 	route.visible_world = index == 3
 	if route.visible_world:
 		route.preview()
@@ -303,6 +323,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
 	var key: int = event.keycode
+	if not combat.running and key==KEY_E and route.at_refuge() and not editor.visible:
+		route.rest(); get_viewport().set_input_as_handled(); return
 	if not combat.running and key in [KEY_B,KEY_C]:
 		open_build(key==KEY_C)
 		get_viewport().set_input_as_handled()
@@ -362,7 +384,8 @@ func refresh_body() -> void:
 	selection.disabled = active
 	start_button.disabled = active
 	if route.visible_world:
-		start_button.text = "Explorar" if route.state == "ready" else "Reiniciar"
+		start_button.text = "Explorar" if route.state == "ready" else "Descansar [E]"
+		start_button.disabled=active or (route.state!="ready" and not route.at_refuge()) or editor.visible
 	else:
 		start_button.text = "Repetir" if not combat.actors.is_empty() else "Comenzar"
 	if combat.running:
@@ -402,6 +425,8 @@ func refresh_body() -> void:
 	retain_button.disabled = not combat.running
 	var selected := selected_data()
 	var effect: String = "%d daño" % selected.damage if selected.damage > 0 else "Protege el próximo impacto"
+	if selected.get("status","")=="dot": effect += " · residuo cada 4 s"
+	if selected.get("status","")=="slow": effect += " · ralentiza ATB"
 	var availability := ""
 	if combat.running:
 		var actor: Dictionary = combat.actor_by_id("main")
@@ -431,7 +456,9 @@ func _process_body(delta: float) -> void:
 	elif route != null and route.visible_world:
 		if route.state == "travelling":
 			result_label.text = route.confrontation
-			exploration_help.text = "WASD / flechas · desplazarte" + (" · tres encuentros superados" if route.cleared == route.zones.size() else " · acércate a los enemigos")
+			exploration_help.text="WASD / flechas · explorar   B · build   C · bestias"+("   E · descansar" if route.at_refuge() else "")
+			start_button.disabled=not route.at_refuge() or editor.visible
+			if session.objectives.completed: result_label.text="Demo completada · el mundo sigue abierto"
 		elif route.state == "complete":
 			result_label.text = "Tres encuentros superados · Reiniciar para repetir"
 		elif route.state == "failed":
@@ -461,6 +488,12 @@ func run_combat_demo_checks() -> Dictionary:
 func run_copy_demo_checks() -> Dictionary:
 	return preload("res://tests/copy_demo.gd").new().run()
 
+func run_save_demo_checks() -> Dictionary:
+	return preload("res://tests/save_demo.gd").new().run()
+
+func run_journey_checks() -> Dictionary:
+	return preload("res://tests/demo_journey.gd").new().run()
+
 func open_build(collection_mode: bool) -> void:
 	if combat.running or route.state != "travelling" or not route.visible_world: return
 	session.sync_actor(route.actors[0],combat.priority,combat.retained)
@@ -475,6 +508,7 @@ func on_build_applied() -> void:
 	combat.actors.append(route.actors[0])
 	combat.priority = session.principal().priority
 	combat.retained = session.principal().retained
+	create_checkpoint()
 	refresh()
 
 func copy_selected() -> void:
@@ -501,3 +535,35 @@ func refresh_copy() -> void:
 	if copy_targets.selected>=0: reason=combat.copy_service.eligibility(combat.actor_by_id(copy_target_ids[copy_targets.selected]),main)
 	copy_button.disabled=not combat.running or busy or (combat.copy_service.pending_id=="" and (copy_targets.selected<0 or reason!=""))
 	copy_label.text=combat.copy_service.message if combat.copy_service.message!="" else reason
+
+func create_checkpoint() -> Dictionary:
+	if diagnostic_mode or save_service==null or not route.visible_world: return {"ok":false,"error":"Perfil de diagnóstico separado"}
+	if combat.running: return {"ok":false,"error":"Se conserva el punto anterior al encuentro"}
+	session.sync_actor(route.actors[0],combat.priority,combat.retained)
+	var snapshot_data := {"session":session.export_data(),"world":route.export_data()}
+	var validation := validate_snapshot(snapshot_data)
+	if not validation.ok: save_label.text=validation.error; return validation
+	var result: Dictionary=save_service.create_checkpoint(snapshot_data)
+	save_label.text=save_service.status
+	return result
+
+func validate_snapshot(data: Dictionary) -> Dictionary:
+	if not data.get("session") is Dictionary or not data.get("world") is Dictionary: return {"ok":false,"error":"Punto seguro incompleto"}
+	var validation: Dictionary=session.validate_data(data.session)
+	if not validation.ok: return validation
+	return route.validate_data(data.world)
+
+func restore_checkpoint(data: Dictionary) -> Dictionary:
+	var validation := validate_snapshot(data)
+	if not validation.ok: return validation
+	session.restore_data(data.session)
+	route.restore_data(data.world)
+	combat.priority=session.principal().priority
+	combat.retained=session.principal().retained
+	refresh()
+	return {"ok":true}
+
+func _notification(what: int) -> void:
+	if what==NOTIFICATION_WM_CLOSE_REQUEST:
+		if save_service!=null: save_service.flush()
+		get_tree().quit()
