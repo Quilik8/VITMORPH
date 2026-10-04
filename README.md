@@ -2,7 +2,7 @@
 
 ## Estado y documentos para continuar
 
-Estamos construyendo los sistemas de una demo que incorporará assets aportados por el usuario. 0.7.0 es el prototipo técnico recuperable. El nuevo editor de ensamblaje ya integra colección, habilidades, montajes sobre la bestia y selección/arrastre; su presentación artística espera assets. El primer mapa y el refugio requieren sus propios bloques: refugio grande con personajes y acceso a otra instancia; historia única sin ramificaciones.
+Estamos construyendo los sistemas de una demo que incorporará assets aportados por el usuario. 0.7.0 es el prototipo técnico recuperable. El editor de ensamblaje integra técnicamente colección, habilidades, montajes y selección/arrastre, pero el usuario rechazó su composición. Requiere rediseño de UX y, por separado, incorporación de assets. Investigación y siguiente capa de diseño: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md). El primer mapa y el refugio requieren sus propios bloques: refugio grande con personajes y acceso a otra instancia; historia única sin ramificaciones.
 
 Leer primero [DEMO_SCOPE.md](DEMO_SCOPE.md) y [ASSET_REQUESTS.md](ASSET_REQUESTS.md). El primero registra las correcciones vigentes y los pendientes; el segundo contiene inventario de assets, fichas de entrega, estados y registro de recepción. Los apartados siguientes describen la base técnica existente.
 
@@ -29,7 +29,8 @@ El proyecto incluye Godot MCP Toolkit 1.0.2 en `addons/godot_mcp_toolkit`, habil
 
 - `DESIGN_STATUS.md`: comprensión, decisiones aprobadas, temas abiertos y descartados.
 - `SYSTEMS_DESIGN.md`: antecedente de sistemas; las decisiones de demo vigentes están en DEMO_IMPLEMENTATION.md.
-- `BUILD_DESIGN.md`: antecedente del editor; implementado y revisado en esta demo conforme al contrato aprobado.
+- `BUILD_DESIGN.md`: contrato de reglas del editor; composición implementada rechazada, rediseño pendiente.
+- `GAME_UI_RESEARCH.md`: diagnóstico de UI, referencias y propuesta de skill específica de videojuegos.
 - `ARCHITECTURE.md`: estructura técnica actual y límites de la base.
 - `ASSET_REQUESTS.md`: necesidades de arte identificadas hasta ahora.
 - `TECHNICAL_DECISIONS.md`: registro breve de decisiones de implementación.

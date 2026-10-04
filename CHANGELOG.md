@@ -1,5 +1,12 @@
 # Registro de cambios
 
+## Investigación y rechazo de composición UI · 4 octubre 2026
+
+- Registrado rechazo del usuario a la composición del editor; separado de las comprobaciones mecánicas anteriores y de la falta de assets.
+- GAME_UI_RESEARCH.md documenta fallos observados, referencias de Warframe, Destiny/DIM, Last Epoch y Armored Core VI, opiniones comunitarias y límites de evidencia.
+- Evaluadas cuatro skills específicas y propuesta una capa personal de UI para videojuegos complementaria al núcleo y a Godot. Sin instalación de terceros ni creación de la nueva skill todavía.
+- Actualizados documentos de entrada y entrega para no presentar la UX como aceptada. Cambios documentales; sin cambios de juego ni nuevas pruebas mecánicas.
+
 ## Editor de ensamblaje · 4 octubre 2026
 
 - Sustituida la UI de builds/colección por una superficie centrada en la copia editada: selector integrado, diez anclajes corporales, habilidades debajo, biblioteca y comparación contextual. Conservado Theme cálido; reflow vertical con desplazamiento y foco en ventana estrecha.

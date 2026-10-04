@@ -4,6 +4,8 @@ Actualizado: 4 octubre 2026, después de checkpoint-v0.7.0. Autoridad: instrucci
 
 ## Estado del proyecto
 
+El usuario rechazó también la composición del editor de ensamblaje posterior a 0.7.0 por seguir siendo casi la misma. Antes de modificarla de nuevo se investiga UI de videojuegos y una skill especializada: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md). La validación mecánica previa permanece como evidencia técnica; no certifica aprobación de UX.
+
 La demo prevista integra imágenes, sprites, sonido y demás contenido aportado por el usuario. La versión 0.7.0 es un prototipo de sistemas y una base recuperable. Las pruebas técnicas no certifican la demo final ni la aceptación de su UI o mapa.
 
 Todos los assets los proporcionará el usuario. No generar imágenes ni inventar elecciones artísticas o narrativas pendientes. Lista de producción: [ASSET_REQUESTS.md](ASSET_REQUESTS.md).

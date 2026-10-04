@@ -1,5 +1,7 @@
 # Vitmorph · editor de ensamblaje
 
+**Estado posterior a esta entrega:** el usuario rechazó la composición por seguir siendo casi la misma UI. La evidencia siguiente describe funcionamiento y revisión histórica; no representa aceptación del diseño. Pendientes: rediseño de experiencia/composición e integración artística. Diagnóstico, referencias comunitarias y propuesta de skill: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md).
+
 4 octubre 2026. Implementación sobre la base 82d8e1a; checkpoint-v0.7.0 se conserva. El sistema usa representación técnica mientras llegan los assets del usuario. Esta entrega no certifica la presentación artística final ni reexporta el ejecutable 0.7.0.
 
 ## Probar y comprender el ensamblaje

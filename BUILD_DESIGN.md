@@ -1,5 +1,7 @@
 # Editor de ensamblaje · contrato aprobado, 4 octubre 2026
 
+**Revisión posterior del usuario:** la composición implementada fue rechazada por seguir siendo casi la misma UI. El contrato de reglas sigue vigente; la aceptación de UX y dirección visual está pendiente de rediseño, no únicamente de assets. Investigación y propuesta de skill especializada: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md).
+
 El usuario autorizó implementar el plan de ensamblaje. Objetivo: identificar la copia editada, montar mejoras y comprender el resultado. Una superficie de lectura, bestia protagonista, selector de copias, biblioteca contextual y detalle compartido. Se aplican ui-design-core, godot-ui-design y ui-visual-qa. El contenido final lo aporta el usuario.
 
 ## Composición y estados
@@ -24,7 +26,7 @@ Pruebas: copias independientes, equivalencia selección/arrastre, reemplazo/inte
 
 ## Antecedente histórico
 
-Estado de implementación y evidencia: [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md). El sistema de ensamblaje está implementado con representación técnica; integración y aceptación artística pendientes de assets del usuario.
+Estado de implementación y evidencia histórica: [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md). El sistema de ensamblaje tiene implementación técnica; su composición fue rechazada por el usuario. Rediseño UX pendiente y, por separado, integración de assets.
 
 Las secciones siguientes conservan la propuesta de octubre 3; quedan subordinadas al contrato anterior y DEMO_SCOPE.md.
 
