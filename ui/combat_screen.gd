@@ -413,3 +413,6 @@ func snapshot() -> Dictionary:
 
 func run_rule_checks() -> Dictionary:
 	return {"passed": false, "status": "HISTORICAL_SUITE", "reason": "La suite anterior asume iniciativa virtual; requiere adaptación explícita a ATB antes de ejecutarse."}
+
+func run_demo_checks() -> Dictionary:
+	return preload("res://tests/demo_rules.gd").new().run()

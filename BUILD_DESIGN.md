@@ -1,3 +1,5 @@
+> Contrato vigente: DEMO_IMPLEMENTATION.md. Plan autorizado por el usuario el 4 de octubre de 2026. La exploración se pausa al editar; las reglas coincidentes anteriores pendientes quedan aprobadas/sustituidas por ese contrato.
+
 # Vitmorph — diseño de builds e interfaz, revisión 01
 
 3 de octubre de 2026. **Propuesta de diseño, pendiente de revisión.** No cambia el juego ni convierte números de prueba en balance definitivo.

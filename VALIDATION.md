@@ -134,3 +134,7 @@ Auditoría de etiquetas: (1150,640) queda fuera del radio de detección y sus ca
 Scripts modificados comprobados por MCP y consola sin errores/advertencias en consulta final. No se agregó ni ejecutó la suite automática histórica. Punto recuperable `checkpoint-v0.1.2`. Continuidad, ritmo, ATB, comandos y reglas conservados; cobertura visual limitada a estos estados y resolución.
 
 Tras reiniciar el runtime final: travelling, 100 PV, comandos vacíos, diagnóstico inactivo, sin Preparation; cuatro elementos libres del pool y una sola detección espacial en reposo. Estado y resultados de compilación/consola en `tests/evidence/headroom_final_diagnostics.json`.
+
+## Hito 0.2.0
+
+MCP reconectado tras apertura del editor. Tres capturas idle y tres acciones en tests/evidence/demo_baseline.json. Catálogo, sesión, builds y suite compilados por MCP. Suite aislada ejecutada sobre runtime; resultado en demo_build_checks.json. No altera partida visible.

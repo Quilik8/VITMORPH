@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"checks\":[{\"name\":\"catalog references\",\"passed\":true},{\"name\":\"initial library\",\"passed\":true},{\"name\":\"slot structure\",\"passed\":true},{\"name\":\"normal equipped\",\"passed\":true},{\"name\":\"basic range\",\"passed\":true},{\"name\":\"guard unaffected\",\"passed\":true},{\"name\":\"close range\",\"passed\":true},{\"name\":\"far range\",\"passed\":true},{\"name\":\"definition untouched\",\"passed\":true},{\"name\":\"duplicate modular rejected\",\"passed\":true},{\"name\":\"duplicate instance rejected\",\"passed\":true},{\"name\":\"locked modular rejected\",\"passed\":true},{\"name\":\"swap accepted\",\"passed\":true},{\"name\":\"swap marks and health\",\"passed\":true},{\"name\":\"removed marks clear\",\"passed\":true},{\"name\":\"unequipped cooldown kept\",\"passed\":true},{\"name\":\"combat locks builds\",\"passed\":true},{\"name\":\"combat locks main\",\"passed\":true},{\"name\":\"select copied main\",\"passed\":true},{\"name\":\"individual identity and state\",\"passed\":true}],\"count\":20,\"failures\":[],\"passed\":true}}"
+    }
+  ]
+}

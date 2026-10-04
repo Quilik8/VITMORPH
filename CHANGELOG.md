@@ -43,3 +43,7 @@ Este punto no certifica un juego completo ni 60 FPS. Las pruebas antiguas de ini
 - Cinco reinicios sin crecimiento observado en nodos/recursos/objetos/memoria gráfica; no certifica sesiones largas ni ausencia de fugas.
 - Corregida etiqueta histórica de persecución: era cámara junto a grupo. Nueva persecución real confirmada separadamente por MCP; sin baseline equivalente.
 - Método, evidencia y límites en PERFORMANCE_HEADROOM.md. Diseño y reglas conservados; sin assets nuevos, streaming, movimiento táctico ni pruebas automáticas.
+
+## 0.2.0 · catálogo y builds
+
+Resource de definiciones, biblioteca/colección, identidades y servicio de builds con vista previa, Alcance global y ranuras validadas. Contrato aprobado en DEMO_IMPLEMENTATION.md; baseline tres repeticiones. Suite nueva de 20 casos aislados por MCP.

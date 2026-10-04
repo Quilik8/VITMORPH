@@ -1,3 +1,5 @@
+> Contrato vigente: DEMO_IMPLEMENTATION.md. Plan autorizado por el usuario el 4 de octubre de 2026. La exploración se pausa al editar; las reglas coincidentes anteriores pendientes quedan aprobadas/sustituidas por ese contrato.
+
 # Vitmorph — próximos sistemas de diseño
 
 Fecha: 3 de octubre de 2026.
