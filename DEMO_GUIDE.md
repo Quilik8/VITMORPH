@@ -1,5 +1,7 @@
 # Demo técnica de Vitmorph · 4 de octubre de 2026
 
+> Guía del prototipo checkpoint-v0.7.0. La demo con assets y el refugio grande en otra instancia están pendientes de construcción; alcance vigente en DEMO_SCOPE.md. Las instrucciones siguientes describen el comportamiento existente.
+
 ## Jugar
 
 Ejecutar `dist/Vitmorph.exe` o abrir `project.godot` con Godot 4.7.2 y pulsar F5.

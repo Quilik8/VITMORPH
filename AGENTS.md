@@ -1,5 +1,9 @@
 # Vitmorph
 
+- Antes de continuar, leer DEMO_SCOPE.md y ASSET_REQUESTS.md: alcance vigente, decisiones posteriores y lista de producción. No reconstruir requisitos desde el chat ni dar pendientes por aprobados.
+- Refugio grande con personajes, cercano a una ciudad; por ahora se accede entrando a otra instancia. El combate sigue en el lugar de exploración. Presentación de la transición pendiente.
+- Historia única sin ramificaciones. Presentación narrativa pendiente. Todos los assets los aporta el usuario. checkpoint-v0.7.0 es base técnica, no demo final con assets ni UX aprobada.
+
 - Usar el Godot MCP configurado y comprobar conexión con una consulta de solo lectura antes de afirmar evidencia de editor/runtime. Mantener un editor y un addon; no desactivar el MCP requerido para continuar.
 - El jugador navega por un mundo continuo y multidireccional. El combate ocurre en ese lugar; HUD solo en combate. No añadir pantallas de preparación ni transición previa a cada encuentro.
 - Las builds las arma el jugador. El editor voluntario está aprobado en DEMO_IMPLEMENTATION.md, pausa exploración y se bloquea en combate; no introducir otros menús por iniciativa propia.

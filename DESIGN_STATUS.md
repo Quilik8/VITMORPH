@@ -1,5 +1,9 @@
 # Estado del diseño
 
+## Corrección posterior a 0.7.0 · 4 octubre 2026
+
+Autoridad vigente: DEMO_SCOPE.md. Refugio grande con personajes, cercano a una ciudad y acceso a otra instancia; historia única sin ramificaciones. Assets aportados por el usuario y registrados en ASSET_REQUESTS.md. Colección/builds requieren rediseño con selección y drag and drop, cada copia con su build; mapa exterior demasiado lineal y modalidad de presencia enemiga pendiente. 0.7.0 es prototipo de sistemas, no demo final. La presentación narrativa aún no está elegida. Esta corrección prevalece sobre propuestas anteriores.
+
 ## Actualización de la demo · 4 octubre 2026
 
 El contrato vigente de esta entrega está en DEMO_IMPLEMENTATION.md: builds fuera de combate con exploración pausada, selección de un principal, copia como apoyo, biblioteca reutilizable, estados, guardado y refugio. Estos sistemas ya están implementados y técnicamente validados; los pendientes históricos de las secciones posteriores deben leerse junto al contrato. La evaluación humana del ritmo y balance continúa pendiente. Parámetros y geometría siguen siendo provisionales. Entrega y límites: DEMO_DELIVERY.md.

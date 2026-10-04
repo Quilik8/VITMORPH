@@ -1,5 +1,11 @@
 # Vitmorph
 
+## Estado y documentos para continuar
+
+Estamos construyendo los sistemas de una demo que incorporará assets aportados por el usuario. 0.7.0 es el prototipo técnico recuperable. La UI de builds/colección y el primer mapa requieren replanteamiento. El refugio será grande, con personajes y acceso a otra instancia; historia única sin ramificaciones.
+
+Leer primero [DEMO_SCOPE.md](DEMO_SCOPE.md) y [ASSET_REQUESTS.md](ASSET_REQUESTS.md). El primero registra las correcciones vigentes y los pendientes; el segundo contiene inventario de assets, fichas de entrega, estados y registro de recepción. Los apartados siguientes describen la base técnica existente.
+
 
 Primer prototipo de combate para el videojuego 2D **Vitmorph**, desarrollado con Godot y GDScript. El nombre del juego y del proyecto queda fijado como Vitmorph por la instrucción explícita del usuario.
 

@@ -1,5 +1,12 @@
 # Registro de cambios
 
+## Diseño posterior a 0.7.0 · 4 octubre 2026
+
+- Registrada corrección del usuario: refugio grande con personajes, cercano a una ciudad y entrada a otra instancia; historia única sin ramificaciones.
+- DEMO_SCOPE.md distingue alcance aprobado, implementación técnica y decisiones pendientes. 0.7.0 se conserva como prototipo de sistemas; la demo con assets y rediseño UI/mapa sigue pendiente.
+- ASSET_REQUESTS.md ampliado con inventario por familias, dependencias, fichas de entrega, estados y registro de recepción. Todo el material lo aporta el usuario; cantidades no definidas no se inventan.
+- AGENTS.md y documentos de entrada/históricos enlazan las correcciones para continuidad entre sesiones. Cambios documentales; sin modificación de gameplay ni nuevas pruebas.
+
 ## 0.7.0 · 4 octubre 2026 · demo técnica integrada
 
 - Cierre de etapas: 0.3.0 editor de builds/colección; 0.4.0 reloj determinista, estados e IA; 0.5.0 copia y retirada viva; 0.6.0 guardado seguro, refugio y recorrido. Cada alcance tiene su etiqueta recuperable en Git.

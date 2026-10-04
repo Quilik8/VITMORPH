@@ -1,5 +1,7 @@
 # Vitmorph · demo técnica 0.7.0
 
+> Informe histórico del prototipo de sistemas. Tras la revisión del usuario, no se considera la demo final con assets ni una UX aceptada. Alcance posterior: DEMO_SCOPE.md; lista de producción: ASSET_REQUESTS.md. El refugio del prototipo no representa la zona amplia en otra instancia solicitada después.
+
 ## Entrega
 
 La demo implementa el ciclo de construir, explorar, combatir, copiar una bestia viva, incorporar sus modulares, resolver el encuentro final y continuar desde disco. El mundo y los encuentros comparten escena. La edición es voluntaria y pausa la exploración; no hay preparación obligatoria antes de combatir.

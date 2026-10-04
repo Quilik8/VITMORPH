@@ -1,5 +1,7 @@
 # Vitmorph — contrato aprobado de demo técnica
 
+> Antecedente implementado en checkpoint-v0.7.0. Correcciones posteriores en DEMO_SCOPE.md: el refugio final será grande, con personajes y entrada a otra instancia; la historia es única y la demo integrará assets del usuario. La ubicación del refugio en el mismo mapa descrita debajo corresponde al prototipo anterior. Las reglas mecánicas no sustituidas conservan vigencia; UI y mapa requieren revisión.
+
 4 octubre 2026. El usuario autorizó implementar el plan completo, pruebas automáticas, MCP y versionado. Valores técnicos provisionales; no son balance de campaña.
 
 ## Ciclo y reglas

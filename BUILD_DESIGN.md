@@ -1,4 +1,4 @@
-> Contrato vigente: DEMO_IMPLEMENTATION.md. Plan autorizado por el usuario el 4 de octubre de 2026. La exploración se pausa al editar; las reglas coincidentes anteriores pendientes quedan aprobadas/sustituidas por ese contrato.
+> Antecedente del editor. Mecánicas del prototipo en DEMO_IMPLEMENTATION.md; alcance posterior en DEMO_SCOPE.md. El usuario pidió rediseñar colección, habilidades y mods con selección + drag and drop y hacer clara la build propia de cada copia. La UX implementada no queda aprobada por este documento. Las propuestas históricas siguientes deben leerse con esas correcciones.
 
 # Vitmorph — diseño de builds e interfaz, revisión 01
 
