@@ -17,6 +17,7 @@ El proyecto incluye Godot MCP Toolkit 1.0.2 en `addons/godot_mcp_toolkit`, habil
 
 - `DESIGN_STATUS.md`: comprensión, decisiones aprobadas, temas abiertos y descartados.
 - `SYSTEMS_DESIGN.md`: propuesta de próximos sistemas y decisiones pendientes del bloque de habilidades/builds; no canon nuevo.
+- `BUILD_DESIGN.md`: diseño candidato de builds, compatibilidad y brief de interfaz; pendiente de revisión y render.
 - `ARCHITECTURE.md`: estructura técnica actual y límites de la base.
 - `ASSET_REQUESTS.md`: necesidades de arte identificadas hasta ahora.
 - `TECHNICAL_DECISIONS.md`: registro breve de decisiones de implementación.

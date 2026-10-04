@@ -25,6 +25,8 @@ Las necesidades de guardado se definen desde el primer bloque para evitar pérdi
 
 ## Primer bloque candidato: habilidades, propiedades y compatibilidad
 
+Desarrollo concreto del candidato y brief de interfaz: [BUILD_DESIGN.md](BUILD_DESIGN.md). Contiene reglas alternativas pendientes, comparación de Alcance y estados; no es una interfaz ya implementada.
+
 Objetivo: que el jugador pueda anticipar qué cambia al construir una build y reconocer ese cambio en las decisiones de su bestia.
 
 Propuesta de descripción común de cada habilidad:
