@@ -1,0 +1,71 @@
+{
+	"checks": [
+		{
+			"name": "independent properties",
+			"passed": true
+		},
+		{
+			"name": "close power",
+			"passed": true
+		},
+		{
+			"name": "guard unchanged",
+			"passed": true
+		},
+		{
+			"name": "catalog immutable",
+			"passed": true
+		},
+		{
+			"name": "duration incompatible instantaneous",
+			"passed": true
+		},
+		{
+			"name": "DOT duration",
+			"passed": true
+		},
+		{
+			"name": "slow duration",
+			"passed": true
+		},
+		{
+			"name": "direct damage only",
+			"passed": true
+		},
+		{
+			"name": "cooldown unchanged",
+			"passed": true
+		},
+		{
+			"name": "sum percentages once",
+			"passed": true
+		},
+		{
+			"name": "apply preserves state",
+			"passed": true
+		},
+		{
+			"name": "copies independent",
+			"passed": true
+		},
+		{
+			"name": "legacy migration: { \"ok\": true }",
+			"passed": true
+		},
+		{
+			"name": "migration preserves copy",
+			"passed": true
+		},
+		{
+			"name": "migration not repeated",
+			"passed": true
+		},
+		{
+			"name": "shared timing",
+			"passed": true
+		}
+	],
+	"count": 16,
+	"failures": [],
+	"passed": true
+}

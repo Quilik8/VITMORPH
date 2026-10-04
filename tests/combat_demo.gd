@@ -25,7 +25,7 @@ func run() -> Dictionary:
 	check("ATB arrival and action",engine.pending.actor_id==actors[0].id and is_equal_approx(engine.elapsed,0.0))
 	engine.advance(2.2)
 	check("impact exact",engine.resolved and actors[0].shield==24)
-	engine.advance(2.6)
+	engine.advance(engine.action_seconds-engine.resolve_seconds)
 	check("stable waiting actor dispatched",engine.pending.actor_id==actors[1].id and is_equal_approx(engine.elapsed,0.0))
 	engine.begin_encounter(pair())
 	actors=engine.actors

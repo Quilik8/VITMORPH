@@ -37,6 +37,13 @@ func validate_build(beast: Dictionary, build: Dictionary, library: Array, invent
 		if id != "": errors.append("No hay modificadores especiales en esta demo")
 	return {"ok":errors.is_empty(),"errors":errors,"warnings":warnings}
 
+func compatible(skill: Dictionary, property: String) -> bool:
+	match property:
+		"range": return skill.get("range",0.0)>0 and skill.get("shield",0)==0
+		"damage": return skill.get("damage",0)>0
+		"status_duration": return skill.get("status","") in ["dot","slow"]
+	return false
+
 func preview_build(beast: Dictionary, build: Dictionary, inventory: Dictionary) -> Dictionary:
 	var definition: Dictionary = catalog.beast(beast.definition_id)
 	var skills: Array[Dictionary] = []
@@ -44,16 +51,24 @@ func preview_build(beast: Dictionary, build: Dictionary, inventory: Dictionary) 
 	for id in definition.fixed + build.modular:
 		var skill: Dictionary = catalog.skill(id)
 		if skill.is_empty(): continue
-		var base: float = skill.range
-		var percent := 0.0
-		var contributions: Array = []
-		if base > 0 and skill.shield == 0:
+		var properties := {}
+		var rules = preload("res://data/demo_rules.gd")
+		skill["status_duration"] = rules.DOT_DURATION if skill.get("status","")=="dot" else (rules.SLOW_DURATION if skill.get("status","")=="slow" else 0.0)
+		for property in ["range","damage","status_duration"]:
+			var base: float = float(skill[property])
+			var percent := 0.0
+			var contributions: Array = []
+			var accepts := compatible(skill,property)
 			for instance in build.normal:
-				if inventory.has(instance):
-					var modifier: Dictionary = catalog.get_value("modifier:"+inventory[instance])
+				if not inventory.has(instance): continue
+				var modifier: Dictionary = catalog.get_value("modifier:"+inventory[instance])
+				if accepts and modifier.get("property","")==property:
 					percent += modifier.get("percent",0.0)
 					contributions.append({"instance":instance,"percent":modifier.get("percent",0.0)})
-			skill.range = base * (1.0+percent)
+			var value := base*(1.0+percent)
+			skill[property] = int(floor(value+0.5)) if property=="damage" else value
+			properties[property] = {"base":base,"result":skill[property],"contributions":contributions,"compatible":accepts,"reason":"" if accepts else ("Sin estado con duración" if property=="status_duration" else ("Sin daño directo" if property=="damage" else "Objetivo propio; sin alcance"))}
+		skill["derived_properties"] = properties.duplicate(true)
 		skills.append(skill)
-		changes.append({"id":id,"name":skill.name,"base":base,"result":skill.range,"contributions":contributions,"reason":"Objetivo propio; sin cambio" if skill.shield>0 else "Distancia al objetivo"})
+		changes.append({"id":id,"name":skill.name,"base":properties.range.base,"result":skill.range,"contributions":properties.range.contributions,"reason":properties.range.reason,"properties":properties})
 	return {"abilities":skills,"changes":changes}

@@ -1,7 +1,7 @@
 extends RefCounted
 ## Datos exclusivamente técnicos. No son catálogo ni balance definitivo.
 
-const ACTION_SECONDS := 4.8
+const ACTION_SECONDS := 3.8
 const RESOLVE_SECONDS := 2.2
 const SCENARIOS := ["1 contra 1 · cercano", "1 contra 1 · lejano", "1 contra 2"]
 

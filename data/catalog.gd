@@ -12,6 +12,8 @@ func _init() -> void:
 	add_skill("enemy_hit", "Ataque técnico", 4, 0, 600.0, 0, 6)
 	add_skill("enemy_guard", "Protección técnica", 0, 12, 0.0, 0, 7)
 	add("modifier:range", "modifier", {"id":"range", "name":"Alcance", "property":"range", "percent":0.30})
+	add("modifier:power", "modifier", {"id":"power", "name":"Potencia", "property":"damage", "percent":0.20})
+	add("modifier:duration", "modifier", {"id":"duration", "name":"Duración", "property":"status_duration", "percent":0.50})
 	add_beast("starter", "Principal inicial", 10.0, ["basic","guard"], ["close","far"])
 	add_beast("residual_beast", "Bestia residual", 8.0, ["enemy_hit","enemy_guard"], ["residual","slow"])
 	add_beast("ranged_beast", "Bestia distante", 12.0, ["enemy_hit","enemy_guard"], ["close","far"])

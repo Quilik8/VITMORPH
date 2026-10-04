@@ -8,7 +8,8 @@ var catalog := Catalog.new()
 var builds := Builds.new(catalog)
 var collection: Array[Dictionary] = []
 var library: Array = []
-var inventory: Dictionary = {"range_1":"range"}
+var inventory: Dictionary = {"range_1":"range","power_1":"power","duration_1":"duration"}
+var build_content_version := 1
 var principal_id := ""
 var next_id := 1
 var combat_locked := false
@@ -86,7 +87,7 @@ func recover() -> void:
 		beast.ready_at.clear()
 
 func export_data() -> Dictionary:
-	return {"collection":collection.duplicate(true),"library":library.duplicate(),"inventory":inventory.duplicate(),"principal_id":principal_id,"next_id":next_id,"objectives":objectives.duplicate(),"copied_skills":copied_skills.duplicate()}
+	return {"build_content_version":build_content_version,"collection":collection.duplicate(true),"library":library.duplicate(),"inventory":inventory.duplicate(),"principal_id":principal_id,"next_id":next_id,"objectives":objectives.duplicate(),"copied_skills":copied_skills.duplicate()}
 
 func validate_data(data: Dictionary) -> Dictionary:
 	for key in ["collection","library","copied_skills"]:
@@ -141,6 +142,11 @@ func restore_data(data: Dictionary) -> Dictionary:
 	collection.assign(data.collection.duplicate(true))
 	library=data.library.duplicate()
 	inventory=data.inventory.duplicate()
+	# Version marker prevents granting removed instances again on every load.
+	if int(data.get("build_content_version",0)) < 1:
+		for entry in {"power_1":"power","duration_1":"duration"}:
+			if not inventory.has(entry): inventory[entry]="power" if entry=="power_1" else "duration"
+	build_content_version=1
 	principal_id=data.principal_id
 	next_id=int(data.next_id)
 	objectives=data.objectives.duplicate()

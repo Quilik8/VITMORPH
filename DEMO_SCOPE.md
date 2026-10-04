@@ -4,6 +4,8 @@ Actualizado: 4 octubre 2026, después de checkpoint-v0.7.0. Autoridad: instrucci
 
 ## Estado del proyecto
 
+Actualización autorizada: la revisión carbón/cobre fue valorada positivamente por el usuario. Siguiente bloque aprobado en BUILD_INTENTS_IMPLEMENTATION.md: builds diferenciadas e intenciones enemigas. Assets aplazados por instrucción actual; la demo artística sigue pendiente. Los rechazos que siguen describen composiciones históricas.
+
 El usuario rechazó también la composición del editor de ensamblaje posterior a 0.7.0 por seguir siendo casi la misma. Antes de modificarla de nuevo se investiga UI de videojuegos y una skill especializada: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md). La validación mecánica previa permanece como evidencia técnica; no certifica aprobación de UX.
 
 La demo prevista integra imágenes, sprites, sonido y demás contenido aportado por el usuario. La versión 0.7.0 es un prototipo de sistemas y una base recuperable. Las pruebas técnicas no certifican la demo final ni la aceptación de su UI o mapa.

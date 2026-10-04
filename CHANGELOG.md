@@ -1,5 +1,12 @@
 # Registro de cambios
 
+## Builds e intenciones · entrega A · 4 octubre 2026
+
+- Acción común de 3,8 s; impacto 2,2 s, ATB y copia sin cambios.
+- Resolución independiente por propiedad: Alcance +30 %, Potencia +20 % de daño directo, Duración +50 % de estados. Catálogo inmutable y contribuciones trazables.
+- Inventario inicial con tres instancias; migración versionada sin repetir entrega ni sobrescribir builds. Suite nueva: 16 comprobaciones aprobadas en Godot 4.7.2 headless.
+- Contrato y límites en BUILD_INTENTS_IMPLEMENTATION.md. Probe MCP de lectura confirmado; editor reutilizado y runtime reconectado. UI/estados/intenciones pendientes de entregas B/C.
+
 ## UI carbón/cobre y ensamblaje · 4 octubre 2026
 
 - Reemplazado predominio verde por carbón, marfil, cobre/ámbar y azul grisáceo en editor, HUD y terreno provisional.
