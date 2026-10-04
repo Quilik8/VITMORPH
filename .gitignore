@@ -1,0 +1,5 @@
+.godot/
+.godot-temp-mcp/
+.codex/
+*.log
+*.tmp

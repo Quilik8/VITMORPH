@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-02",
+  "source": "Godot MCP execute_code /root/Main.run_rule_checks()",
+  "checks": [
+    {
+      "name": "IA elige mayor daño válido",
+      "passed": true
+    },
+    {
+      "name": "Comando no altera acción ya elegida",
+      "passed": true
+    },
+    {
+      "name": "Acción en curso termina aun retenida después",
+      "passed": true
+    },
+    {
+      "name": "Prioridad válida se elige",
+      "passed": true
+    },
+    {
+      "name": "Retención bloquea sin borrar prioridad",
+      "passed": true
+    },
+    {
+      "name": "Liberar restaura prioridad",
+      "passed": true
+    },
+    {
+      "name": "ID desconocido no cambia comando",
+      "passed": true
+    },
+    {
+      "name": "Reutilización de dos elecciones: vuelve en la cuarta",
+      "passed": true
+    },
+    {
+      "name": "Reutilización bloquea elección 2",
+      "passed": true
+    },
+    {
+      "name": "Reutilización bloquea elección 3",
+      "passed": true
+    },
+    {
+      "name": "Prioridad conservada vuelve a usarse al estar disponible",
+      "passed": true
+    },
+    {
+      "name": "Uso no consume la prioridad",
+      "passed": true
+    },
+    {
+      "name": "Defensa automática al 40 por ciento",
+      "passed": true
+    },
+    {
+      "name": "Protección existente impide acumular defensa",
+      "passed": true
+    },
+    {
+      "name": "Escudo absorbe impacto y se consume completo",
+      "passed": true
+    },
+    {
+      "name": "Siguiente impacto afecta vida sin escudo",
+      "passed": true
+    },
+    {
+      "name": "Prioridad fuera de alcance usa alternativa válida",
+      "passed": true
+    },
+    {
+      "name": "Ninguna habilidad válida produce espera",
+      "passed": true
+    },
+    {
+      "name": "Espera se resuelve sin detener el flujo",
+      "passed": true
+    },
+    {
+      "name": "Empate de vida conserva orden de objetivos",
+      "passed": true
+    },
+    {
+      "name": "IA selecciona menor vida entre objetivos válidos",
+      "passed": true
+    },
+    {
+      "name": "Objetivo muerto queda excluido",
+      "passed": true
+    },
+    {
+      "name": "Empates de iniciativa tienen orden estable",
+      "passed": true
+    },
+    {
+      "name": "Iniciativa admite acciones consecutivas",
+      "passed": true
+    },
+    {
+      "name": "Escenario 0 termina sin atasco",
+      "passed": true
+    },
+    {
+      "name": "Escenario 0 no actúa después del final",
+      "passed": true
+    },
+    {
+      "name": "Escenario 0 reinicia estado completo",
+      "passed": true
+    },
+    {
+      "name": "Escenario 1 termina sin atasco",
+      "passed": true
+    },
+    {
+      "name": "Escenario 1 no actúa después del final",
+      "passed": true
+    },
+    {
+      "name": "Escenario 1 reinicia estado completo",
+      "passed": true
+    },
+    {
+      "name": "Escenario 2 termina sin atasco",
+      "passed": true
+    },
+    {
+      "name": "Escenario 2 no actúa después del final",
+      "passed": true
+    },
+    {
+      "name": "Escenario 2 reinicia estado completo",
+      "passed": true
+    }
+  ],
+  "count": 33,
+  "failures": [],
+  "passed": true
+}

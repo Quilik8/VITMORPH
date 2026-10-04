@@ -1,0 +1,3189 @@
+{
+  "date": "2026-10-03",
+  "source": "Godot MCP runtime",
+  "timing": {
+    "action_seconds": 4.8,
+    "resolve_seconds": 2.2
+  },
+  "diagnostic_setup": "After first encounter, principal placed at (1100,360) to isolate retreat, then at (1140,370) to observe obstacle routing. New runtime: placed at (2140,100) to isolate separated encounter. These placements are MCP diagnostic setup, not player controls. Final restart restores all source defaults.",
+  "collision": {
+    "actions": 0,
+    "actors": [
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 18,
+            "id": "basic",
+            "name": "Ataque básico",
+            "range": 400,
+            "shield": 0,
+            "slot": "FIJA 01"
+          },
+          {
+            "cooldown": 0,
+            "damage": 0,
+            "id": "guard",
+            "name": "Defensa",
+            "range": 0,
+            "shield": 24,
+            "slot": "FIJA 02"
+          },
+          {
+            "cooldown": 2,
+            "damage": 30,
+            "id": "close",
+            "name": "Ataque cercano",
+            "range": 240,
+            "shield": 0,
+            "slot": "MODULAR 01"
+          },
+          {
+            "cooldown": 1,
+            "damage": 12,
+            "id": "far",
+            "name": "Ataque distante",
+            "range": 600,
+            "shield": 0,
+            "slot": "MODULAR 02"
+          }
+        ],
+        "hp": 100,
+        "id": "main",
+        "max_hp": 100,
+        "name": "Principal",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 357.794860839844,
+          "y": 260
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 10,
+        "turns": 0
+      }
+    ],
+    "combat_hud_visible": false,
+    "combat_instance": 43620763192,
+    "exploration_help_visible": true,
+    "pending": {},
+    "priority": "",
+    "result": "",
+    "retained": "",
+    "running": false,
+    "scenario": 0,
+    "scene_instance": 42849011160,
+    "world": {
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "hp": 100,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 357.794860839844,
+            "y": 260
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 10,
+          "turns": 0
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 30,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 30,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "hp": 30,
+          "id": "zone_2_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "hp": 30,
+          "id": "zone_2_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "hp": 30,
+          "id": "zone_3_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_3"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "hp": 30,
+          "id": "zone_3_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_3"
+        }
+      ],
+      "alerted_groups": {
+        "zone_2": "idle"
+      },
+      "camera_x": 157.794860839844,
+      "cleared": 0,
+      "confrontation": "",
+      "encounters": [],
+      "obstacles": [
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 380,
+          "y": 175
+        },
+        {
+          "h": 100,
+          "type": "Rect2",
+          "w": 100,
+          "x": 1220,
+          "y": 200
+        },
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 2120,
+          "y": 140
+        }
+      ],
+      "state": "travelling",
+      "visible_world": true,
+      "zone_index": 0
+    }
+  },
+  "first_encounter": {
+    "actions": 0,
+    "actors": [
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 18,
+            "id": "basic",
+            "name": "Ataque básico",
+            "range": 400,
+            "shield": 0,
+            "slot": "FIJA 01"
+          },
+          {
+            "cooldown": 0,
+            "damage": 0,
+            "id": "guard",
+            "name": "Defensa",
+            "range": 0,
+            "shield": 24,
+            "slot": "FIJA 02"
+          },
+          {
+            "cooldown": 2,
+            "damage": 30,
+            "id": "close",
+            "name": "Ataque cercano",
+            "range": 240,
+            "shield": 0,
+            "slot": "MODULAR 01"
+          },
+          {
+            "cooldown": 1,
+            "damage": 12,
+            "id": "far",
+            "name": "Ataque distante",
+            "range": 600,
+            "shield": 0,
+            "slot": "MODULAR 02"
+          }
+        ],
+        "hp": 100,
+        "id": "main",
+        "max_hp": 100,
+        "name": "Principal",
+        "next_at": 10,
+        "position": {
+          "type": "Vector2",
+          "x": 612.841674804688,
+          "y": 344.654724121094
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 10,
+        "turns": 1
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "hp": 30,
+        "id": "zone_1_0",
+        "max_hp": 30,
+        "name": "Enemigo 1",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 8,
+        "turns": 0,
+        "zone_id": "zone_1"
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "hp": 30,
+        "id": "zone_1_1",
+        "max_hp": 30,
+        "name": "Enemigo 2",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 12,
+        "turns": 0,
+        "zone_id": "zone_1"
+      }
+    ],
+    "combat_hud_visible": true,
+    "combat_instance": 43620763192,
+    "exploration_help_visible": false,
+    "pending": {
+      "actor_id": "main",
+      "reason": "Ataque válido de mayor daño",
+      "skill": {
+        "cooldown": 2,
+        "damage": 30,
+        "id": "close",
+        "name": "Ataque cercano",
+        "range": 240,
+        "shield": 0,
+        "slot": "MODULAR 01"
+      },
+      "target_id": "zone_1_0"
+    },
+    "priority": "",
+    "result": "",
+    "retained": "",
+    "running": true,
+    "scenario": -1,
+    "scene_instance": 42849011160,
+    "world": {
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "hp": 100,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 10,
+          "position": {
+            "type": "Vector2",
+            "x": 612.841674804688,
+            "y": 344.654724121094
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 10,
+          "turns": 1
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 30,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 30,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "hp": 30,
+          "id": "zone_2_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "hp": 30,
+          "id": "zone_2_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "hp": 30,
+          "id": "zone_3_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_3"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "hp": 30,
+          "id": "zone_3_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_3"
+        }
+      ],
+      "alerted_groups": {
+        "zone_2": "idle"
+      },
+      "camera_x": 412.841674804688,
+      "cleared": 0,
+      "confrontation": "",
+      "encounters": [
+        {
+          "enemy_positions": [
+            {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            {
+              "type": "Vector2",
+              "x": 770,
+              "y": 210
+            }
+          ],
+          "hp_at_start": 100,
+          "principal_position": {
+            "type": "Vector2",
+            "x": 612.841674804688,
+            "y": 344.654724121094
+          },
+          "zone": "zone_1"
+        }
+      ],
+      "obstacles": [
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 380,
+          "y": 175
+        },
+        {
+          "h": 100,
+          "type": "Rect2",
+          "w": 100,
+          "x": 1220,
+          "y": 200
+        },
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 2120,
+          "y": 140
+        }
+      ],
+      "state": "battle",
+      "visible_world": true,
+      "zone_index": 0
+    }
+  },
+  "returning": {
+    "actions": 6,
+    "actors": [
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 18,
+            "id": "basic",
+            "name": "Ataque básico",
+            "range": 400,
+            "shield": 0,
+            "slot": "FIJA 01"
+          },
+          {
+            "cooldown": 0,
+            "damage": 0,
+            "id": "guard",
+            "name": "Defensa",
+            "range": 0,
+            "shield": 24,
+            "slot": "FIJA 02"
+          },
+          {
+            "cooldown": 2,
+            "damage": 30,
+            "id": "close",
+            "name": "Ataque cercano",
+            "range": 240,
+            "shield": 0,
+            "slot": "MODULAR 01"
+          },
+          {
+            "cooldown": 1,
+            "damage": 12,
+            "id": "far",
+            "name": "Ataque distante",
+            "range": 600,
+            "shield": 0,
+            "slot": "MODULAR 02"
+          }
+        ],
+        "hp": 88,
+        "id": "main",
+        "max_hp": 100,
+        "name": "Principal",
+        "next_at": 30,
+        "position": {
+          "type": "Vector2",
+          "x": 252.121398925781,
+          "y": 360
+        },
+        "ready_at": {
+          "basic": 4,
+          "close": 4
+        },
+        "shield": 0,
+        "speed": 10,
+        "turns": 3
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "hp": 0,
+        "id": "zone_1_0",
+        "max_hp": 30,
+        "name": "Enemigo 1",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 8,
+        "turns": 0,
+        "zone_id": "zone_1"
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "hp": 0,
+        "id": "zone_1_1",
+        "max_hp": 30,
+        "name": "Enemigo 2",
+        "next_at": 25,
+        "position": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "ready_at": {
+          "enemy_hit": 4
+        },
+        "shield": 0,
+        "speed": 12,
+        "turns": 3,
+        "zone_id": "zone_1"
+      }
+    ],
+    "combat_hud_visible": false,
+    "combat_instance": 43620763192,
+    "exploration_help_visible": true,
+    "pending": {
+      "actor_id": "main",
+      "reason": "Ataque válido de mayor daño",
+      "skill": {
+        "cooldown": 0,
+        "damage": 18,
+        "id": "basic",
+        "name": "Ataque básico",
+        "range": 400,
+        "shield": 0,
+        "slot": "FIJA 01"
+      },
+      "target_id": "zone_1_1"
+    },
+    "priority": "",
+    "result": "Victoria",
+    "retained": "",
+    "running": false,
+    "scenario": -1,
+    "scene_instance": 42849011160,
+    "world": {
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "hp": 88,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 30,
+          "position": {
+            "type": "Vector2",
+            "x": 252.121398925781,
+            "y": 360
+          },
+          "ready_at": {
+            "basic": 4,
+            "close": 4
+          },
+          "shield": 0,
+          "speed": 10,
+          "turns": 3
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 0,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 0,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 25,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {
+            "enemy_hit": 4
+          },
+          "shield": 0,
+          "speed": 12,
+          "turns": 3,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "hp": 30,
+          "id": "zone_2_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1033.01477050781,
+            "y": 368.713836669922
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "hp": 30,
+          "id": "zone_2_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1383.42517089844,
+            "y": 309.441711425781
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "hp": 30,
+          "id": "zone_3_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_3"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "hp": 30,
+          "id": "zone_3_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_3"
+        }
+      ],
+      "alerted_groups": {
+        "zone_2": "returning"
+      },
+      "camera_x": 52.1213989257813,
+      "cleared": 1,
+      "confrontation": "El grupo abandona la persecución",
+      "encounters": [
+        {
+          "enemy_positions": [
+            {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            {
+              "type": "Vector2",
+              "x": 770,
+              "y": 210
+            }
+          ],
+          "hp_at_start": 100,
+          "principal_position": {
+            "type": "Vector2",
+            "x": 612.841674804688,
+            "y": 344.654724121094
+          },
+          "zone": "zone_1"
+        }
+      ],
+      "obstacles": [
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 380,
+          "y": 175
+        },
+        {
+          "h": 100,
+          "type": "Rect2",
+          "w": 100,
+          "x": 1220,
+          "y": 200
+        },
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 2120,
+          "y": 140
+        }
+      ],
+      "state": "travelling",
+      "visible_world": true,
+      "zone_index": 0
+    }
+  },
+  "returned_home": {
+    "actions": 6,
+    "actors": [
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 18,
+            "id": "basic",
+            "name": "Ataque básico",
+            "range": 400,
+            "shield": 0,
+            "slot": "FIJA 01"
+          },
+          {
+            "cooldown": 0,
+            "damage": 0,
+            "id": "guard",
+            "name": "Defensa",
+            "range": 0,
+            "shield": 24,
+            "slot": "FIJA 02"
+          },
+          {
+            "cooldown": 2,
+            "damage": 30,
+            "id": "close",
+            "name": "Ataque cercano",
+            "range": 240,
+            "shield": 0,
+            "slot": "MODULAR 01"
+          },
+          {
+            "cooldown": 1,
+            "damage": 12,
+            "id": "far",
+            "name": "Ataque distante",
+            "range": 600,
+            "shield": 0,
+            "slot": "MODULAR 02"
+          }
+        ],
+        "hp": 88,
+        "id": "main",
+        "max_hp": 100,
+        "name": "Principal",
+        "next_at": 30,
+        "position": {
+          "type": "Vector2",
+          "x": 252.121398925781,
+          "y": 360
+        },
+        "ready_at": {
+          "basic": 4,
+          "close": 4
+        },
+        "shield": 0,
+        "speed": 10,
+        "turns": 3
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "hp": 0,
+        "id": "zone_1_0",
+        "max_hp": 30,
+        "name": "Enemigo 1",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 8,
+        "turns": 0,
+        "zone_id": "zone_1"
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "hp": 0,
+        "id": "zone_1_1",
+        "max_hp": 30,
+        "name": "Enemigo 2",
+        "next_at": 25,
+        "position": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "ready_at": {
+          "enemy_hit": 4
+        },
+        "shield": 0,
+        "speed": 12,
+        "turns": 3,
+        "zone_id": "zone_1"
+      }
+    ],
+    "combat_hud_visible": false,
+    "combat_instance": 43620763192,
+    "exploration_help_visible": true,
+    "pending": {
+      "actor_id": "main",
+      "reason": "Ataque válido de mayor daño",
+      "skill": {
+        "cooldown": 0,
+        "damage": 18,
+        "id": "basic",
+        "name": "Ataque básico",
+        "range": 400,
+        "shield": 0,
+        "slot": "FIJA 01"
+      },
+      "target_id": "zone_1_1"
+    },
+    "priority": "",
+    "result": "Victoria",
+    "retained": "",
+    "running": false,
+    "scenario": -1,
+    "scene_instance": 42849011160,
+    "world": {
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "hp": 88,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 30,
+          "position": {
+            "type": "Vector2",
+            "x": 252.121398925781,
+            "y": 360
+          },
+          "ready_at": {
+            "basic": 4,
+            "close": 4
+          },
+          "shield": 0,
+          "speed": 10,
+          "turns": 3
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 0,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 0,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 25,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {
+            "enemy_hit": 4
+          },
+          "shield": 0,
+          "speed": 12,
+          "turns": 3,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "hp": 30,
+          "id": "zone_2_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "hp": 30,
+          "id": "zone_2_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "hp": 30,
+          "id": "zone_3_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_3"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "hp": 30,
+          "id": "zone_3_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_3"
+        }
+      ],
+      "alerted_groups": {
+        "zone_2": "idle"
+      },
+      "camera_x": 52.1213989257813,
+      "cleared": 1,
+      "confrontation": "",
+      "encounters": [
+        {
+          "enemy_positions": [
+            {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            {
+              "type": "Vector2",
+              "x": 770,
+              "y": 210
+            }
+          ],
+          "hp_at_start": 100,
+          "principal_position": {
+            "type": "Vector2",
+            "x": 612.841674804688,
+            "y": 344.654724121094
+          },
+          "zone": "zone_1"
+        }
+      ],
+      "obstacles": [
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 380,
+          "y": 175
+        },
+        {
+          "h": 100,
+          "type": "Rect2",
+          "w": 100,
+          "x": 1220,
+          "y": 200
+        },
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 2120,
+          "y": 140
+        }
+      ],
+      "state": "travelling",
+      "visible_world": true,
+      "zone_index": 0
+    }
+  },
+  "routing": {
+    "actions": 6,
+    "actors": [
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 18,
+            "id": "basic",
+            "name": "Ataque básico",
+            "range": 400,
+            "shield": 0,
+            "slot": "FIJA 01"
+          },
+          {
+            "cooldown": 0,
+            "damage": 0,
+            "id": "guard",
+            "name": "Defensa",
+            "range": 0,
+            "shield": 24,
+            "slot": "FIJA 02"
+          },
+          {
+            "cooldown": 2,
+            "damage": 30,
+            "id": "close",
+            "name": "Ataque cercano",
+            "range": 240,
+            "shield": 0,
+            "slot": "MODULAR 01"
+          },
+          {
+            "cooldown": 1,
+            "damage": 12,
+            "id": "far",
+            "name": "Ataque distante",
+            "range": 600,
+            "shield": 0,
+            "slot": "MODULAR 02"
+          }
+        ],
+        "hp": 88,
+        "id": "main",
+        "max_hp": 100,
+        "name": "Principal",
+        "next_at": 30,
+        "position": {
+          "type": "Vector2",
+          "x": 1140,
+          "y": 132.869537353516
+        },
+        "ready_at": {
+          "basic": 4,
+          "close": 4
+        },
+        "shield": 0,
+        "speed": 10,
+        "turns": 3
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "hp": 0,
+        "id": "zone_1_0",
+        "max_hp": 30,
+        "name": "Enemigo 1",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 690,
+          "y": 150
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 8,
+        "turns": 0,
+        "zone_id": "zone_1"
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "hp": 0,
+        "id": "zone_1_1",
+        "max_hp": 30,
+        "name": "Enemigo 2",
+        "next_at": 25,
+        "position": {
+          "type": "Vector2",
+          "x": 770,
+          "y": 210
+        },
+        "ready_at": {
+          "enemy_hit": 4
+        },
+        "shield": 0,
+        "speed": 12,
+        "turns": 3,
+        "zone_id": "zone_1"
+      }
+    ],
+    "combat_hud_visible": false,
+    "combat_instance": 43620763192,
+    "exploration_help_visible": true,
+    "pending": {
+      "actor_id": "main",
+      "reason": "Ataque válido de mayor daño",
+      "skill": {
+        "cooldown": 0,
+        "damage": 18,
+        "id": "basic",
+        "name": "Ataque básico",
+        "range": 400,
+        "shield": 0,
+        "slot": "FIJA 01"
+      },
+      "target_id": "zone_1_1"
+    },
+    "priority": "",
+    "result": "Victoria",
+    "retained": "",
+    "running": false,
+    "scenario": -1,
+    "scene_instance": 42849011160,
+    "world": {
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "hp": 88,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 30,
+          "position": {
+            "type": "Vector2",
+            "x": 1140,
+            "y": 132.869537353516
+          },
+          "ready_at": {
+            "basic": 4,
+            "close": 4
+          },
+          "shield": 0,
+          "speed": 10,
+          "turns": 3
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 0,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 0,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 25,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {
+            "enemy_hit": 4
+          },
+          "shield": 0,
+          "speed": 12,
+          "turns": 3,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "hp": 30,
+          "id": "zone_2_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1251.55163574219,
+            "y": 338.862396240234
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "hp": 30,
+          "id": "zone_2_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1582.42163085938,
+            "y": 198.532501220703
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "hp": 30,
+          "id": "zone_3_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_3"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "hp": 30,
+          "id": "zone_3_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_3"
+        }
+      ],
+      "alerted_groups": {
+        "zone_2": "pursuing"
+      },
+      "camera_x": 397.459313925781,
+      "cleared": 1,
+      "confrontation": "Un grupo se acerca",
+      "encounters": [
+        {
+          "enemy_positions": [
+            {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            {
+              "type": "Vector2",
+              "x": 770,
+              "y": 210
+            }
+          ],
+          "hp_at_start": 100,
+          "principal_position": {
+            "type": "Vector2",
+            "x": 612.841674804688,
+            "y": 344.654724121094
+          },
+          "zone": "zone_1"
+        }
+      ],
+      "obstacles": [
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 380,
+          "y": 175
+        },
+        {
+          "h": 100,
+          "type": "Rect2",
+          "w": 100,
+          "x": 1220,
+          "y": 200
+        },
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 2120,
+          "y": 140
+        }
+      ],
+      "state": "travelling",
+      "visible_world": true,
+      "zone_index": 0
+    }
+  },
+  "retained_far": {
+    "actions": 2,
+    "actors": [
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 18,
+            "id": "basic",
+            "name": "Ataque básico",
+            "range": 400,
+            "shield": 0,
+            "slot": "FIJA 01"
+          },
+          {
+            "cooldown": 0,
+            "damage": 0,
+            "id": "guard",
+            "name": "Defensa",
+            "range": 0,
+            "shield": 24,
+            "slot": "FIJA 02"
+          },
+          {
+            "cooldown": 2,
+            "damage": 30,
+            "id": "close",
+            "name": "Ataque cercano",
+            "range": 240,
+            "shield": 0,
+            "slot": "MODULAR 01"
+          },
+          {
+            "cooldown": 1,
+            "damage": 12,
+            "id": "far",
+            "name": "Ataque distante",
+            "range": 600,
+            "shield": 0,
+            "slot": "MODULAR 02"
+          }
+        ],
+        "hp": 96,
+        "id": "main",
+        "max_hp": 100,
+        "name": "Principal",
+        "next_at": 10,
+        "position": {
+          "type": "Vector2",
+          "x": 2140,
+          "y": 100
+        },
+        "ready_at": {
+          "close": 4
+        },
+        "shield": 0,
+        "speed": 10,
+        "turns": 1
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 2320,
+          "y": 130
+        },
+        "hp": 0,
+        "id": "zone_3_0",
+        "max_hp": 30,
+        "name": "Enemigo 1",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 2320,
+          "y": 130
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 8,
+        "turns": 0,
+        "zone_id": "zone_3"
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 2610,
+          "y": 360
+        },
+        "hp": 30,
+        "id": "zone_3_1",
+        "max_hp": 30,
+        "name": "Enemigo 2",
+        "next_at": 16.6666666666667,
+        "position": {
+          "type": "Vector2",
+          "x": 2610,
+          "y": 360
+        },
+        "ready_at": {
+          "enemy_hit": 2
+        },
+        "shield": 0,
+        "speed": 12,
+        "turns": 2,
+        "zone_id": "zone_3"
+      }
+    ],
+    "combat_hud_visible": true,
+    "combat_instance": 43620763192,
+    "exploration_help_visible": false,
+    "pending": {
+      "actor_id": "zone_3_1",
+      "reason": "Ataque válido de mayor daño",
+      "skill": {
+        "cooldown": 0,
+        "damage": 4,
+        "id": "enemy_hit",
+        "name": "Ataque técnico",
+        "range": 600,
+        "shield": 0,
+        "slot": "FIJA"
+      },
+      "target_id": "main"
+    },
+    "priority": "close",
+    "result": "",
+    "retained": "far",
+    "running": true,
+    "scenario": -1,
+    "scene_instance": 42849011160,
+    "world": {
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "hp": 96,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 10,
+          "position": {
+            "type": "Vector2",
+            "x": 2140,
+            "y": 100
+          },
+          "ready_at": {
+            "close": 4
+          },
+          "shield": 0,
+          "speed": 10,
+          "turns": 1
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 30,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 30,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "hp": 30,
+          "id": "zone_2_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1453.76440429688,
+            "y": 378.472412109375
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "hp": 30,
+          "id": "zone_2_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1783.9658203125,
+            "y": 179.118713378906
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "hp": 0,
+          "id": "zone_3_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_3"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "hp": 30,
+          "id": "zone_3_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 16.6666666666667,
+          "position": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "ready_at": {
+            "enemy_hit": 2
+          },
+          "shield": 0,
+          "speed": 12,
+          "turns": 2,
+          "zone_id": "zone_3"
+        }
+      ],
+      "alerted_groups": {
+        "zone_2": "pursuing"
+      },
+      "camera_x": 1126.13526133333,
+      "cleared": 0,
+      "confrontation": "Un grupo se acerca",
+      "encounters": [
+        {
+          "enemy_positions": [
+            {
+              "type": "Vector2",
+              "x": 2320,
+              "y": 130
+            },
+            {
+              "type": "Vector2",
+              "x": 2610,
+              "y": 360
+            }
+          ],
+          "hp_at_start": 100,
+          "principal_position": {
+            "type": "Vector2",
+            "x": 2140,
+            "y": 100
+          },
+          "zone": "zone_3"
+        }
+      ],
+      "obstacles": [
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 380,
+          "y": 175
+        },
+        {
+          "h": 100,
+          "type": "Rect2",
+          "w": 100,
+          "x": 1220,
+          "y": 200
+        },
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 2120,
+          "y": 140
+        }
+      ],
+      "spatial_events": [
+        {
+          "group": "zone_2",
+          "principal_position": {
+            "type": "Vector2",
+            "x": 2140,
+            "y": 100
+          },
+          "state": "pursuing"
+        }
+      ],
+      "state": "battle",
+      "visible_world": true,
+      "zone_index": 2
+    }
+  },
+  "released_far": {
+    "actions": 3,
+    "actors": [
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 18,
+            "id": "basic",
+            "name": "Ataque básico",
+            "range": 400,
+            "shield": 0,
+            "slot": "FIJA 01"
+          },
+          {
+            "cooldown": 0,
+            "damage": 0,
+            "id": "guard",
+            "name": "Defensa",
+            "range": 0,
+            "shield": 24,
+            "slot": "FIJA 02"
+          },
+          {
+            "cooldown": 2,
+            "damage": 30,
+            "id": "close",
+            "name": "Ataque cercano",
+            "range": 240,
+            "shield": 0,
+            "slot": "MODULAR 01"
+          },
+          {
+            "cooldown": 1,
+            "damage": 12,
+            "id": "far",
+            "name": "Ataque distante",
+            "range": 600,
+            "shield": 0,
+            "slot": "MODULAR 02"
+          }
+        ],
+        "hp": 92,
+        "id": "main",
+        "max_hp": 100,
+        "name": "Principal",
+        "next_at": 20,
+        "position": {
+          "type": "Vector2",
+          "x": 2140,
+          "y": 100
+        },
+        "ready_at": {
+          "close": 4
+        },
+        "shield": 0,
+        "speed": 10,
+        "turns": 2
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 2320,
+          "y": 130
+        },
+        "hp": 0,
+        "id": "zone_3_0",
+        "max_hp": 30,
+        "name": "Enemigo 1",
+        "next_at": 0,
+        "position": {
+          "type": "Vector2",
+          "x": 2320,
+          "y": 130
+        },
+        "ready_at": {},
+        "shield": 0,
+        "speed": 8,
+        "turns": 0,
+        "zone_id": "zone_3"
+      },
+      {
+        "abilities": [
+          {
+            "cooldown": 0,
+            "damage": 4,
+            "id": "enemy_hit",
+            "name": "Ataque técnico",
+            "range": 600,
+            "shield": 0,
+            "slot": "FIJA"
+          }
+        ],
+        "home": {
+          "type": "Vector2",
+          "x": 2610,
+          "y": 360
+        },
+        "hp": 30,
+        "id": "zone_3_1",
+        "max_hp": 30,
+        "name": "Enemigo 2",
+        "next_at": 16.6666666666667,
+        "position": {
+          "type": "Vector2",
+          "x": 2610,
+          "y": 360
+        },
+        "ready_at": {
+          "enemy_hit": 3
+        },
+        "shield": 0,
+        "speed": 12,
+        "turns": 2,
+        "zone_id": "zone_3"
+      }
+    ],
+    "combat_hud_visible": true,
+    "combat_instance": 43620763192,
+    "exploration_help_visible": false,
+    "pending": {
+      "actor_id": "main",
+      "reason": "Ataque válido de mayor daño",
+      "skill": {
+        "cooldown": 1,
+        "damage": 12,
+        "id": "far",
+        "name": "Ataque distante",
+        "range": 600,
+        "shield": 0,
+        "slot": "MODULAR 02"
+      },
+      "target_id": "zone_3_1"
+    },
+    "priority": "close",
+    "result": "",
+    "retained": "",
+    "running": true,
+    "scenario": -1,
+    "scene_instance": 42849011160,
+    "world": {
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "hp": 92,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 20,
+          "position": {
+            "type": "Vector2",
+            "x": 2140,
+            "y": 100
+          },
+          "ready_at": {
+            "close": 4
+          },
+          "shield": 0,
+          "speed": 10,
+          "turns": 2
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 30,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 30,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1450,
+            "y": 380
+          },
+          "hp": 30,
+          "id": "zone_2_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1453.76440429688,
+            "y": 378.472412109375
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 1780,
+            "y": 180
+          },
+          "hp": 30,
+          "id": "zone_2_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 1783.9658203125,
+            "y": 179.118713378906
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 12,
+          "turns": 0,
+          "zone_id": "zone_2"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "hp": 0,
+          "id": "zone_3_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 2320,
+            "y": 130
+          },
+          "ready_at": {},
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_3"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "home": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "hp": 30,
+          "id": "zone_3_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 16.6666666666667,
+          "position": {
+            "type": "Vector2",
+            "x": 2610,
+            "y": 360
+          },
+          "ready_at": {
+            "enemy_hit": 3
+          },
+          "shield": 0,
+          "speed": 12,
+          "turns": 2,
+          "zone_id": "zone_3"
+        }
+      ],
+      "alerted_groups": {
+        "zone_2": "pursuing"
+      },
+      "camera_x": 1768.90348483334,
+      "cleared": 0,
+      "confrontation": "Un grupo se acerca",
+      "encounters": [
+        {
+          "enemy_positions": [
+            {
+              "type": "Vector2",
+              "x": 2320,
+              "y": 130
+            },
+            {
+              "type": "Vector2",
+              "x": 2610,
+              "y": 360
+            }
+          ],
+          "hp_at_start": 100,
+          "principal_position": {
+            "type": "Vector2",
+            "x": 2140,
+            "y": 100
+          },
+          "zone": "zone_3"
+        }
+      ],
+      "obstacles": [
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 380,
+          "y": 175
+        },
+        {
+          "h": 100,
+          "type": "Rect2",
+          "w": 100,
+          "x": 1220,
+          "y": 200
+        },
+        {
+          "h": 150,
+          "type": "Rect2",
+          "w": 120,
+          "x": 2120,
+          "y": 140
+        }
+      ],
+      "spatial_events": [
+        {
+          "group": "zone_2",
+          "principal_position": {
+            "type": "Vector2",
+            "x": 2140,
+            "y": 100
+          },
+          "state": "pursuing"
+        }
+      ],
+      "state": "battle",
+      "visible_world": true,
+      "zone_index": 2
+    }
+  }
+}
