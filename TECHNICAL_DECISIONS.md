@@ -2,6 +2,14 @@
 
 Este registro cubre la base de implementación. No aprueba mecánicas de juego.
 
+## Ensamblaje · 4 octubre 2026
+
+- Controlador de borrador separado de UI. Selección y arrastre usan candidate/equip y los servicios de build existentes; payload contiene IDs, origen y copia, sin Resources mutables.
+- Biblioteca visual compartida de Resources, cargada al iniciar ejecución. Montajes normalizados por especie; componente reutilizable editor/arena. Guardado no incluye presentación.
+- Firmas de colección/habilidades/biblioteca conservan controles cuando sus datos no cambian. La apariencia solo recompone capas al cambiar configuración; mundo actualiza posiciones y culling.
+- Efectos Node2D opcionales, doce transitorios por componente y limpieza por duración/retirada. El límite no sustituye el perfilado de assets reales. Inspección de errores en snapshot().visual_assets.
+- Diagnósticos usan sesión/restauración aislada. Para arrastre, helper Viewport con button_mask porque el MCP omite ese campo de MouseMotion. Addon intacto. Evidencia y límites: ASSEMBLY_DELIVERY.md.
+
 - T-028: sustituir fila de barras por previsión temporal de siete sucesos con actores repetidos; considera carga, cola y recuperación, pero no daño ni muertes futuras.
 - T-029: aclaración del jugador: movimiento futuro automático, sin aprobar movimiento como acción ni coste ATB. Se retira esa propuesta del documento vigente.
 - T-030 RECHAZADA Y REVERTIDA: se había añadido una pantalla de preparación y variantes/Potencia sin que el jugador pidiera ese paso. Se elimina su implementación. Construir las builds corresponde al jugador; no se impone una pantalla previa al encuentro.

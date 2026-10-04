@@ -3,6 +3,7 @@ const INK := Color("eee5d3")
 const MUTED := Color("a5aa9b")
 const GOLD := Color("d4bb79")
 const TEAL := Color("86bbb0")
+const ASSEMBLY_BACKGROUND := Color("0b1711")
 
 static func underline(color: Color, fill: Color = Color.TRANSPARENT) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()

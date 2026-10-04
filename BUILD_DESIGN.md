@@ -1,4 +1,32 @@
-> Antecedente del editor. Mecánicas del prototipo en DEMO_IMPLEMENTATION.md; alcance posterior en DEMO_SCOPE.md. El usuario pidió rediseñar colección, habilidades y mods con selección + drag and drop y hacer clara la build propia de cada copia. La UX implementada no queda aprobada por este documento. Las propuestas históricas siguientes deben leerse con esas correcciones.
+# Editor de ensamblaje · contrato aprobado, 4 octubre 2026
+
+El usuario autorizó implementar el plan de ensamblaje. Objetivo: identificar la copia editada, montar mejoras y comprender el resultado. Una superficie de lectura, bestia protagonista, selector de copias, biblioteca contextual y detalle compartido. Se aplican ui-design-core, godot-ui-design y ui-visual-qa. El contenido final lo aporta el usuario.
+
+## Composición y estados
+
+Cabecera con nombre/copia/principal; tira de colección; bestia central con ocho montajes normales y dos especiales reservados; dos fijas y dos modulares debajo; biblioteca Habilidades/Mods a un lado; comparación contextual; pie Descartar/Aplicar a esta bestia. Reflow vertical en ventana estrecha. Extender Theme cálido, sin paneles anidados. Estados: vacío, seleccionado, foco, destino válido/inválido, ocupado por otra copia, pendiente/aplicado, assets ausentes y fallo de validación.
+
+## Contrato de interacción
+
+Selección de mejora y destino, o drag and drop nativo, usan el mismo controlador de borrador y validación. Destinos explícitos: soltar entre puntos no elige automáticamente. Ubicación visual sin compatibilidad anatómica. Reemplazar devuelve la instancia anterior al inventario del borrador; mover entre montajes intercambia; retirar requiere acción explícita. Soltar fuera/Escape cancela. Mod equipado en otra copia indica propietaria y se bloquea hasta retirarlo/aplicarlo allí. Modulares reutilizables entre copias, sin duplicarlas en la misma bestia.
+
+Cambiar copia, cerrar o elegir principal con cambios pendientes ofrece Aplicar/Descartar/Seguir editando. Un fallo conserva el borrador. Tab/Mayús+Tab/flechas/Enter/Escape y botón Retirar. Edición fuera de combate, exploración pausada; sin curación ni reinicio de reutilizaciones por aplicación. Edición no selecciona principal.
+
+## Presentación e ingesta
+
+Resources por ID de definición de bestia/habilidad/mod, separados de estado mutable: imágenes, representación de editor/mundo, diez anclajes normalizados por especie, escala/orientación/orden y efectos opcionales de montaje, persistencia, ejecución e impacto. Cada contexto puede tener anclajes propios. El editor presenta borrador; mundo/combate presentan build aplicada. Retirar/descartar elimina capas correspondientes. Efecto de montaje una vez por cambio aceptado; efectos de acciones por eventos, sin cambiar reglas/tiempos.
+
+Assets recibidos con ID, ruta, revisión, procedencia y aprobación; biblioteca visual editable en Inspector, sin cambiar código por imagen. Ausencia permite representación técnica textual; tipos inválidos se diagnostican sin spam. No importar archivos arbitrarios desde la UI del jugador. Guardado sigue con IDs/ranuras, sin texturas/coordenadas de interfaz. Efectos acotados y capas estáticas sin proceso propio.
+
+## Aceptación
+
+Pruebas: copias independientes, equivalencia selección/arrastre, reemplazo/intercambio/retiro/cancelación, duplicados/propiedad, cambios pendientes, estado persistente y marcas, recursos ausentes/invalidos/completos, capas y efectos, consistencia editor/mundo y regresión mecánica. Probe MCP antes de runtime; revisión de render amplio/1018×696/estrecho con tamaños reales. Tres repeticiones de apertura/actualización, veinte reaperturas y efectos activos; comparar p95, nodos/recursos/memoria, no sumar scopes anidados. Corregir/justificar regresión >10 %. Presentación artística final pendiente de recibir assets.
+
+## Antecedente histórico
+
+Estado de implementación y evidencia: [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md). El sistema de ensamblaje está implementado con representación técnica; integración y aceptación artística pendientes de assets del usuario.
+
+Las secciones siguientes conservan la propuesta de octubre 3; quedan subordinadas al contrato anterior y DEMO_SCOPE.md.
 
 # Vitmorph — diseño de builds e interfaz, revisión 01
 

@@ -1,0 +1,1297 @@
+{
+  "assembly_regression_final": {
+    "run_demo_checks": {
+      "checks": [
+        {
+          "name": "catalog references",
+          "passed": true
+        },
+        {
+          "name": "initial library",
+          "passed": true
+        },
+        {
+          "name": "slot structure",
+          "passed": true
+        },
+        {
+          "name": "normal equipped",
+          "passed": true
+        },
+        {
+          "name": "basic range",
+          "passed": true
+        },
+        {
+          "name": "guard unaffected",
+          "passed": true
+        },
+        {
+          "name": "close range",
+          "passed": true
+        },
+        {
+          "name": "far range",
+          "passed": true
+        },
+        {
+          "name": "definition untouched",
+          "passed": true
+        },
+        {
+          "name": "duplicate modular rejected",
+          "passed": true
+        },
+        {
+          "name": "duplicate instance rejected",
+          "passed": true
+        },
+        {
+          "name": "locked modular rejected",
+          "passed": true
+        },
+        {
+          "name": "swap accepted",
+          "passed": true
+        },
+        {
+          "name": "swap marks and health",
+          "passed": true
+        },
+        {
+          "name": "removed marks clear",
+          "passed": true
+        },
+        {
+          "name": "unequipped cooldown kept",
+          "passed": true
+        },
+        {
+          "name": "combat locks builds",
+          "passed": true
+        },
+        {
+          "name": "combat locks main",
+          "passed": true
+        },
+        {
+          "name": "select copied main",
+          "passed": true
+        },
+        {
+          "name": "individual identity and state",
+          "passed": true
+        }
+      ],
+      "count": 20,
+      "failures": [],
+      "passed": true
+    },
+    "run_combat_demo_checks": {
+      "checks": [
+        {
+          "name": "ATB arrival and action",
+          "passed": true
+        },
+        {
+          "name": "impact exact",
+          "passed": true
+        },
+        {
+          "name": "stable waiting actor dispatched",
+          "passed": true
+        },
+        {
+          "name": "dot first pulse",
+          "passed": true
+        },
+        {
+          "name": "dot reapply preserves cadence",
+          "passed": true
+        },
+        {
+          "name": "dot second pulse",
+          "passed": true
+        },
+        {
+          "name": "dot through shared protection",
+          "passed": true
+        },
+        {
+          "name": "dot extended final pulse and expiry",
+          "passed": true
+        },
+        {
+          "name": "slow retains accumulated charge",
+          "passed": true
+        },
+        {
+          "name": "slow expiry and future arrival",
+          "passed": true
+        },
+        {
+          "name": "forecast repeated sequence",
+          "passed": true
+        },
+        {
+          "name": "forecast accounts expiry",
+          "passed": true
+        },
+        {
+          "name": "large delta action parity",
+          "passed": true
+        },
+        {
+          "name": "large delta charge parity",
+          "passed": true
+        },
+        {
+          "name": "team targeting independent of ID",
+          "passed": true
+        },
+        {
+          "name": "valid priority",
+          "passed": true
+        },
+        {
+          "name": "retain beats priority",
+          "passed": true
+        },
+        {
+          "name": "invalid priority fallback",
+          "passed": true
+        },
+        {
+          "name": "priority becomes valid",
+          "passed": true
+        },
+        {
+          "name": "defense threshold",
+          "passed": true
+        },
+        {
+          "name": "no valid loses opportunity",
+          "passed": true
+        },
+        {
+          "name": "AI control advanced charge",
+          "passed": true
+        },
+        {
+          "name": "AI avoids equivalent control",
+          "passed": true
+        },
+        {
+          "name": "periodic death resolves encounter",
+          "passed": true
+        }
+      ],
+      "count": 24,
+      "failures": [],
+      "passed": true
+    },
+    "run_copy_demo_checks": {
+      "checks": [
+        {
+          "name": "copy above threshold rejected",
+          "passed": true
+        },
+        {
+          "name": "copy request accepted",
+          "passed": true
+        },
+        {
+          "name": "second request rejected",
+          "passed": true
+        },
+        {
+          "name": "pending cancellable",
+          "passed": true
+        },
+        {
+          "name": "support replaces skill opportunity",
+          "passed": true
+        },
+        {
+          "name": "process begins on resolution",
+          "passed": true
+        },
+        {
+          "name": "combat continuous before completion",
+          "passed": true
+        },
+        {
+          "name": "copy success and live withdrawal",
+          "passed": true
+        },
+        {
+          "name": "last withdrawal wins",
+          "passed": true
+        },
+        {
+          "name": "unlocks deduplicated library",
+          "passed": true
+        },
+        {
+          "name": "copy starts clean",
+          "passed": true
+        },
+        {
+          "name": "unique owned identity",
+          "passed": true
+        },
+        {
+          "name": "repeat acquires new instance no library duplicate",
+          "passed": true
+        },
+        {
+          "name": "dispatch revalidates uses ordinary opportunity",
+          "passed": true
+        },
+        {
+          "name": "due damage before simultaneous completion",
+          "passed": true
+        },
+        {
+          "name": "failed copy explained",
+          "passed": true
+        },
+        {
+          "name": "main defeat fails process",
+          "passed": true
+        }
+      ],
+      "count": 17,
+      "failures": [],
+      "passed": true
+    },
+    "run_save_demo_checks": {
+      "checks": [
+        {
+          "name": "snapshot references valid",
+          "passed": true
+        },
+        {
+          "name": "checkpoint queued",
+          "passed": true
+        },
+        {
+          "name": "write confirmed",
+          "passed": true
+        },
+        {
+          "name": "JSON roundtrip valid",
+          "passed": true
+        },
+        {
+          "name": "last valid backup retained",
+          "passed": true
+        },
+        {
+          "name": "corrupt main uses valid backup",
+          "passed": true
+        },
+        {
+          "name": "repair preserves usable backup",
+          "passed": true
+        },
+        {
+          "name": "latest write wins",
+          "passed": true
+        },
+        {
+          "name": "unknown definition rejected",
+          "passed": true
+        },
+        {
+          "name": "invalid saved build rejected",
+          "passed": true
+        },
+        {
+          "name": "invalid coordinates rejected",
+          "passed": true
+        },
+        {
+          "name": "copy retained in session",
+          "passed": true
+        },
+        {
+          "name": "restore pre encounter reverts copy",
+          "passed": true
+        },
+        {
+          "name": "restore keeps HP state",
+          "passed": true
+        },
+        {
+          "name": "write failure never reports saved",
+          "passed": true
+        },
+        {
+          "name": "incompatible schema preserves file",
+          "passed": true
+        },
+        {
+          "name": "incompatible not silently overwritten",
+          "passed": true
+        },
+        {
+          "name": "refuge rest valid",
+          "passed": true
+        },
+        {
+          "name": "rest discards pending battle copy",
+          "passed": true
+        },
+        {
+          "name": "rest resets health and encounters",
+          "passed": true
+        },
+        {
+          "name": "three milestones complete demo",
+          "passed": true
+        },
+        {
+          "name": "rest preserves completion and library",
+          "passed": true
+        },
+        {
+          "name": "continuous world ready after rest",
+          "passed": true
+        },
+        {
+          "name": "resolved defeat keeps collection in world controller",
+          "passed": true
+        },
+        {
+          "name": "resolved defeat returns refuge and resets groups",
+          "passed": true
+        }
+      ],
+      "count": 25,
+      "failures": [],
+      "passed": true
+    },
+    "run_journey_checks": {
+      "checks": [
+        {
+          "name": "new game applies build",
+          "passed": true
+        },
+        {
+          "name": "natural damage reaches copy eligibility",
+          "passed": true
+        },
+        {
+          "name": "new game completes copy",
+          "passed": true
+        },
+        {
+          "name": "copied library incorporated",
+          "passed": true
+        },
+        {
+          "name": "new modular used in actual decisions",
+          "passed": true
+        },
+        {
+          "name": "final encounter beaten",
+          "passed": true
+        },
+        {
+          "name": "full demo milestone cycle",
+          "passed": true
+        },
+        {
+          "name": "completed session restored",
+          "passed": true
+        },
+        {
+          "name": "resolved defeat preserves acquired copies",
+          "passed": true
+        },
+        {
+          "name": "refuge recovery retains builds",
+          "passed": true
+        }
+      ],
+      "count": 10,
+      "failures": [],
+      "passed": true
+    },
+    "run_edge_checks": {
+      "checks": [
+        {
+          "name": "percentage contributions add once",
+          "passed": true
+        },
+        {
+          "name": "second build remains intact",
+          "passed": true
+        },
+        {
+          "name": "catalog remains intact",
+          "passed": true
+        },
+        {
+          "name": "apply valid multiple instances",
+          "passed": true
+        },
+        {
+          "name": "owned modifier cannot equip twice across beasts",
+          "passed": true
+        },
+        {
+          "name": "fixed skills cannot replace",
+          "passed": true
+        },
+        {
+          "name": "slot limits enforced",
+          "passed": true
+        },
+        {
+          "name": "commands do not cancel begun action",
+          "passed": true
+        },
+        {
+          "name": "retained begun action still resolves",
+          "passed": true
+        },
+        {
+          "name": "next choice uses new priority",
+          "passed": true
+        },
+        {
+          "name": "slow preserves registered arrival",
+          "passed": true
+        },
+        {
+          "name": "reapply preserves stronger intensity and extends",
+          "passed": true
+        },
+        {
+          "name": "overkill capped stable skill order",
+          "passed": true
+        },
+        {
+          "name": "target tie stable order",
+          "passed": true
+        },
+        {
+          "name": "obstacles constrain world movement",
+          "passed": true
+        },
+        {
+          "name": "states clean at encounter end",
+          "passed": true
+        }
+      ],
+      "count": 16,
+      "failures": [],
+      "passed": true
+    },
+    "run_assembly_checks": {
+      "checks": [
+        {
+          "name": "copies independent",
+          "passed": true
+        },
+        {
+          "name": "click equips draft",
+          "passed": true
+        },
+        {
+          "name": "draft not applied",
+          "passed": true
+        },
+        {
+          "name": "drop equivalent",
+          "passed": true
+        },
+        {
+          "name": "invalid drop leaves draft",
+          "passed": true
+        },
+        {
+          "name": "wrong copy rejected",
+          "passed": true
+        },
+        {
+          "name": "duplicate instance rejected",
+          "passed": true
+        },
+        {
+          "name": "move mount",
+          "passed": true
+        },
+        {
+          "name": "swap occupied mounts",
+          "passed": true
+        },
+        {
+          "name": "remove explicit",
+          "passed": true
+        },
+        {
+          "name": "duplicate modular rejected",
+          "passed": true
+        },
+        {
+          "name": "move modular swaps",
+          "passed": true
+        },
+        {
+          "name": "apply draft",
+          "passed": true
+        },
+        {
+          "name": "state and marks persist",
+          "passed": true
+        },
+        {
+          "name": "editing does not select principal",
+          "passed": true
+        },
+        {
+          "name": "other copy owns instance",
+          "passed": true
+        },
+        {
+          "name": "combat locks editing",
+          "passed": true
+        },
+        {
+          "name": "missing assets safe",
+          "passed": true
+        },
+        {
+          "name": "invalid references diagnosed",
+          "passed": true
+        },
+        {
+          "name": "invalid transforms excluded",
+          "passed": true
+        },
+        {
+          "name": "invalid effect duration excluded",
+          "passed": true
+        },
+        {
+          "name": "save contains no presentation",
+          "passed": true
+        }
+      ],
+      "count": 22,
+      "failures": [],
+      "passed": true
+    }
+  },
+  "assembly_editor_checks_final": {
+    "checks": [
+      {
+        "name": "switch with dirty build offers decision",
+        "passed": true
+      },
+      {
+        "name": "apply failure retains draft and decision",
+        "passed": true
+      },
+      {
+        "name": "discard switch leaves first copy intact",
+        "passed": true
+      },
+      {
+        "name": "principal switch awaits decision",
+        "passed": true
+      },
+      {
+        "name": "apply then explicitly choose principal",
+        "passed": true
+      },
+      {
+        "name": "dirty close keeps exploration paused",
+        "passed": true
+      },
+      {
+        "name": "continue editing keeps draft",
+        "passed": true
+      },
+      {
+        "name": "clean close restores exploration",
+        "passed": true
+      },
+      {
+        "name": "reopen applied build",
+        "passed": true
+      }
+    ],
+    "count": 9,
+    "passed": true,
+    "running": false
+  },
+  "assembly_visual_checks_final": {
+    "checks": [
+      {
+        "name": "complete typed presentation resources",
+        "passed": true
+      },
+      {
+        "name": "layer and persistent effect mounted behind body",
+        "passed": true
+      },
+      {
+        "name": "mount burst once",
+        "passed": true
+      },
+      {
+        "name": "execution and impact from mod",
+        "passed": true
+      },
+      {
+        "name": "range mod effect excludes own defense",
+        "passed": true
+      },
+      {
+        "name": "transient effects bounded",
+        "passed": true
+      },
+      {
+        "name": "transient effects released",
+        "passed": true
+      },
+      {
+        "name": "removal clears persistent visuals",
+        "passed": true
+      },
+      {
+        "name": "world uses applied build while editor previews draft",
+        "passed": true
+      },
+      {
+        "name": "world assets and layers instantiated",
+        "passed": true
+      },
+      {
+        "name": "discard restores preview to applied build",
+        "passed": true
+      }
+    ],
+    "count": 11,
+    "limits": "In-memory empty texture and Node2D fixtures; no user art supplied or generated.",
+    "passed": true,
+    "running": false
+  },
+  "assembly_compare_final": {
+    "after": [
+      {
+        "open_cpu_usec": 21373,
+        "update_cpu_usec": 28170
+      },
+      {
+        "open_cpu_usec": 21157,
+        "update_cpu_usec": 29300
+      },
+      {
+        "open_cpu_usec": 21773,
+        "update_cpu_usec": 26927
+      }
+    ],
+    "before": [
+      {
+        "open_cpu_usec": 25127,
+        "update_cpu_usec": 28302
+      },
+      {
+        "open_cpu_usec": 24774,
+        "update_cpu_usec": 25932
+      },
+      {
+        "open_cpu_usec": 21252,
+        "update_cpu_usec": 29287
+      }
+    ],
+    "limits": "New editor includes hero, ten body controls and pending-change handling. CPU synchronous only; layouts settle outside timers. Updates compare direct draft mutation + old render against new validated drop + render.",
+    "running": false,
+    "source": "82d8e1a:ui/build_editor.gd copied unchanged to ignored .codex for comparison; identical isolated session with two copies, four library skills and two mods. First warm pair excluded."
+  },
+  "assembly_cycles_final": {
+    "cycles": [
+      {
+        "index": 0,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71460644,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 28700,
+        "update_cpu_usec": 69821
+      },
+      {
+        "index": 1,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71462428,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 23008,
+        "update_cpu_usec": 58382
+      },
+      {
+        "index": 2,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71464132,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 31165,
+        "update_cpu_usec": 70707
+      },
+      {
+        "index": 3,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71465860,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 33745,
+        "update_cpu_usec": 76568
+      },
+      {
+        "index": 4,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71467612,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 26069,
+        "update_cpu_usec": 69525
+      },
+      {
+        "index": 5,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71469316,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 21392,
+        "update_cpu_usec": 53661
+      },
+      {
+        "index": 6,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71471092,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 26918,
+        "update_cpu_usec": 59312
+      },
+      {
+        "index": 7,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71472796,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 20204,
+        "update_cpu_usec": 51885
+      },
+      {
+        "index": 8,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71474500,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 25259,
+        "update_cpu_usec": 54257
+      },
+      {
+        "index": 9,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71476300,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 22243,
+        "update_cpu_usec": 51535
+      },
+      {
+        "index": 10,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71478004,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 20685,
+        "update_cpu_usec": 54503
+      },
+      {
+        "index": 11,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71479708,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 22057,
+        "update_cpu_usec": 53859
+      },
+      {
+        "index": 12,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71481412,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 23230,
+        "update_cpu_usec": 53015
+      },
+      {
+        "index": 13,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71483260,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 20848,
+        "update_cpu_usec": 53504
+      },
+      {
+        "index": 14,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71486836,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 24671,
+        "update_cpu_usec": 51668
+      },
+      {
+        "index": 15,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71486668,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 23172,
+        "update_cpu_usec": 53278
+      },
+      {
+        "index": 16,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71488372,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 23434,
+        "update_cpu_usec": 52709
+      },
+      {
+        "index": 17,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71490076,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 21694,
+        "update_cpu_usec": 54780
+      },
+      {
+        "index": 18,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71491780,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 21971,
+        "update_cpu_usec": 55304
+      },
+      {
+        "index": 19,
+        "monitors": {
+          "draw_calls": 123,
+          "engine_memory_bytes": 71495612,
+          "nodes": 148,
+          "objects": 2089,
+          "orphan_nodes": 0,
+          "primitives": 4438,
+          "render_buffer_bytes": 8619418,
+          "resources": 67,
+          "texture_bytes": 7066517,
+          "video_memory_bytes": 15685935
+        },
+        "open_cpu_usec": 24317,
+        "update_cpu_usec": 55102
+      }
+    ],
+    "limits": "CPU includes synchronous render work; frames awaited separately; compare same warmed view. Not GPU time or OS RAM.",
+    "open_cpu": {
+      "max": 33745,
+      "mean": 24239.1,
+      "p50": 23172,
+      "p95": 31165,
+      "p99": 33745
+    },
+    "passed": true,
+    "running": false,
+    "update_cpu": {
+      "max": 76568,
+      "mean": 57668.75,
+      "p50": 54257,
+      "p95": 70707,
+      "p99": 76568
+    }
+  },
+  "assembly_drag_final": {
+    "after": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "range_1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "applied": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "before": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "cancelled": false,
+    "method": "Actual Viewport mouse events with held button mask; configured MCP calls this isolated test helper. MCP input_simulate omits MouseMotion.button_mask.",
+    "native_drag_started": true,
+    "outside": false,
+    "running": false
+  },
+  "assembly_cancel_final": {
+    "after": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "range_1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "applied": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "before": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "range_1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "cancelled": true,
+    "method": "Actual Viewport mouse events with held button mask; configured MCP calls this isolated test helper. MCP input_simulate omits MouseMotion.button_mask.",
+    "native_drag_started": true,
+    "outside": false,
+    "running": false
+  },
+  "assembly_outside_final": {
+    "after": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "range_1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "applied": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "before": {
+      "modular": [
+        "close",
+        "far"
+      ],
+      "normal": [
+        "range_1",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "special": [
+        "",
+        ""
+      ]
+    },
+    "cancelled": false,
+    "method": "Actual Viewport mouse events with held button mask; configured MCP calls this isolated test helper. MCP input_simulate omits MouseMotion.button_mask.",
+    "native_drag_started": true,
+    "outside": true,
+    "running": false
+  },
+  "runtime_log_after_focus_fix": {
+    "error_lines": 0,
+    "after": [
+      "editor",
+      "presentation",
+      "20 cycles"
+    ]
+  },
+  "keyboard_observed": {
+    "method": "MCP input_simulate",
+    "keys": [
+      "Shift+Tab",
+      "Enter"
+    ],
+    "decision": "discard and continue copy change",
+    "selected_copy": "copy_000002",
+    "principal_unchanged": "copy_000001"
+  }
+}

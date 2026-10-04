@@ -4,6 +4,8 @@ Actualizado: 4 octubre 2026. Alcance vigente: [DEMO_SCOPE.md](DEMO_SCOPE.md). Es
 
 ## Reglas
 
+El ensamblaje técnico ya admite recursos de presentación editables. Pasos de integración y campos exactos: [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md). La biblioteca `data/visual_library.tres` está vacía; esta entrega no registra imágenes ni efectos finales recibidos.
+
 - Todos los assets los aporta el usuario. No generar imágenes ni inventar contenido final.
 - Refugio amplio, con personajes y acceso a otra instancia. Historia única, sin ramificaciones.
 - El usuario decide contenido y arte final. La dirección de referencia sigue siendo Fábula Moderna Simplificada; referencias piloto no son assets integrados.
@@ -37,6 +39,8 @@ Estado inicial de todas las familias: **POR DEFINIR**. Las cantidades se cierran
 | CPY-01 | Proceso de copia | Familia reutilizable; variantes pendientes | Dirección visual del proceso |
 | CPY-02 | Éxito, fallo y retirada | Según presentación aprobada | Diferenciar copia y muerte |
 | MOD-01 | Iconos de modificadores normales | Por tipo incluido | Ocho ranuras no exigen ocho tipos de mod |
+| MOD-03 | Capa montada sobre bestia | Por mod que requiera representación | Transparencia, tamaño relativo y orden delante/detrás |
+| MOD-04 | Efecto de montaje y efectos persistentes/acción/impacto opcionales | Por familia aprobada | Escena Node2D, duración, coste y legibilidad; no inventar un efecto para cada mod |
 | MOD-02 | Modificadores especiales | Sin solicitud de efectos por ahora | Sus reglas aún no están definidas |
 
 ### Mapa exterior y refugio
@@ -91,6 +95,12 @@ Estado inicial de todas las familias: **POR DEFINIR**. Las cantidades se cierran
 | AUD-09 | Resultados y cierre | Pendiente | Tratamiento audiovisual del final |
 
 ## Ficha de entrega por asset concreto
+
+### Contrato de ingesta del ensamblaje
+
+Biblioteca `data/visual_library.tres`, con entradas Resource basadas en `data/visual_asset.gd`. Por definición: kind (beast/skill/modifier), definition_id, revision, source_note y approval. Referencias opcionales icon/body/world_body/mounted_layer; equip_effect/persistent_effect/execution_effect/impact_effect y duración de efecto breve. Los efectos son escenas Node2D. Anclajes de bestia: diez posiciones normalizadas (ocho normales y dos especiales), editor y mundo, escala/orientación/z por punto. No son reglas anatómicas. La imagen de biblioteca puede diferir de la capa montada. Sin assets, el fallback es técnico y explícito. Los Resources no contienen builds de copias ni se guardan en JSON.
+
+Crear cada entrada desde el Inspector, añadirla a entries de la biblioteca y registrar aquí procedencia/ruta/revisión/aprobación. Los archivos recibidos no se dan por aprobados automáticamente; no se ha aportado una muestra artística en este bloque.
 
 Registrar:
 

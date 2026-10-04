@@ -65,6 +65,7 @@ func _ready() -> void:
 	build_screen()
 	editor = preload("res://ui/build_editor.gd").new()
 	editor.session = session
+	editor.visuals=arena.visuals
 	add_child(editor)
 	editor.closed.connect(func():route.menu_paused=false;route.held_keys.clear();build_button.grab_focus())
 	editor.applied.connect(on_build_applied)
@@ -75,6 +76,7 @@ func _ready() -> void:
 			copy_notice=combat.copy_service.message; copy_notice_seconds=8.0
 		refresh())
 	combat.action_executed.connect(func(action):
+		arena.show_impact(action)
 		if combat.actor_by_id(action.actor_id).get("is_principal",false) and not action.skill.is_empty() and action.get("kind","")!="copy": session.record_skill(action.skill.id))
 	combat.state_changed.connect(refresh)
 	combat.action_chosen.connect(on_action)
@@ -489,6 +491,7 @@ func snapshot() -> Dictionary:
 	report["session"] = session.export_data()
 	report["save"] = {"status":save_service.status,"confirmed":save_service.confirmed,"requested":save_service.sequence,"last_write_usec":save_service.last_write_usec,"diagnostic_profile":diagnostic_mode}
 	report["editor"] = {"visible":editor.visible,"exploration_paused":route.menu_paused,"draft":editor.draft.duplicate(true)}
+	report["visual_assets"] = {"registered":arena.visuals.entries.size(),"issues":arena.visuals.issues.duplicate()}
 	report["world"] = route.snapshot()
 	report["forecast"] = combat.forecast(7)
 	report["performance"] = {"fps": Performance.get_monitor(Performance.TIME_FPS), "process_ms": Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0, "forecast_updates": atb_strip.forecast_updates}
@@ -520,6 +523,22 @@ func run_journey_checks() -> Dictionary:
 func run_edge_checks() -> Dictionary:
 	return preload("res://tests/demo_edges.gd").new().run()
 
+func run_assembly_checks() -> Dictionary:
+	return preload("res://tests/assembly_checks.gd").new().run()
+
+func assembly_diagnostics(mode: String) -> void:
+	var previous:=get_node_or_null("AssemblyDiagnostics")
+	if previous!=null: previous.free()
+	var driver:=preload("res://tests/assembly_runtime.gd").new()
+	driver.name="AssemblyDiagnostics";add_child(driver)
+	match mode:
+		"begin": driver.begin(self)
+		"cycles": driver.cycles(self)
+		"presentation": driver.presentation(self)
+		"editor": driver.editor_contract(self)
+		"compare": driver.compare_legacy(self)
+		"effects": driver.effects_profile(self)
+
 func start_runtime_cycles() -> void:
 	var previous := get_node_or_null("RuntimeCycles")
 	if previous!=null: previous.free()
@@ -550,6 +569,7 @@ func benchmark_fixture(actions: bool) -> void:
 	refresh()
 
 func open_build(collection_mode: bool) -> void:
+	if editor.visible: return
 	if combat.running or route.state != "travelling" or not route.visible_world: return
 	session.sync_actor(route.actors[0],combat.priority,combat.retained)
 	route.menu_paused = true
@@ -563,6 +583,7 @@ func on_build_applied() -> void:
 	combat.actors.append(route.actors[0])
 	combat.priority = session.principal().priority
 	combat.retained = session.principal().retained
+	arena.sync_visuals(true)
 	create_checkpoint()
 	refresh()
 

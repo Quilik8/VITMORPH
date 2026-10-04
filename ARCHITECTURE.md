@@ -2,6 +2,10 @@
 
 # Arquitectura del prototipo de combate
 
+## Ensamblaje actual
+
+El editor usa systems/build_draft.gd para estado de borrador y operaciones validadas. ui/assembly_item.gd adapta selección/arrastre nativo; ui/build_editor.gd compone selector, cuerpo, biblioteca y decisiones. data/visual_asset.gd y visual_library.tres definen presentación sin estado de colección; systems/visual_catalog.gd verifica referencias y ui/beast_visual.gd presenta borrador o build aplicada en editor/arena. Eventos de combate disparan efectos opcionales. Detalle y contratos de ingesta en ASSEMBLY_DELIVERY.md.
+
 ## Flujo
 
 scenes/main.tscn contiene un Control raíz con ui/combat_screen.gd. La pantalla crea el HUD mediante Containers, un Theme común y un único nodo Combat. El motor no conoce los botones ni la presentación.

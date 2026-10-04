@@ -1,4 +1,6 @@
 extends Control
+var visuals: RefCounted=preload("res://systems/visual_catalog.gd").new()
+var actor_visuals: Dictionary={}
 var profile: Node
 ## Campo 2D y siluetas geométricas de prueba; no son criaturas ni arte final.
 var combat: Node
@@ -62,6 +64,7 @@ func _ready() -> void:
 	anticipation_arc.name = "AnticipationArc"
 	add_child(anticipation_arc)
 	route.world_rebuilt.connect(ground.queue_redraw)
+	route.world_rebuilt.connect(func():sync_visuals(true))
 	resized.connect(func(): ground.queue_redraw(); queue_redraw())
 
 func polygon_mesh(points: PackedVector2Array) -> ArrayMesh:
@@ -88,7 +91,33 @@ func recycle_popup(popup: Dictionary) -> void:
 
 func show_action(value: Dictionary) -> void:
 	action = value.duplicate(true)
+	sync_visuals()
+	if actor_visuals.has(value.actor_id) and not value.skill.is_empty(): actor_visuals[value.actor_id].play_skill(value.skill.id)
 	queue_redraw()
+
+func show_impact(value: Dictionary) -> void:
+	if value.skill.is_empty() or not actor_visuals.has(value.actor_id): return
+	var target: Dictionary=combat.actor_by_id(value.target_id)
+	if target.is_empty() or target.get("retired",false): return
+	actor_visuals[value.actor_id].play_skill(value.skill.id,true,screen_actor(target)-actor_visuals[value.actor_id].position)
+
+func sync_visuals(update_build := false) -> void:
+	if visuals.entries.is_empty() and actor_visuals.is_empty(): return
+	var actors: Array=route.actors if route!=null and route.visible_world else combat.actors
+	var active: Dictionary={}
+	for actor in actors:
+		if actor.get("retired",false): continue
+		active[actor.id]=true
+		if not actor_visuals.has(actor.id):
+			var view:=preload("res://ui/beast_visual.gd").new()
+			view.visuals=visuals;view.catalog=route.session.catalog;add_child(view);actor_visuals[actor.id]=view
+			view.configure(actor.get("definition_id",""),actor.get("build",{}),route.session.inventory,Vector2(70,76),true)
+		var view: Node2D=actor_visuals[actor.id]
+		if update_build: view.configure(actor.get("definition_id",""),actor.get("build",{}),route.session.inventory,Vector2(70,76),true)
+		view.position=screen_actor(actor)
+		view.visible=view.position.x>=-120 and view.position.x<=size.x+120 and view.position.y>=-120 and view.position.y<=size.y+120
+	for id in actor_visuals.keys():
+		if not active.has(id): actor_visuals[id].queue_free();actor_visuals.erase(id)
 
 func flash(id: String, damage: int, absorbed: int) -> void:
 	var caption := "−%d" % damage
@@ -110,6 +139,7 @@ func _process(delta: float) -> void:
 		profile.record("ui/arena_view.gd:_process", Time.get_ticks_usec() - stamp)
 
 func _process_body(delta: float) -> void:
+	sync_visuals()
 	if combat.running and not combat.pending.is_empty() and not combat.resolved:
 		var actor: Dictionary = combat.actor_by_id(combat.pending.actor_id)
 		anticipation_arc.update_progress(screen_actor(actor), clampf(combat.elapsed / combat.resolve_seconds, 0.0, 1.0))
@@ -216,7 +246,8 @@ func _draw_body() -> void:
 			draw_polyline(PackedVector2Array([base+Vector2(-6,-86), base+Vector2(0,-80), base+Vector2(6,-86)]), INK, 2.0)
 		if acting:
 			draw_mesh(footprint_mesh, null, Transform2D(0.0, base), MAIN)
-		draw_mesh(main_mesh if actor.get("is_principal",false) else enemy_mesh, null, Transform2D(0.0, center), color)
+		if not actor_visuals.has(actor.id) or not actor_visuals[actor.id].has_body():
+			draw_mesh(main_mesh if actor.get("is_principal",false) else enemy_mesh, null, Transform2D(0.0, center), color)
 		if combat.running:
 			if actor.shield > 0:
 				draw_mesh(shield_mesh, null, Transform2D(0.0, center), Color("86bbb0"))

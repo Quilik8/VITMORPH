@@ -2,7 +2,7 @@
 
 ## Estado y documentos para continuar
 
-Estamos construyendo los sistemas de una demo que incorporará assets aportados por el usuario. 0.7.0 es el prototipo técnico recuperable. La UI de builds/colección y el primer mapa requieren replanteamiento. El refugio será grande, con personajes y acceso a otra instancia; historia única sin ramificaciones.
+Estamos construyendo los sistemas de una demo que incorporará assets aportados por el usuario. 0.7.0 es el prototipo técnico recuperable. El nuevo editor de ensamblaje ya integra colección, habilidades, montajes sobre la bestia y selección/arrastre; su presentación artística espera assets. El primer mapa y el refugio requieren sus propios bloques: refugio grande con personajes y acceso a otra instancia; historia única sin ramificaciones.
 
 Leer primero [DEMO_SCOPE.md](DEMO_SCOPE.md) y [ASSET_REQUESTS.md](ASSET_REQUESTS.md). El primero registra las correcciones vigentes y los pendientes; el segundo contiene inventario de assets, fichas de entrega, estados y registro de recepción. Los apartados siguientes describen la base técnica existente.
 
@@ -13,11 +13,13 @@ Demo técnica jugable con el ciclo **build → explorar → combatir → copiar 
 
 ## Jugar
 
-Ejecuta `dist/Vitmorph.exe` o abre `project.godot` con Godot **4.7.2** y pulsa F5. La exportación local usa plantillas oficiales de esa misma versión.
+Para probar el nuevo ensamblaje abre `project.godot` con Godot **4.7.2** y pulsa F5. El ejecutable local `dist/Vitmorph.exe` corresponde al prototipo anterior 0.7.0; este bloque no lo reexportó.
 WASD/flechas: explorar. B: builds. C: colección. E: descansar en refugio. En batalla: 1–4, P, R y X para solicitar copia del objetivo seleccionado. Tab/Mayús+Tab/flechas/Enter/Escape: interfaz.
 El editor es voluntario y pausa únicamente exploración; no hay pantalla de preparación ni cambio de escena al combatir.
 
 Guía completa: [DEMO_GUIDE.md](DEMO_GUIDE.md). Contrato aprobado: [DEMO_IMPLEMENTATION.md](DEMO_IMPLEMENTATION.md). Evidencia y límites: [DEMO_DELIVERY.md](DEMO_DELIVERY.md).
+
+Editor actual, controles, incorporación de assets y evidencia: [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md). Diseño aprobado: [BUILD_DESIGN.md](BUILD_DESIGN.md).
 
 ## Godot MCP
 

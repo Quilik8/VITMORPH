@@ -1,5 +1,14 @@
 # Registro de cambios
 
+## Editor de ensamblaje · 4 octubre 2026
+
+- Sustituida la UI de builds/colección por una superficie centrada en la copia editada: selector integrado, diez anclajes corporales, habilidades debajo, biblioteca y comparación contextual. Conservado Theme cálido; reflow vertical con desplazamiento y foco en ventana estrecha.
+- Controlador de borrador común para selección y arrastre nativo: reemplazo, movimiento/intercambio, retiro explícito, cancelación, bloqueo de instancias ocupadas y rechazo de modulares duplicadas. Aplicar/Descartar/Seguir editando al cambiar copia, cerrar o elegir principal.
+- Resources de presentación por ID y componente compartido editor/mundo/combate para imágenes, capas y efectos opcionales. Catálogo visual vacío hasta recibir assets; guardado permanece basado en IDs. Referencias inválidas diagnosticadas; efectos temporales limitados y liberados.
+- 112 comprobaciones mecánicas vigentes, 22 de ensamblaje, nueve de flujo de editor y once de presentación aprobadas; arrastre y teclado observados mediante MCP. Las 33 comprobaciones históricas no se cuentan.
+- Reutilización de controles sin cambios para evitar reconstrucciones completas. Tres pares de apertura/actualización, tres capturas de intervalos, veinte reaperturas y tres pruebas de infraestructura de efectos registrados en tests/evidence. Informe y límites en ASSEMBLY_DELIVERY.md.
+- Conservado checkpoint-v0.7.0; este bloque modifica el proyecto, no reexporta el ejecutable anterior. Integración artística real y evaluación del usuario pendientes. Sin imágenes generadas ni ampliación de mapa/refugio/historia.
+
 ## Diseño posterior a 0.7.0 · 4 octubre 2026
 
 - Registrada corrección del usuario: refugio grande con personajes, cercano a una ciudad y entrada a otra instancia; historia única sin ramificaciones.

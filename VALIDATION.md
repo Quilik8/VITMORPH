@@ -1,5 +1,11 @@
 # Validación de la primera prueba de combate
 
+## Editor de ensamblaje · 4 octubre 2026
+
+Probe de lectura MCP confirmó Vitmorph; script_check y ejecución en Godot 4.7.2. 112 comprobaciones mecánicas, 22 de ensamblaje, nueve de flujo de editor y once de presentación aprobadas. Arrastre nativo, cancelación, salida sin retirar y teclado observados mediante MCP. Capturas físicas 1018×696 y 645×696; no se atribuye revisión física 1200×820 a una ventana embebida menor.
+
+Correcciones y evidencia completa en [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md), tests/evidence/assembly_validation.json, assembly_performance.json y assembly_effects.json. Tres pares de apertura/actualización, tres perfiles antes/después, veinte ciclos y tres pruebas de infraestructura de efectos. Assets reales y aprobación humana pendientes; no se certifica rendimiento artístico ni el ejecutable anterior como nueva UI.
+
 ## Iteración 06 · exploración rápida y ATB · 3 de octubre de 2026
 
 Probe MCP de solo lectura confirmó Vitmorph. combat_engine, atb_strip y combat_screen pasaron script_check sin diagnósticos. Consola MCP sin errores/advertencias observados. Se mantuvo la instancia de editor configurada. No se añadió ni ejecutó una nueva suite automática; las 33 comprobaciones anteriores son evidencia histórica de iniciativa virtual. El método run_rule_checks devuelve HISTORICAL_SUITE en esta versión para evitar ejecutar accidentalmente esa suite incompatible.

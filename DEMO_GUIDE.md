@@ -20,10 +20,18 @@ La partida válida se recupera automáticamente. Un solo principal; figuras y ba
 | Diagnóstico de combate | F3 |
 | Navegar UI / activar / volver | Tab, Mayús+Tab, flechas, Enter, Escape |
 
-Abrir builds o colección pausa la exploración. Cerrar descarta cambios no aplicados. No se abre un menú antes de combatir.
+Abrir builds o colección pausa la exploración. En el editor actual del proyecto, cerrar o cambiar copia con cambios pendientes ofrece Aplicar / Descartar / Seguir editando. El ejecutable 0.7.0 conserva la UI anterior. No se abre un menú antes de combatir.
 Fijas pertenecen a la especie; dos modulares se eligen de la biblioteca, sin duplicados en una bestia.
 Ocho ranuras normales, dos especiales sin efectos en esta demo. Alcance +30 % modifica todos los ataques compatibles y no afecta Defensa.
 Elegir principal o aplicar una build conserva vida y reutilizaciones. Una instancia de modificador no se equipa simultáneamente en dos bestias.
+
+### Ensamblaje actual en el proyecto
+
+B/C abre la misma superficie con selector de copias. Editar una copia no cambia el principal. Para cambiar una modular: Habilidades → habilidad de biblioteca → Modular 1 o 2, o arrastrar a esa ranura. Las fijas no se reemplazan. Para un mod: Mods → mejora → punto numerado sobre la bestia, o arrastrar al punto. Los puntos E1/E2 están reservados.
+
+Mover un mod montado intercambia posiciones; Retirar devuelve la instancia al inventario del borrador. Soltar fuera no retira. Aplicar a esta bestia confirma conjuntamente; Descartar restaura la configuración aplicada. Una instancia ocupada indica su copia propietaria: retirarla y aplicar allí antes de trasladarla. La comparación de alcance explica el efecto y Defensa queda fuera de ese modificador.
+
+Tab/Mayús+Tab y flechas navegan; Enter activa el control enfocado. Escape cancela primero arrastre/selección/decisión y luego solicita cerrar. La ventana estrecha desplaza biblioteca y detalle debajo; el foco acompaña el desplazamiento. Informe y assets: [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md).
 
 ## Completar el ciclo
 

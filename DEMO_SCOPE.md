@@ -42,9 +42,11 @@ Cambiar de instancia no define cómo se presentará la transición. La meta ante
 
 ## Builds y colección
 
+El plan de ensamblaje fue autorizado para implementación. Contrato en BUILD_DESIGN.md: selector integrado, montajes sobre cuerpo, ubicación exclusivamente visual, capas/efectos opcionales en editor y juego, selección y arrastre equivalentes y borrador por copia. No añade reglas anatómicas. La aceptación artística sigue dependiendo de assets del usuario y revisión posterior.
+
 Cada copia conserva identidad y build propias, incluso si comparte especie con otra. La biblioteca de habilidades es reutilizable. Mostrar inequívocamente la copia editada, dos fijas, dos modulares, ocho ranuras normales y dos especiales. Seleccionar para editar no la convierte en principal.
 
-Selección y arrastre usarán el mismo servicio de validación. Layout, reemplazos, retiro de mods, comparación y cambios pendientes requieren brief y revisión del render. Los efectos especiales de ranuras especiales siguen sin definirse. El catálogo técnico no obliga a producir el mismo catálogo artístico.
+Selección y arrastre ya usan el mismo controlador y servicio de validación. Layout, reemplazos, retiro de mods, comparación y cambios pendientes se implementaron y revisaron por MCP; evidencia y límites en ASSEMBLY_DELIVERY.md. Los efectos de ranuras especiales siguen sin definirse. El catálogo técnico no obliga a producir el mismo catálogo artístico.
 
 ## Exterior y enemigos
 
@@ -52,7 +54,7 @@ Replantear la distribución, conexiones, referencias visuales y espacios de encu
 
 ## Próximo trabajo de diseño
 
-1. Brief de colección/builds con selección y arrastre.
+1. Integrar una muestra de assets del usuario en el ensamblaje implementado y revisar su lectura.
 2. Esquema del exterior y refugio, accesos y conexiones.
 3. Escenas de la historia única y presentación.
 4. Assets por contenido aprobado, cantidades y fichas.

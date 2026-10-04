@@ -1,0 +1,497 @@
+[
+  {
+    "active": false,
+    "average_fps": 60.1713720568802,
+    "draw_calls_monitor": 69,
+    "fps_monitor": 60,
+    "frame_delta_ms": {
+      "max": 16.6666666666667,
+      "mean": 16.6666666666666,
+      "p50": 16.6666666666667,
+      "p95": 16.6666666666667,
+      "p99": 16.6666666666667
+    },
+    "frame_process_ms_monitor": 18.587,
+    "frames": 181,
+    "hitches": {
+      "over_16_67_ms": 88,
+      "over_33_33_ms": 0,
+      "over_50_ms": 0
+    },
+    "label": "assembly_before_1",
+    "limits": "Memory is engine allocations, not OS working set; sampled peaks at 0.25s are not exact peaks. Some monitors can lag or be unavailable. Zero is not proof of no usage. Scopes overlap; no direct GPU timing. Samples capped at 8192; counters include all frames.",
+    "monitor_sample_count": 13,
+    "monitors": {
+      "draw_calls": {
+        "delta": 0,
+        "end": 69,
+        "min_sampled": 69,
+        "peak_sampled": 69,
+        "start": 69
+      },
+      "engine_memory_bytes": {
+        "delta": 47300,
+        "end": 68990753,
+        "min_sampled": 68943453,
+        "peak_sampled": 68990753,
+        "start": 68943453
+      },
+      "nodes": {
+        "delta": 0,
+        "end": 112,
+        "min_sampled": 112,
+        "peak_sampled": 112,
+        "start": 112
+      },
+      "objects": {
+        "delta": -2,
+        "end": 2009,
+        "min_sampled": 2009,
+        "peak_sampled": 2011,
+        "start": 2011
+      },
+      "orphan_nodes": {
+        "delta": 0,
+        "end": 0,
+        "min_sampled": 0,
+        "peak_sampled": 0,
+        "start": 0
+      },
+      "primitives": {
+        "delta": 0,
+        "end": 1884,
+        "min_sampled": 1884,
+        "peak_sampled": 1884,
+        "start": 1884
+      },
+      "render_buffer_bytes": {
+        "delta": 0,
+        "end": 14960794,
+        "min_sampled": 14960794,
+        "peak_sampled": 14960794,
+        "start": 14960794
+      },
+      "resources": {
+        "delta": 0,
+        "end": 58,
+        "min_sampled": 58,
+        "peak_sampled": 58,
+        "start": 58
+      },
+      "texture_bytes": {
+        "delta": 0,
+        "end": 7459733,
+        "min_sampled": 7459733,
+        "peak_sampled": 7459733,
+        "start": 7459733
+      },
+      "video_memory_bytes": {
+        "delta": 0,
+        "end": 22420527,
+        "min_sampled": 22420527,
+        "peak_sampled": 22420527,
+        "start": 22420527
+      }
+    },
+    "scopes": {
+      "systems/combat_engine.gd:_process": {
+        "calls": 182,
+        "max_usec": 21,
+        "mean_usec": 9.35164835164835,
+        "sample_usec": {
+          "max": 21,
+          "mean": 9.35164835164835,
+          "p50": 9,
+          "p95": 14,
+          "p99": 20
+        }
+      },
+      "systems/world_route.gd:_process": {
+        "calls": 182,
+        "max_usec": 180,
+        "mean_usec": 6.52197802197802,
+        "sample_usec": {
+          "max": 180,
+          "mean": 6.52197802197802,
+          "p50": 6,
+          "p95": 8,
+          "p99": 17
+        }
+      },
+      "ui/arena_view.gd:_process": {
+        "calls": 182,
+        "max_usec": 395,
+        "mean_usec": 101.043956043956,
+        "sample_usec": {
+          "max": 395,
+          "mean": 101.043956043956,
+          "p50": 92,
+          "p95": 179,
+          "p99": 357
+        }
+      },
+      "ui/atb_strip.gd:_process": {
+        "calls": 182,
+        "max_usec": 159,
+        "mean_usec": 12.3626373626374,
+        "sample_usec": {
+          "max": 159,
+          "mean": 12.3626373626374,
+          "p50": 11,
+          "p95": 19,
+          "p99": 38
+        }
+      },
+      "ui/combat_screen.gd:_process": {
+        "calls": 182,
+        "max_usec": 290,
+        "mean_usec": 76.7857142857143,
+        "sample_usec": {
+          "max": 290,
+          "mean": 76.7857142857143,
+          "p50": 77,
+          "p95": 118,
+          "p99": 216
+        }
+      }
+    },
+    "wall_frame_ms": {
+      "max": 20.393,
+      "mean": 16.6581277777778,
+      "p50": 16.234,
+      "p95": 18.705,
+      "p99": 20.313
+    },
+    "wall_seconds": 3.008075
+  },
+  {
+    "active": false,
+    "average_fps": 59.9916411646644,
+    "draw_calls_monitor": 69,
+    "fps_monitor": 59,
+    "frame_delta_ms": {
+      "max": 16.6666666666667,
+      "mean": 16.6666666666666,
+      "p50": 16.6666666666667,
+      "p95": 16.6666666666667,
+      "p99": 16.6666666666667
+    },
+    "frame_process_ms_monitor": 23.106,
+    "frames": 180,
+    "hitches": {
+      "over_16_67_ms": 85,
+      "over_33_33_ms": 1,
+      "over_50_ms": 0
+    },
+    "label": "assembly_before_2",
+    "limits": "Memory is engine allocations, not OS working set; sampled peaks at 0.25s are not exact peaks. Some monitors can lag or be unavailable. Zero is not proof of no usage. Scopes overlap; no direct GPU timing. Samples capped at 8192; counters include all frames.",
+    "monitor_sample_count": 13,
+    "monitors": {
+      "draw_calls": {
+        "delta": 0,
+        "end": 69,
+        "min_sampled": 69,
+        "peak_sampled": 69,
+        "start": 69
+      },
+      "engine_memory_bytes": {
+        "delta": 47300,
+        "end": 68992561,
+        "min_sampled": 68945261,
+        "peak_sampled": 68992561,
+        "start": 68945261
+      },
+      "nodes": {
+        "delta": 0,
+        "end": 112,
+        "min_sampled": 112,
+        "peak_sampled": 112,
+        "start": 112
+      },
+      "objects": {
+        "delta": -2,
+        "end": 2009,
+        "min_sampled": 2009,
+        "peak_sampled": 2011,
+        "start": 2011
+      },
+      "orphan_nodes": {
+        "delta": 0,
+        "end": 0,
+        "min_sampled": 0,
+        "peak_sampled": 0,
+        "start": 0
+      },
+      "primitives": {
+        "delta": 0,
+        "end": 1884,
+        "min_sampled": 1884,
+        "peak_sampled": 1884,
+        "start": 1884
+      },
+      "render_buffer_bytes": {
+        "delta": 0,
+        "end": 14960794,
+        "min_sampled": 14960794,
+        "peak_sampled": 14960794,
+        "start": 14960794
+      },
+      "resources": {
+        "delta": 0,
+        "end": 58,
+        "min_sampled": 58,
+        "peak_sampled": 58,
+        "start": 58
+      },
+      "texture_bytes": {
+        "delta": 0,
+        "end": 7459733,
+        "min_sampled": 7459733,
+        "peak_sampled": 7459733,
+        "start": 7459733
+      },
+      "video_memory_bytes": {
+        "delta": 0,
+        "end": 22420527,
+        "min_sampled": 22420527,
+        "peak_sampled": 22420527,
+        "start": 22420527
+      }
+    },
+    "scopes": {
+      "systems/combat_engine.gd:_process": {
+        "calls": 181,
+        "max_usec": 205,
+        "mean_usec": 11.2651933701657,
+        "sample_usec": {
+          "max": 205,
+          "mean": 11.2651933701657,
+          "p50": 10,
+          "p95": 14,
+          "p99": 25
+        }
+      },
+      "systems/world_route.gd:_process": {
+        "calls": 181,
+        "max_usec": 248,
+        "mean_usec": 7.50828729281768,
+        "sample_usec": {
+          "max": 248,
+          "mean": 7.50828729281768,
+          "p50": 6,
+          "p95": 8,
+          "p99": 9
+        }
+      },
+      "ui/arena_view.gd:_process": {
+        "calls": 181,
+        "max_usec": 2447,
+        "mean_usec": 124.944751381215,
+        "sample_usec": {
+          "max": 2447,
+          "mean": 124.944751381215,
+          "p50": 102,
+          "p95": 217,
+          "p99": 373
+        }
+      },
+      "ui/atb_strip.gd:_process": {
+        "calls": 181,
+        "max_usec": 44,
+        "mean_usec": 12.828729281768,
+        "sample_usec": {
+          "max": 44,
+          "mean": 12.828729281768,
+          "p50": 12,
+          "p95": 19,
+          "p99": 42
+        }
+      },
+      "ui/combat_screen.gd:_process": {
+        "calls": 181,
+        "max_usec": 336,
+        "mean_usec": 83.9834254143646,
+        "sample_usec": {
+          "max": 336,
+          "mean": 83.9834254143646,
+          "p50": 83,
+          "p95": 128,
+          "p99": 298
+        }
+      }
+    },
+    "wall_frame_ms": {
+      "max": 36.343,
+      "mean": 16.6626424581006,
+      "p50": 16.398,
+      "p95": 19.166,
+      "p99": 19.69
+    },
+    "wall_seconds": 3.000418
+  },
+  {
+    "active": false,
+    "average_fps": 59.3929443836506,
+    "draw_calls_monitor": 69,
+    "fps_monitor": 60,
+    "frame_delta_ms": {
+      "max": 24.9653333333334,
+      "mean": 16.852260707635,
+      "p50": 16.6666666666667,
+      "p95": 18.0555555555556,
+      "p99": 24.9306666666667
+    },
+    "frame_process_ms_monitor": 18.506,
+    "frames": 179,
+    "hitches": {
+      "over_16_67_ms": 89,
+      "over_33_33_ms": 1,
+      "over_50_ms": 0
+    },
+    "label": "assembly_before_3",
+    "limits": "Memory is engine allocations, not OS working set; sampled peaks at 0.25s are not exact peaks. Some monitors can lag or be unavailable. Zero is not proof of no usage. Scopes overlap; no direct GPU timing. Samples capped at 8192; counters include all frames.",
+    "monitor_sample_count": 13,
+    "monitors": {
+      "draw_calls": {
+        "delta": 0,
+        "end": 69,
+        "min_sampled": 69,
+        "peak_sampled": 69,
+        "start": 69
+      },
+      "engine_memory_bytes": {
+        "delta": 49172,
+        "end": 68996241,
+        "min_sampled": 68947069,
+        "peak_sampled": 68996241,
+        "start": 68947069
+      },
+      "nodes": {
+        "delta": 0,
+        "end": 112,
+        "min_sampled": 112,
+        "peak_sampled": 112,
+        "start": 112
+      },
+      "objects": {
+        "delta": -2,
+        "end": 2009,
+        "min_sampled": 2009,
+        "peak_sampled": 2011,
+        "start": 2011
+      },
+      "orphan_nodes": {
+        "delta": 0,
+        "end": 0,
+        "min_sampled": 0,
+        "peak_sampled": 0,
+        "start": 0
+      },
+      "primitives": {
+        "delta": 0,
+        "end": 1884,
+        "min_sampled": 1884,
+        "peak_sampled": 1884,
+        "start": 1884
+      },
+      "render_buffer_bytes": {
+        "delta": 0,
+        "end": 14960794,
+        "min_sampled": 14960794,
+        "peak_sampled": 14960794,
+        "start": 14960794
+      },
+      "resources": {
+        "delta": 0,
+        "end": 58,
+        "min_sampled": 58,
+        "peak_sampled": 58,
+        "start": 58
+      },
+      "texture_bytes": {
+        "delta": 0,
+        "end": 7459733,
+        "min_sampled": 7459733,
+        "peak_sampled": 7459733,
+        "start": 7459733
+      },
+      "video_memory_bytes": {
+        "delta": 0,
+        "end": 22420527,
+        "min_sampled": 22420527,
+        "peak_sampled": 22420527,
+        "start": 22420527
+      }
+    },
+    "scopes": {
+      "systems/combat_engine.gd:_process": {
+        "calls": 180,
+        "max_usec": 42,
+        "mean_usec": 9.47222222222222,
+        "sample_usec": {
+          "max": 42,
+          "mean": 9.47222222222222,
+          "p50": 9,
+          "p95": 14,
+          "p99": 23
+        }
+      },
+      "systems/world_route.gd:_process": {
+        "calls": 180,
+        "max_usec": 73,
+        "mean_usec": 5.95,
+        "sample_usec": {
+          "max": 73,
+          "mean": 5.95,
+          "p50": 6,
+          "p95": 8,
+          "p99": 9
+        }
+      },
+      "ui/arena_view.gd:_process": {
+        "calls": 180,
+        "max_usec": 1689,
+        "mean_usec": 123.166666666667,
+        "sample_usec": {
+          "max": 1689,
+          "mean": 123.166666666667,
+          "p50": 95,
+          "p95": 301,
+          "p99": 614
+        }
+      },
+      "ui/atb_strip.gd:_process": {
+        "calls": 180,
+        "max_usec": 25,
+        "mean_usec": 11.45,
+        "sample_usec": {
+          "max": 25,
+          "mean": 11.45,
+          "p50": 11,
+          "p95": 18,
+          "p99": 24
+        }
+      },
+      "ui/combat_screen.gd:_process": {
+        "calls": 180,
+        "max_usec": 669,
+        "mean_usec": 81.7333333333333,
+        "sample_usec": {
+          "max": 669,
+          "mean": 81.7333333333333,
+          "p50": 78,
+          "p95": 128,
+          "p99": 403
+        }
+      }
+    },
+    "wall_frame_ms": {
+      "max": 35.835,
+      "mean": 16.8559157303371,
+      "p50": 16.389,
+      "p95": 18.773,
+      "p99": 29.511
+    },
+    "wall_seconds": 3.013826
+  }
+]
