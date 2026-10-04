@@ -9,6 +9,10 @@ signal combat_finished(result: String)
 signal message(text: String)
 
 const Fixture = preload("res://data/combat_fixture.gd")
+const Status = preload("res://systems/status_system.gd")
+const EPS := 0.000001
+var time_debt := 0.0
+signal states_changed
 const AI = preload("res://systems/combat_ai.gd")
 var actors: Array[Dictionary] = []
 var priority := ""
@@ -43,8 +47,10 @@ func start(which: int) -> void:
 
 func initialize_atb() -> void:
 	combat_clock = 0.0
+	time_debt = 0.0
 	resolved = true
 	for actor in actors:
+		actor["states"] = {}
 		actor["atb"] = 0.0
 		actor["ready_time"] = -1.0
 	state_changed.emit()
@@ -56,33 +62,81 @@ func _process(delta: float) -> void:
 		profile.record("systems/combat_engine.gd:_process", Time.get_ticks_usec() - stamp)
 
 func _process_body(delta: float) -> void:
-	if not running:
-		return
-	var previous_clock := combat_clock
-	combat_clock += delta
-	for actor in actors:
-		if actor.hp <= 0 or actor.ready_time >= 0.0 or (not pending.is_empty() and pending.actor_id == actor.id):
-			continue
-		var before: float = actor.atb
-		actor.atb = minf(100.0, before + actor.speed * delta)
-		if actor.atb >= 100.0:
-			actor.ready_time = previous_clock + (100.0 - before) / actor.speed
-	if not pending.is_empty():
-		elapsed += delta
-		if not resolved and elapsed >= resolve_seconds:
-			resolve_pending()
-		if not running:
-			return
-		if elapsed >= action_seconds:
-			var actor := actor_by_id(pending.actor_id)
-			actor.atb = 0.0
-			actor.ready_time = -1.0
-			pending = {}
-			elapsed = 0.0
-			resolved = true
-			state_changed.emit()
-	if pending.is_empty():
+	advance(delta)
+
+func advance(delta: float) -> void:
+	if not running or delta<0 or not is_finite(delta): return
+	var left := delta+time_debt
+	time_debt=0.0
+	var iterations := 0
+	while running and left>EPS and iterations<2048:
+		iterations+=1
 		choose_next()
+		var step := left
+		for actor in actors:
+			if not Status.active(actor): continue
+			if actor.ready_time<0 and (pending.is_empty() or pending.actor_id!=actor.id):
+				step=minf(step,maxf(0.0,(100.0-actor.atb)/Status.speed(actor,combat_clock)))
+			for state in actor.states.values():
+				step=minf(step,maxf(0.0,state.expires-combat_clock))
+				if state.next<=state.expires+EPS: step=minf(step,maxf(0.0,state.next-combat_clock))
+		if not pending.is_empty():
+			step=minf(step,maxf(0.0,action_seconds-elapsed))
+			if not resolved: step=minf(step,maxf(0.0,resolve_seconds-elapsed))
+		for actor in actors:
+			if not Status.active(actor) or actor.ready_time>=0 or (not pending.is_empty() and pending.actor_id==actor.id): continue
+			actor.atb=minf(100.0,actor.atb+Status.speed(actor,combat_clock)*step)
+			if actor.atb>=100.0-EPS: actor.atb=100.0; actor.ready_time=combat_clock+step
+		combat_clock+=step
+		left-=step
+		if not pending.is_empty(): elapsed+=step
+		# Pulsos debidos antes de impactos y de resultados de copia.
+		for actor in actors:
+			if not running or not Status.active(actor): continue
+			var dot: Dictionary = actor.states.get("dot",{})
+			if not dot.is_empty() and dot.next<=combat_clock+EPS and dot.next<=dot.expires+EPS:
+				dot.next+=4.0
+				apply_damage(actor,int(dot.intensity))
+		if not running: break
+		if not pending.is_empty() and not resolved and elapsed>=resolve_seconds-EPS: resolve_pending()
+		if not running: break
+		for actor in actors:
+			for kind in actor.states.keys():
+				if actor.states[kind].expires<=combat_clock+EPS:
+					actor.states.erase(kind); states_changed.emit(); state_changed.emit()
+		if not pending.is_empty() and elapsed>=action_seconds-EPS:
+			var actor := actor_by_id(pending.actor_id)
+			actor.atb=0.0; actor.ready_time=-1.0
+			pending={}; elapsed=0.0; resolved=true
+			state_changed.emit()
+		choose_next()
+	# Preserve unconsumed simulation time rather than skip events on extreme deltas.
+	if running: time_debt=left
+
+func principal_actor() -> Dictionary:
+	for actor in actors:
+		if actor.get("is_principal",false): return actor
+	return {}
+
+func apply_damage(target: Dictionary, amount: int) -> void:
+	if not Status.active(target): return
+	var absorbed: int = mini(int(target.shield),amount)
+	var damage := amount-absorbed
+	target.shield=0
+	target.hp=maxi(0,int(target.hp)-damage)
+	if target.hp==0: target.atb=0.0; target.ready_time=-1.0; target.states.clear()
+	damage_applied.emit(target.id,damage,absorbed)
+	message.emit("%s: −%d vida%s"%[target.name,damage," · protección %d"%absorbed if absorbed>0 else ""])
+	check_finish()
+	state_changed.emit()
+
+func check_finish() -> void:
+	if not running: return
+	var main := principal_actor()
+	if main.is_empty() or not Status.active(main): finish("Derrota"); return
+	for actor in actors:
+		if actor.team!=main.team and Status.active(actor): return
+	finish("Victoria")
 
 func begin_encounter(participants: Array[Dictionary]) -> void:
 	# Copia solo la lista: cada Dictionary sigue siendo el actor del mundo.
@@ -112,7 +166,7 @@ func command(kind: String, skill_id: String) -> void:
 		return
 	if not skill_id.is_empty():
 		var known := false
-		for skill in actor_by_id("main").abilities:
+		for skill in principal_actor().abilities:
 			if skill.id == skill_id:
 				known = true
 		if not known:
@@ -126,7 +180,7 @@ func command(kind: String, skill_id: String) -> void:
 	state_changed.emit()
 
 func skill_name(id: String) -> String:
-	for skill in actor_by_id("main").abilities:
+	for skill in principal_actor().abilities:
 		if skill.id == id:
 			return skill.name
 	return id
@@ -136,7 +190,7 @@ func choose_next() -> void:
 		return
 	var actor: Dictionary = {}
 	for candidate in actors:
-		if candidate.hp > 0 and candidate.get("ready_time", -1.0) >= 0.0 and (actor.is_empty() or candidate.ready_time < actor.ready_time):
+		if Status.active(candidate) and candidate.get("ready_time", -1.0) >= 0.0 and (actor.is_empty() or candidate.ready_time < actor.ready_time):
 			actor = candidate
 	if actor.is_empty():
 		return
@@ -152,46 +206,30 @@ func choose_next() -> void:
 	state_changed.emit()
 
 func resolve_pending() -> void:
-	if resolved or pending.is_empty():
-		return
-	resolved = true
-	var actor := actor_by_id(pending.actor_id)
-	var skill: Dictionary = pending.skill
-	if not skill.is_empty():
-		var target := actor_by_id(pending.target_id)
-		if not target.is_empty() and target.hp > 0:
-			if skill.shield > 0:
-				target.shield = skill.shield
-				message.emit("%s obtiene %d de protección para el siguiente impacto." % [target.name, skill.shield])
+	if resolved or pending.is_empty(): return
+	resolved=true
+	var completed: Dictionary = pending.duplicate(true)
+	var actor := actor_by_id(completed.actor_id)
+	var skill: Dictionary = completed.skill
+	if not skill.is_empty() and Status.active(actor):
+		var target := actor_by_id(completed.target_id)
+		if not target.is_empty() and Status.active(target):
+			if skill.shield>0: target.shield=skill.shield; message.emit("%s obtiene %d de protección"%[target.name,skill.shield])
 			else:
-				var absorbed: int = mini(target.shield, skill.damage)
-				var damage: int = skill.damage - absorbed
-				target.shield = 0
-				target.hp = maxi(0, target.hp - damage)
-				if target.hp == 0:
-					target.atb = 0.0
-					target.ready_time = -1.0
-				damage_applied.emit(target.id, damage, absorbed)
-				message.emit("%s: −%d vida%s" % [target.name, damage, " · protección absorbió %d" % absorbed if absorbed > 0 else ""])
-			actor.ready_at[skill.id] = actor.turns + skill.cooldown + 1
-	action_count += 1
-	if history.size() >= HISTORY_LIMIT:
-		history.pop_front()
-	history.append(pending.duplicate(true))
-	action_executed.emit(pending.duplicate(true))
-	if actor_by_id("main").hp <= 0:
-		finish("Derrota")
-	else:
-		var enemies_alive := false
-		for candidate in actors:
-			if candidate.id != "main" and candidate.hp > 0:
-				enemies_alive = true
-		if not enemies_alive:
-			finish("Victoria")
+				apply_damage(target,int(skill.damage))
+				if running and Status.active(target) and skill.get("status","")!="":
+					Status.apply(target,skill.status,combat_clock); states_changed.emit()
+		actor.ready_at[skill.id]=actor.turns+skill.cooldown+1
+	action_count+=1
+	if history.size()>=HISTORY_LIMIT: history.pop_front()
+	history.append(completed)
+	action_executed.emit(completed)
+	check_finish()
 	state_changed.emit()
 
 func finish(outcome: String) -> void:
 	running = false
+	for actor in actors: actor.states.clear()
 	pending = {}
 	resolved = true
 	elapsed = 0.0
@@ -204,8 +242,8 @@ func atb_snapshot() -> Array[Dictionary]:
 	for actor in actors:
 		var status := "charging"
 		var rank := 2
-		var order: float = (100.0 - actor.get("atb", 0.0)) / actor.speed
-		if actor.hp <= 0:
+		var order: float = Status.time_to_charge(actor,100.0-float(actor.get("atb",0.0)),combat_clock)
+		if not Status.active(actor):
 			status = "defeated"
 			rank = 3
 			order = 0.0
@@ -241,14 +279,14 @@ func forecast(count: int = 7) -> Array[Dictionary]:
 	var queue: Array[Dictionary] = []
 	var available_at := 0.0
 	for actor in actors:
-		if actor.hp <= 0:
+		if not Status.active(actor):
 			continue
-		var ready: float = actor.get("ready_time", -1.0) - combat_clock if actor.get("ready_time", -1.0) >= 0.0 else (100.0 - actor.get("atb", 0.0)) / actor.speed
+		var ready: float = actor.get("ready_time", -1.0) - combat_clock if actor.get("ready_time", -1.0) >= 0.0 else Status.time_to_charge(actor,100.0-float(actor.get("atb",0.0)),combat_clock)
 		if not pending.is_empty() and pending.actor_id == actor.id:
 			available_at = maxf(0.0, action_seconds - elapsed)
-			ready = available_at + 100.0 / actor.speed
+			ready = available_at + Status.time_to_charge(actor,100.0,combat_clock+available_at)
 			sequence.append({"id": actor.id, "name": actor.name, "time": 0.0, "current": true})
-		queue.append({"id": actor.id, "name": actor.name, "ready": ready, "speed": actor.speed})
+		queue.append({"id": actor.id, "name": actor.name, "ready": ready, "speed": actor.speed, "actor": actor})
 	while sequence.size() < count and not queue.is_empty():
 		var best := 0
 		for index in range(1, queue.size()):
@@ -257,7 +295,7 @@ func forecast(count: int = 7) -> Array[Dictionary]:
 		var start_at: float = maxf(available_at, maxf(0.0, queue[best].ready))
 		sequence.append({"id": queue[best].id, "name": queue[best].name, "time": start_at, "current": false})
 		available_at = start_at + action_seconds
-		queue[best].ready = available_at + 100.0 / queue[best].speed
+		queue[best].ready = available_at + Status.time_to_charge(queue[best].actor,100.0,combat_clock+available_at)
 	return sequence
 
 func snapshot() -> Dictionary:

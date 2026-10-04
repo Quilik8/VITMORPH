@@ -424,6 +424,9 @@ func run_rule_checks() -> Dictionary:
 func run_demo_checks() -> Dictionary:
 	return preload("res://tests/demo_rules.gd").new().run()
 
+func run_combat_demo_checks() -> Dictionary:
+	return preload("res://tests/combat_demo.gd").new().run()
+
 func open_build(collection_mode: bool) -> void:
 	if combat.running or route.state != "travelling" or not route.visible_world: return
 	session.sync_actor(route.actors[0],combat.priority,combat.retained)
