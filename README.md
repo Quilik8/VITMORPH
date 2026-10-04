@@ -40,3 +40,7 @@ La pantalla de preparación añadida por el agente fue rechazada y eliminada. La
 [VITMORPH en GitHub](https://github.com/Quilik8/VITMORPH). Historial en `CHANGELOG.md`, decisiones en `DESIGN_STATUS.md` y `TECHNICAL_DECISIONS.md`; recuperación en `VERSIONING.md`.
 
 La pantalla de preparación fue rechazada y eliminada. El jugador construirá sus builds; no se impone un paso antes del encuentro. Navegación técnica en ambos ejes con cámara y terreno ampliado. Rendimiento aún pendiente de perfilado: las optimizaciones actuales reducen cálculos repetidos sin certificar una tasa de FPS.
+
+## Rendimiento
+
+Primera pasada medida: terreno retenido y mallas reutilizadas. Resultados, diagnóstico optativo y límites en [PERFORMANCE.md](PERFORMANCE.md). Punto recuperable de esta pasada: `checkpoint-v0.1.1`.

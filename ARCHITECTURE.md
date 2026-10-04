@@ -42,3 +42,9 @@ El único addon MCP se conserva. El editor y su runtime se usan para evidencia; 
 La franja cachea la previsión temporal durante 0,2 s, con invalidación por cambios de combate. Cada perseguidor conserva waypoint, destino, modo y edad durante un máximo de 0,25 s; invalida antes si cambia el modo/destino o llega a una esquina. Esto no añade decisiones de movimiento en combate.
 
 La cámara sigue x/y; actores fuera del campo se omiten del dibujo. En exploración inmóvil, el dibujo se conserva hasta cambio de posiciones/cámara, feedback o tamaño. No existe estado ni nodo de preparación. Los mapas grandes definitivos, streaming y planificación de movimiento automático en combate requieren una fase posterior.
+
+## Dibujo retenido y perfilado
+
+`ui/world_ground.gd` dibuja el terreno detrás de los actores y conserva comandos hasta cambiar mapa/modo/tamaño. Movimiento de cámara mediante posición del nodo. `arena_view.gd` reutiliza mallas de siluetas/sombras y redibuja actores con feedback o animación. `WorldRoute.world_rebuilt` invalida el terreno al reconstruir el recorrido.
+
+`systems/performance_probe.gd` es diagnóstico optativo compartido por nodos; inactivo normalmente. Captura CPU por scope y deltas de frame, sin sumar scopes anidados ni atribuirles GPU. Ver `PERFORMANCE.md`.

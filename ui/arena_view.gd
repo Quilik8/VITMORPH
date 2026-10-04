@@ -1,10 +1,19 @@
 extends Control
+var profile: Node
 ## Campo 2D y siluetas geométricas de prueba; no son criaturas ni arte final.
 var combat: Node
 var route: Node
 var action: Dictionary = {}
 var popups: Array[Dictionary] = []
-var shield_pulse := 0.0
+var ground: Node2D
+var last_ground_world := false
+var shadow_mesh: ArrayMesh
+var main_mesh: ArrayMesh
+var enemy_mesh: ArrayMesh
+var shadow_shape := PackedVector2Array()
+var footprint_shape := PackedVector2Array()
+var enemy_shape := PackedVector2Array()
+var main_shape := PackedVector2Array([Vector2(0,-30),Vector2(28,-6),Vector2(18,25),Vector2(-18,25),Vector2(-28,-6)])
 var last_world_positions: Array[Vector2] = []
 var last_camera := Vector2(INF, INF)
 const INK := Color("eee5d3")
@@ -16,7 +25,35 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	custom_minimum_size = Vector2(0, 340)
 	clip_contents = true
-	resized.connect(queue_redraw)
+	ground = preload("res://ui/world_ground.gd").new()
+	ground.name = "WorldGround"
+	ground.arena = self
+	ground.route = route
+	ground.profile = profile
+	ground.show_behind_parent = true
+	add_child(ground)
+	for index in 40:
+		var angle := TAU * index / 40.0
+		shadow_shape.append(Vector2(cos(angle)*44, sin(angle)*14))
+		footprint_shape.append(Vector2(cos(angle)*43, 26+sin(angle)*13))
+	footprint_shape.append(footprint_shape[0])
+	for index in 6:
+		var angle := TAU * index / 6.0
+		enemy_shape.append(Vector2(cos(angle)*29, sin(angle)*32))
+	shadow_mesh = polygon_mesh(shadow_shape)
+	main_mesh = polygon_mesh(main_shape)
+	enemy_mesh = polygon_mesh(enemy_shape)
+	route.world_rebuilt.connect(ground.queue_redraw)
+	resized.connect(func(): ground.queue_redraw(); queue_redraw())
+
+func polygon_mesh(points: PackedVector2Array) -> ArrayMesh:
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = points
+	arrays[Mesh.ARRAY_INDEX] = Geometry2D.triangulate_polygon(points)
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
 
 func reset_feedback() -> void:
 	action = {}
@@ -35,6 +72,20 @@ func flash(id: String, damage: int, absorbed: int) -> void:
 	queue_redraw()
 
 func _process(delta: float) -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	_process_body(delta)
+	if stamp != 0:
+		profile.record("ui/arena_view.gd:_process", Time.get_ticks_usec() - stamp)
+
+func _process_body(delta: float) -> void:
+	var world_visible: bool = route != null and route.visible_world
+	if world_visible != last_ground_world:
+		last_ground_world = world_visible
+		ground.queue_redraw()
+	if world_visible:
+		ground.position = Vector2(-route.camera_x * size.x / 800.0, -route.camera_y * (size.y - 130.0) * 0.70 / 430.0)
+	else:
+		ground.position = Vector2.ZERO
 	var had_popups := not popups.is_empty()
 	for index in range(popups.size() - 1, -1, -1):
 		popups[index].age += delta
@@ -50,7 +101,8 @@ func _process(delta: float) -> void:
 			var position: Vector2 = route.actors[index].position
 			world_moved = world_moved or last_world_positions[index] != position
 			last_world_positions[index] = position
-	if combat != null and (combat.running or had_popups or world_moved):
+	var animating: bool = combat != null and combat.running and not combat.pending.is_empty() and (not combat.resolved or combat.elapsed < combat.resolve_seconds + 0.65)
+	if animating or had_popups or world_moved:
 		queue_redraw()
 
 func point(actor: Dictionary) -> Vector2:
@@ -60,28 +112,6 @@ func point(actor: Dictionary) -> Vector2:
 
 func world_point(position: Vector2) -> Vector2:
 	return Vector2((position.x - route.camera_x) / 800.0 * size.x, (size.y - 130.0) * (0.20 + (position.y - route.camera_y) / 430.0 * 0.70))
-
-func world_polygon(points: Array[Vector2], color: Color) -> void:
-	var projected := PackedVector2Array()
-	for position in points:
-		projected.append(world_point(position))
-	draw_colored_polygon(projected, color)
-
-func draw_world_ground() -> void:
-	world_polygon([Vector2(0,80),Vector2(500,40),Vector2(1050,60),Vector2(1500,90),Vector2(2000,20),Vector2(4050,70),Vector2(4050,2050),Vector2(2150,2050),Vector2(1550,2050),Vector2(750,2050),Vector2(0,2050)], Color("20392a"))
-	var path := PackedVector2Array([world_point(route.actors[0].get("route_start",Vector2(150,260)))])
-	for zone in route.zones:
-		path.append(world_point(zone.approach))
-		draw_circle(world_point(zone.center), 8.0, Color("4b6248"))
-	draw_polyline(path, Color("2d4934"), 44.0)
-	for obstacle in route.obstacles:
-		var corners: Array[Vector2] = [obstacle.position, Vector2(obstacle.end.x, obstacle.position.y), obstacle.end, Vector2(obstacle.position.x, obstacle.end.y)]
-		world_polygon(corners, Color("50604c"))
-		var outline := PackedVector2Array()
-		for corner in corners:
-			outline.append(world_point(corner))
-		outline.append(world_point(corners[0]))
-		draw_polyline(outline, Color("97a080"), 2.0)
 
 func screen_actor(actor: Dictionary) -> Vector2:
 	var center := point(actor)
@@ -100,26 +130,26 @@ func screen_actor(actor: Dictionary) -> Vector2:
 	return center + forward * minf(90.0, center.distance_to(point(target)) * 0.36) * amount
 
 func centered(font: Font, caption: String, at: Vector2, font_size: int, color: Color) -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	centered_body(font, caption, at, font_size, color)
+	if stamp != 0:
+		profile.record("arena:centered", Time.get_ticks_usec() - stamp)
+
+func centered_body(font: Font, caption: String, at: Vector2, font_size: int, color: Color) -> void:
 	var width := font.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 	draw_string(font, at - Vector2(width / 2, 0), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
 
-func ellipse(center: Vector2, radius: Vector2, color: Color) -> void:
-	var points := PackedVector2Array()
-	for index in 40:
-		var angle := TAU * index / 40.0
-		points.append(center + Vector2(cos(angle) * radius.x, sin(angle) * radius.y))
-	draw_colored_polygon(points, color)
-
 func _draw() -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	_draw_body()
+	if stamp != 0:
+		profile.record("ui/arena_view.gd:_draw", Time.get_ticks_usec() - stamp)
+
+func _draw_body() -> void:
 	var w := size.x
 	var h := size.y
 	# Área de encuentro abstracta. El borde irregular comunica suelo, no un panel de HUD.
 	var in_world: bool = route != null and route.visible_world
-	if in_world:
-		draw_world_ground()
-	else:
-		draw_colored_polygon(PackedVector2Array([Vector2(w*.05,h*.23), Vector2(w*.34,h*.13), Vector2(w*.74,h*.20), Vector2(w*.97,h*.46), Vector2(w*.91,h*.80), Vector2(w*.54,h*.92), Vector2(w*.11,h*.84), Vector2(w*.02,h*.53)]), Color("20392a"))
-		draw_colored_polygon(PackedVector2Array([Vector2(w*.13,h*.43), Vector2(w*.41,h*.28), Vector2(w*.85,h*.40), Vector2(w*.87,h*.75), Vector2(w*.46,h*.81), Vector2(w*.16,h*.72)]), Color("27422f"))
 	var font := ThemeDB.fallback_font
 	var visible_actors: Array[Dictionary] = route.actors if in_world else combat.actors
 	if combat == null or visible_actors.is_empty():
@@ -133,27 +163,18 @@ func _draw() -> void:
 		var color: Color = MAIN if actor.id == "main" else ENEMY
 		if actor.hp <= 0:
 			color = Color("556358")
-		ellipse(base + Vector2(0,26), Vector2(44,14), Color(0.05,0.08,0.06,0.55))
+		draw_mesh(shadow_mesh, null, Transform2D(0.0, base + Vector2(0,26)), Color(0.05,0.08,0.06,0.55))
 		var acting: bool = not action.is_empty() and action.actor_id == actor.id and combat.running
 		if not action.is_empty() and action.target_id == actor.id and action.actor_id != actor.id and combat.running and not combat.resolved:
 			draw_polyline(PackedVector2Array([base+Vector2(-6,-86), base+Vector2(0,-80), base+Vector2(6,-86)]), INK, 2.0)
 		if acting:
-			var footprint := PackedVector2Array()
-			for index in 41:
-				var angle := TAU * index / 40.0
-				footprint.append(base + Vector2(cos(angle)*43, 26+sin(angle)*13))
-			draw_polyline(footprint, MAIN, 2)
+			draw_set_transform(base)
+			draw_polyline(footprint_shape, MAIN, 2)
+			draw_set_transform(Vector2.ZERO)
 			if not combat.resolved:
 				var anticipation: float = clampf(combat.elapsed / combat.resolve_seconds, 0, 1)
 				draw_arc(center, 37, -PI/2, -PI/2 + TAU * anticipation, 40, MAIN, 2)
-		if actor.id == "main":
-			draw_colored_polygon(PackedVector2Array([center + Vector2(0,-30), center + Vector2(28,-6), center + Vector2(18,25), center + Vector2(-18,25), center + Vector2(-28,-6)]), color)
-		else:
-			var shape := PackedVector2Array()
-			for index in 6:
-				var angle := TAU * index / 6.0
-				shape.append(center + Vector2(cos(angle)*29, sin(angle)*32))
-			draw_colored_polygon(shape, color)
+		draw_mesh(main_mesh if actor.id == "main" else enemy_mesh, null, Transform2D(0.0, center), color)
 		if combat.running:
 			if actor.shield > 0:
 				draw_arc(center, 40, 0, TAU, 40, Color("86bbb0"), 3)

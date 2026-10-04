@@ -1,0 +1,1942 @@
+{
+  "date": "2026-10-03",
+  "baseline_git": "8950783",
+  "method": "Capturas MCP con instrumentación optativa de CPU. Misma escena y ventana 1018x696. Idle 4 s; movimiento S 4 s desde inicio; persecución 2 s desde posición diagnóstica (1150,640); combate carga ATB 4 s desde (530,150). Reinicio entre capturas. Acciones posteriores 8 s con P/R reales. No suite automática, no medición GPU ni certificación para mapas grandes.",
+  "captures": {
+    "before_idle": {
+      "active": false,
+      "draw_calls_monitor": 25,
+      "fps_monitor": 60,
+      "frame_delta_ms": {
+        "max": 29.026,
+        "mean": 16.7981512605042,
+        "p50": 16.6666666666667,
+        "p95": 16.6666666666667
+      },
+      "frame_process_ms_monitor": 18.397,
+      "frames": 238,
+      "label": "before_idle",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 239,
+          "max_usec": 75,
+          "mean_usec": 5.43933054393305,
+          "sample_usec": {
+            "max": 75,
+            "mean": 5.43933054393305,
+            "p50": 5,
+            "p95": 8
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 239,
+          "max_usec": 717,
+          "mean_usec": 246.355648535565,
+          "sample_usec": {
+            "max": 717,
+            "mean": 246.355648535565,
+            "p50": 210,
+            "p95": 587
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 239,
+          "max_usec": 2106,
+          "mean_usec": 59.1297071129707,
+          "sample_usec": {
+            "max": 2106,
+            "mean": 59.1297071129707,
+            "p50": 46,
+            "p95": 66
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 239,
+          "max_usec": 336,
+          "mean_usec": 17.9205020920502,
+          "sample_usec": {
+            "max": 336,
+            "mean": 17.9205020920502,
+            "p50": 15,
+            "p95": 21
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 239,
+          "max_usec": 367,
+          "mean_usec": 42.9497907949791,
+          "sample_usec": {
+            "max": 367,
+            "mean": 42.9497907949791,
+            "p50": 43,
+            "p95": 62
+          }
+        }
+      },
+      "wall_seconds": 4.000989
+    },
+    "before_movement": {
+      "active": false,
+      "draw_calls_monitor": 21,
+      "fps_monitor": 22,
+      "frame_delta_ms": {
+        "max": 71.6626666666667,
+        "mean": 49.3082642276423,
+        "p50": 50,
+        "p95": 65.0030000000002
+      },
+      "frame_process_ms_monitor": 67.589,
+      "frames": 82,
+      "label": "before_movement",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 83,
+          "max_usec": 15,
+          "mean_usec": 5.04819277108434,
+          "sample_usec": {
+            "max": 15,
+            "mean": 5.04819277108434,
+            "p50": 5,
+            "p95": 6
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 83,
+          "max_usec": 663,
+          "mean_usec": 257.602409638554,
+          "sample_usec": {
+            "max": 663,
+            "mean": 257.602409638554,
+            "p50": 217,
+            "p95": 530
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 74,
+          "max_usec": 61439,
+          "mean_usec": 45612.7837837838,
+          "sample_usec": {
+            "max": 61439,
+            "mean": 45612.7837837838,
+            "p50": 46518,
+            "p95": 55399
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 83,
+          "max_usec": 175,
+          "mean_usec": 49.5421686746988,
+          "sample_usec": {
+            "max": 175,
+            "mean": 49.5421686746988,
+            "p50": 46,
+            "p95": 65
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 83,
+          "max_usec": 20,
+          "mean_usec": 10.566265060241,
+          "sample_usec": {
+            "max": 20,
+            "mean": 10.566265060241,
+            "p50": 10,
+            "p95": 16
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 83,
+          "max_usec": 63,
+          "mean_usec": 34.7951807228916,
+          "sample_usec": {
+            "max": 63,
+            "mean": 34.7951807228916,
+            "p50": 32,
+            "p95": 52
+          }
+        }
+      },
+      "wall_seconds": 4.040753
+    },
+    "before_pursuit": {
+      "active": false,
+      "draw_calls_monitor": 27,
+      "fps_monitor": 16,
+      "frame_delta_ms": {
+        "max": 70.17,
+        "mean": 60.2124215686275,
+        "p50": 59.4941111111111,
+        "p95": 69.126
+      },
+      "frame_process_ms_monitor": 69.98,
+      "frames": 34,
+      "label": "before_pursuit",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 35,
+          "max_usec": 14,
+          "mean_usec": 4.68571428571429,
+          "sample_usec": {
+            "max": 14,
+            "mean": 4.68571428571429,
+            "p50": 4,
+            "p95": 5
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 35,
+          "max_usec": 2318,
+          "mean_usec": 261.114285714286,
+          "sample_usec": {
+            "max": 2318,
+            "mean": 261.114285714286,
+            "p50": 196,
+            "p95": 276
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 34,
+          "max_usec": 63057,
+          "mean_usec": 52451.2058823529,
+          "sample_usec": {
+            "max": 63057,
+            "mean": 52451.2058823529,
+            "p50": 50483,
+            "p95": 62121
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 35,
+          "max_usec": 102,
+          "mean_usec": 46.6857142857143,
+          "sample_usec": {
+            "max": 102,
+            "mean": 46.6857142857143,
+            "p50": 45,
+            "p95": 54
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 35,
+          "max_usec": 14,
+          "mean_usec": 9.71428571428571,
+          "sample_usec": {
+            "max": 14,
+            "mean": 9.71428571428571,
+            "p50": 9,
+            "p95": 12
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 35,
+          "max_usec": 38,
+          "mean_usec": 31.3142857142857,
+          "sample_usec": {
+            "max": 38,
+            "mean": 31.3142857142857,
+            "p50": 31,
+            "p95": 35
+          }
+        }
+      },
+      "wall_seconds": 2.038606
+    },
+    "before_combat": {
+      "active": false,
+      "draw_calls_monitor": 70,
+      "fps_monitor": 17,
+      "frame_delta_ms": {
+        "max": 85.496,
+        "mean": 58.5481062801932,
+        "p50": 57.5757575757576,
+        "p95": 69.0943333333333
+      },
+      "frame_process_ms_monitor": 61.474,
+      "frames": 69,
+      "label": "before_combat",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 70,
+          "max_usec": 77,
+          "mean_usec": 46.1285714285714,
+          "sample_usec": {
+            "max": 77,
+            "mean": 46.1285714285714,
+            "p50": 45,
+            "p95": 52
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 70,
+          "max_usec": 25,
+          "mean_usec": 16.7428571428571,
+          "sample_usec": {
+            "max": 25,
+            "mean": 16.7428571428571,
+            "p50": 16,
+            "p95": 19
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 69,
+          "max_usec": 70135,
+          "mean_usec": 49493.2028985507,
+          "sample_usec": {
+            "max": 70135,
+            "mean": 49493.2028985507,
+            "p50": 48368,
+            "p95": 58160
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 70,
+          "max_usec": 76,
+          "mean_usec": 51.1571428571429,
+          "sample_usec": {
+            "max": 76,
+            "mean": 51.1571428571429,
+            "p50": 50,
+            "p95": 59
+          }
+        },
+        "ui/atb_strip.gd:_draw": {
+          "calls": 17,
+          "max_usec": 1967,
+          "mean_usec": 882,
+          "sample_usec": {
+            "max": 1967,
+            "mean": 882,
+            "p50": 633,
+            "p95": 1967
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 70,
+          "max_usec": 241,
+          "mean_usec": 57.0142857142857,
+          "sample_usec": {
+            "max": 241,
+            "mean": 57.0142857142857,
+            "p50": 10,
+            "p95": 194
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 70,
+          "max_usec": 60,
+          "mean_usec": 20.7285714285714,
+          "sample_usec": {
+            "max": 60,
+            "mean": 20.7285714285714,
+            "p50": 19,
+            "p95": 25
+          }
+        }
+      },
+      "wall_seconds": 4.038262
+    },
+    "after_idle": {
+      "active": false,
+      "draw_calls_monitor": 25,
+      "fps_monitor": 60,
+      "frame_delta_ms": {
+        "max": 26.0383333333333,
+        "mean": 16.8166414565826,
+        "p50": 16.6666666666667,
+        "p95": 18.0555555555556
+      },
+      "frame_process_ms_monitor": 18.338,
+      "frames": 238,
+      "label": "after_idle",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 239,
+          "max_usec": 185,
+          "mean_usec": 5.76987447698745,
+          "sample_usec": {
+            "max": 185,
+            "mean": 5.76987447698745,
+            "p50": 4,
+            "p95": 9
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 239,
+          "max_usec": 637,
+          "mean_usec": 220.690376569038,
+          "sample_usec": {
+            "max": 637,
+            "mean": 220.690376569038,
+            "p50": 183,
+            "p95": 526
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 239,
+          "max_usec": 451,
+          "mean_usec": 85.9330543933054,
+          "sample_usec": {
+            "max": 451,
+            "mean": 85.9330543933054,
+            "p50": 73,
+            "p95": 127
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 239,
+          "max_usec": 199,
+          "mean_usec": 8.44769874476988,
+          "sample_usec": {
+            "max": 199,
+            "mean": 8.44769874476988,
+            "p50": 7,
+            "p95": 11
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 239,
+          "max_usec": 395,
+          "mean_usec": 38.1715481171548,
+          "sample_usec": {
+            "max": 395,
+            "mean": 38.1715481171548,
+            "p50": 29,
+            "p95": 61
+          }
+        }
+      },
+      "wall_seconds": 4.000968
+    },
+    "after_movement": {
+      "active": false,
+      "draw_calls_monitor": 21,
+      "fps_monitor": 60,
+      "frame_delta_ms": {
+        "max": 53.6426666666667,
+        "mean": 24.2373515151516,
+        "p50": 18.35,
+        "p95": 33.6955555555557
+      },
+      "frame_process_ms_monitor": 18.354,
+      "frames": 165,
+      "label": "after_movement",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 166,
+          "max_usec": 324,
+          "mean_usec": 7.06626506024096,
+          "sample_usec": {
+            "max": 324,
+            "mean": 7.06626506024096,
+            "p50": 5,
+            "p95": 7
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 166,
+          "max_usec": 719,
+          "mean_usec": 289.433734939759,
+          "sample_usec": {
+            "max": 719,
+            "mean": 289.433734939759,
+            "p50": 247,
+            "p95": 541
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 159,
+          "max_usec": 27445,
+          "mean_usec": 14229.5283018868,
+          "sample_usec": {
+            "max": 27445,
+            "mean": 14229.5283018868,
+            "p50": 10566,
+            "p95": 23320
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 166,
+          "max_usec": 515,
+          "mean_usec": 121.28313253012,
+          "sample_usec": {
+            "max": 515,
+            "mean": 121.28313253012,
+            "p50": 96,
+            "p95": 323
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 166,
+          "max_usec": 225,
+          "mean_usec": 10.4819277108434,
+          "sample_usec": {
+            "max": 225,
+            "mean": 10.4819277108434,
+            "p50": 7,
+            "p95": 12
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 166,
+          "max_usec": 223,
+          "mean_usec": 39.3373493975904,
+          "sample_usec": {
+            "max": 223,
+            "mean": 39.3373493975904,
+            "p50": 32,
+            "p95": 60
+          }
+        }
+      },
+      "wall_seconds": 4.001474
+    },
+    "after_pursuit": {
+      "active": false,
+      "draw_calls_monitor": 27,
+      "fps_monitor": 31,
+      "frame_delta_ms": {
+        "max": 33.935,
+        "mean": 30.1402828282828,
+        "p50": 32.911,
+        "p95": 33.562
+      },
+      "frame_process_ms_monitor": 33.755,
+      "frames": 66,
+      "label": "after_pursuit",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 67,
+          "max_usec": 8,
+          "mean_usec": 4.97014925373134,
+          "sample_usec": {
+            "max": 8,
+            "mean": 4.97014925373134,
+            "p50": 5,
+            "p95": 7
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 67,
+          "max_usec": 573,
+          "mean_usec": 253.373134328358,
+          "sample_usec": {
+            "max": 573,
+            "mean": 253.373134328358,
+            "p50": 201,
+            "p95": 473
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 66,
+          "max_usec": 26260,
+          "mean_usec": 18492.4242424242,
+          "sample_usec": {
+            "max": 26260,
+            "mean": 18492.4242424242,
+            "p50": 18314,
+            "p95": 23907
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 67,
+          "max_usec": 522,
+          "mean_usec": 127.985074626866,
+          "sample_usec": {
+            "max": 522,
+            "mean": 127.985074626866,
+            "p50": 86,
+            "p95": 379
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 67,
+          "max_usec": 202,
+          "mean_usec": 10.5970149253731,
+          "sample_usec": {
+            "max": 202,
+            "mean": 10.5970149253731,
+            "p50": 7,
+            "p95": 12
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 67,
+          "max_usec": 446,
+          "mean_usec": 42.6865671641791,
+          "sample_usec": {
+            "max": 446,
+            "mean": 42.6865671641791,
+            "p50": 32,
+            "p95": 64
+          }
+        }
+      },
+      "wall_seconds": 2.004888
+    },
+    "after_combat": {
+      "active": false,
+      "draw_calls_monitor": 70,
+      "fps_monitor": 36,
+      "frame_delta_ms": {
+        "max": 51.1063333333335,
+        "mean": 28.4875508274232,
+        "p50": 27.7777777777778,
+        "p95": 33.3333333333333
+      },
+      "frame_process_ms_monitor": 33.693,
+      "frames": 141,
+      "label": "after_combat",
+      "scopes": {
+        "arena:centered": {
+          "calls": 846,
+          "max_usec": 2817,
+          "mean_usec": 65.6997635933806,
+          "sample_usec": {
+            "max": 2817,
+            "mean": 65.6997635933806,
+            "p50": 55,
+            "p95": 67
+          }
+        },
+        "systems/combat_engine.gd:_process": {
+          "calls": 142,
+          "max_usec": 280,
+          "mean_usec": 52.1056338028169,
+          "sample_usec": {
+            "max": 280,
+            "mean": 52.1056338028169,
+            "p50": 44,
+            "p95": 72
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 142,
+          "max_usec": 81,
+          "mean_usec": 18.8943661971831,
+          "sample_usec": {
+            "max": 81,
+            "mean": 18.8943661971831,
+            "p50": 16,
+            "p95": 31
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 141,
+          "max_usec": 36488,
+          "mean_usec": 19145,
+          "sample_usec": {
+            "max": 36488,
+            "mean": 19145,
+            "p50": 19029,
+            "p95": 22586
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 142,
+          "max_usec": 522,
+          "mean_usec": 102.964788732394,
+          "sample_usec": {
+            "max": 522,
+            "mean": 102.964788732394,
+            "p50": 84,
+            "p95": 206
+          }
+        },
+        "ui/atb_strip.gd:_draw": {
+          "calls": 18,
+          "max_usec": 3065,
+          "mean_usec": 948.611111111111,
+          "sample_usec": {
+            "max": 3065,
+            "mean": 948.611111111111,
+            "p50": 604,
+            "p95": 3065
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 142,
+          "max_usec": 365,
+          "mean_usec": 35.2676056338028,
+          "sample_usec": {
+            "max": 365,
+            "mean": 35.2676056338028,
+            "p50": 8,
+            "p95": 191
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 142,
+          "max_usec": 101,
+          "mean_usec": 22.8521126760563,
+          "sample_usec": {
+            "max": 101,
+            "mean": 22.8521126760563,
+            "p50": 20,
+            "p95": 33
+          }
+        }
+      },
+      "wall_seconds": 4.006971
+    },
+    "final_idle": {
+      "active": false,
+      "draw_calls_monitor": 25,
+      "fps_monitor": 60,
+      "frame_delta_ms": {
+        "max": 25.5959999999996,
+        "mean": 16.7678008298755,
+        "p50": 16.6666666666667,
+        "p95": 17.4288888888893
+      },
+      "frame_process_ms_monitor": 18.367,
+      "frames": 241,
+      "label": "final_idle",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 242,
+          "max_usec": 17,
+          "mean_usec": 5.24380165289256,
+          "sample_usec": {
+            "max": 17,
+            "mean": 5.24380165289256,
+            "p50": 5,
+            "p95": 8
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 242,
+          "max_usec": 634,
+          "mean_usec": 206.611570247934,
+          "sample_usec": {
+            "max": 634,
+            "mean": 206.611570247934,
+            "p50": 192,
+            "p95": 346
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 242,
+          "max_usec": 471,
+          "mean_usec": 76.504132231405,
+          "sample_usec": {
+            "max": 471,
+            "mean": 76.504132231405,
+            "p50": 63,
+            "p95": 106
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 242,
+          "max_usec": 203,
+          "mean_usec": 11.3057851239669,
+          "sample_usec": {
+            "max": 203,
+            "mean": 11.3057851239669,
+            "p50": 9,
+            "p95": 16
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 242,
+          "max_usec": 242,
+          "mean_usec": 39.5826446280992,
+          "sample_usec": {
+            "max": 242,
+            "mean": 39.5826446280992,
+            "p50": 30,
+            "p95": 62
+          }
+        }
+      },
+      "wall_seconds": 4.016576
+    },
+    "final_movement": {
+      "active": false,
+      "draw_calls_monitor": 21,
+      "fps_monitor": 60,
+      "frame_delta_ms": {
+        "max": 33.332,
+        "mean": 16.8652935185186,
+        "p50": 16.666,
+        "p95": 16.6666666666667
+      },
+      "frame_process_ms_monitor": 18.506,
+      "frames": 240,
+      "label": "final_movement",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 241,
+          "max_usec": 54,
+          "mean_usec": 5.74688796680498,
+          "sample_usec": {
+            "max": 54,
+            "mean": 5.74688796680498,
+            "p50": 5,
+            "p95": 8
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 241,
+          "max_usec": 519,
+          "mean_usec": 222.390041493776,
+          "sample_usec": {
+            "max": 519,
+            "mean": 222.390041493776,
+            "p50": 206,
+            "p95": 407
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 235,
+          "max_usec": 411,
+          "mean_usec": 152.885106382979,
+          "sample_usec": {
+            "max": 411,
+            "mean": 152.885106382979,
+            "p50": 142,
+            "p95": 266
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 241,
+          "max_usec": 339,
+          "mean_usec": 91.9751037344398,
+          "sample_usec": {
+            "max": 339,
+            "mean": 91.9751037344398,
+            "p50": 91,
+            "p95": 133
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 241,
+          "max_usec": 59,
+          "mean_usec": 11.5643153526971,
+          "sample_usec": {
+            "max": 59,
+            "mean": 11.5643153526971,
+            "p50": 11,
+            "p95": 16
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 241,
+          "max_usec": 442,
+          "mean_usec": 45.9668049792531,
+          "sample_usec": {
+            "max": 442,
+            "mean": 45.9668049792531,
+            "p50": 34,
+            "p95": 69
+          }
+        }
+      },
+      "wall_seconds": 4.002548
+    },
+    "final_pursuit": {
+      "active": false,
+      "draw_calls_monitor": 27,
+      "fps_monitor": 60,
+      "frame_delta_ms": {
+        "max": 16.666,
+        "mean": 16.666,
+        "p50": 16.666,
+        "p95": 16.666
+      },
+      "frame_process_ms_monitor": 19.696,
+      "frames": 120,
+      "label": "final_pursuit",
+      "scopes": {
+        "systems/combat_engine.gd:_process": {
+          "calls": 121,
+          "max_usec": 17,
+          "mean_usec": 6.02479338842975,
+          "sample_usec": {
+            "max": 17,
+            "mean": 6.02479338842975,
+            "p50": 6,
+            "p95": 8
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 121,
+          "max_usec": 668,
+          "mean_usec": 244.280991735537,
+          "sample_usec": {
+            "max": 668,
+            "mean": 244.280991735537,
+            "p50": 221,
+            "p95": 603
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 120,
+          "max_usec": 2274,
+          "mean_usec": 214.866666666667,
+          "sample_usec": {
+            "max": 2274,
+            "mean": 214.866666666667,
+            "p50": 156,
+            "p95": 206
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 121,
+          "max_usec": 2109,
+          "mean_usec": 129.545454545455,
+          "sample_usec": {
+            "max": 2109,
+            "mean": 129.545454545455,
+            "p50": 97,
+            "p95": 418
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 121,
+          "max_usec": 356,
+          "mean_usec": 14.4462809917355,
+          "sample_usec": {
+            "max": 356,
+            "mean": 14.4462809917355,
+            "p50": 12,
+            "p95": 17
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 121,
+          "max_usec": 451,
+          "mean_usec": 46.8099173553719,
+          "sample_usec": {
+            "max": 451,
+            "mean": 46.8099173553719,
+            "p50": 44,
+            "p95": 72
+          }
+        }
+      },
+      "wall_seconds": 2.000288
+    },
+    "final_combat": {
+      "active": false,
+      "draw_calls_monitor": 70,
+      "fps_monitor": 60,
+      "frame_delta_ms": {
+        "max": 90.5713333333341,
+        "mean": 17.1232921985815,
+        "p50": 16.6666666666667,
+        "p95": 17.7686666666659
+      },
+      "frame_process_ms_monitor": 18.331,
+      "frames": 235,
+      "label": "final_combat",
+      "scopes": {
+        "arena:centered": {
+          "calls": 1410,
+          "max_usec": 2464,
+          "mean_usec": 51.4035460992908,
+          "sample_usec": {
+            "max": 2464,
+            "mean": 51.4035460992908,
+            "p50": 21,
+            "p95": 98
+          }
+        },
+        "systems/combat_engine.gd:_process": {
+          "calls": 236,
+          "max_usec": 409,
+          "mean_usec": 57.9533898305085,
+          "sample_usec": {
+            "max": 409,
+            "mean": 57.9533898305085,
+            "p50": 54,
+            "p95": 75
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 236,
+          "max_usec": 364,
+          "mean_usec": 26.2033898305085,
+          "sample_usec": {
+            "max": 364,
+            "mean": 26.2033898305085,
+            "p50": 21,
+            "p95": 32
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 235,
+          "max_usec": 8498,
+          "mean_usec": 708.740425531915,
+          "sample_usec": {
+            "max": 8498,
+            "mean": 708.740425531915,
+            "p50": 556,
+            "p95": 1016
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 236,
+          "max_usec": 485,
+          "mean_usec": 108.555084745763,
+          "sample_usec": {
+            "max": 485,
+            "mean": 108.555084745763,
+            "p50": 102,
+            "p95": 157
+          }
+        },
+        "ui/atb_strip.gd:_draw": {
+          "calls": 19,
+          "max_usec": 2244,
+          "mean_usec": 872.947368421053,
+          "sample_usec": {
+            "max": 2244,
+            "mean": 872.947368421053,
+            "p50": 665,
+            "p95": 2244
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 236,
+          "max_usec": 724,
+          "mean_usec": 33.5508474576271,
+          "sample_usec": {
+            "max": 724,
+            "mean": 33.5508474576271,
+            "p50": 12,
+            "p95": 197
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 236,
+          "max_usec": 350,
+          "mean_usec": 30.0423728813559,
+          "sample_usec": {
+            "max": 350,
+            "mean": 30.0423728813559,
+            "p50": 27,
+            "p95": 41
+          }
+        }
+      },
+      "wall_seconds": 4.01593
+    },
+    "perf_draw_breakdown": {
+      "active": false,
+      "draw_calls_monitor": 70,
+      "fps_monitor": 16,
+      "frame_delta_ms": {
+        "max": 107.006,
+        "mean": 63.6653541666667,
+        "p50": 58.3333333333333,
+        "p95": 94.647
+      },
+      "frame_process_ms_monitor": 103.281,
+      "frames": 32,
+      "label": "draw_breakdown",
+      "scopes": {
+        "arena:centered": {
+          "calls": 192,
+          "max_usec": 2715,
+          "mean_usec": 163.708333333333,
+          "sample_usec": {
+            "max": 2715,
+            "mean": 163.708333333333,
+            "p50": 60,
+            "p95": 1177
+          }
+        },
+        "arena:draw_world_ground": {
+          "calls": 32,
+          "max_usec": 60012,
+          "mean_usec": 38286.4375,
+          "sample_usec": {
+            "max": 60012,
+            "mean": 38286.4375,
+            "p50": 36734,
+            "p95": 55608
+          }
+        },
+        "arena:ellipse": {
+          "calls": 96,
+          "max_usec": 3681,
+          "mean_usec": 2159.13541666667,
+          "sample_usec": {
+            "max": 3681,
+            "mean": 2159.13541666667,
+            "p50": 2000,
+            "p95": 3243
+          }
+        },
+        "arena:world_polygon": {
+          "calls": 128,
+          "max_usec": 30825,
+          "mean_usec": 3975.328125,
+          "sample_usec": {
+            "max": 30825,
+            "mean": 3975.328125,
+            "p50": 2151,
+            "p95": 9706
+          }
+        },
+        "systems/combat_engine.gd:_process": {
+          "calls": 33,
+          "max_usec": 160,
+          "mean_usec": 50.6060606060606,
+          "sample_usec": {
+            "max": 160,
+            "mean": 50.6060606060606,
+            "p50": 45,
+            "p95": 98
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 33,
+          "max_usec": 35,
+          "mean_usec": 17.3333333333333,
+          "sample_usec": {
+            "max": 35,
+            "mean": 17.3333333333333,
+            "p50": 16,
+            "p95": 26
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 32,
+          "max_usec": 95825,
+          "mean_usec": 53941.875,
+          "sample_usec": {
+            "max": 95825,
+            "mean": 53941.875,
+            "p50": 50228,
+            "p95": 83364
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 33,
+          "max_usec": 55,
+          "mean_usec": 48.7272727272727,
+          "sample_usec": {
+            "max": 55,
+            "mean": 48.7272727272727,
+            "p50": 48,
+            "p95": 54
+          }
+        },
+        "ui/atb_strip.gd:_draw": {
+          "calls": 9,
+          "max_usec": 2179,
+          "mean_usec": 1116.55555555556,
+          "sample_usec": {
+            "max": 2179,
+            "mean": 1116.55555555556,
+            "p50": 1106,
+            "p95": 2179
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 33,
+          "max_usec": 290,
+          "mean_usec": 59.969696969697,
+          "sample_usec": {
+            "max": 290,
+            "mean": 59.969696969697,
+            "p50": 10,
+            "p95": 189
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 33,
+          "max_usec": 131,
+          "mean_usec": 27.030303030303,
+          "sample_usec": {
+            "max": 131,
+            "mean": 27.030303030303,
+            "p50": 20,
+            "p95": 115
+          }
+        }
+      },
+      "wall_seconds": 2.026605
+    },
+    "perf_final_actions": {
+      "active": false,
+      "draw_calls_monitor": 73,
+      "fps_monitor": 56,
+      "frame_delta_ms": {
+        "max": 84.4143333333323,
+        "mean": 17.5576537806954,
+        "p50": 16.6666666666667,
+        "p95": 19.4444444444444
+      },
+      "frame_process_ms_monitor": 38.896,
+      "frames": 457,
+      "label": "final_active_actions",
+      "scopes": {
+        "arena:centered": {
+          "calls": 2960,
+          "max_usec": 3799,
+          "mean_usec": 36.7469594594595,
+          "sample_usec": {
+            "max": 3799,
+            "mean": 36.7469594594595,
+            "p50": 22,
+            "p95": 89
+          }
+        },
+        "systems/combat_engine.gd:_process": {
+          "calls": 458,
+          "max_usec": 4739,
+          "mean_usec": 65.6004366812227,
+          "sample_usec": {
+            "max": 4739,
+            "mean": 65.6004366812227,
+            "p50": 37,
+            "p95": 52
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 458,
+          "max_usec": 321,
+          "mean_usec": 21.9082969432314,
+          "sample_usec": {
+            "max": 321,
+            "mean": 21.9082969432314,
+            "p50": 21,
+            "p95": 31
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 458,
+          "max_usec": 13293,
+          "mean_usec": 4076.37772925764,
+          "sample_usec": {
+            "max": 13293,
+            "mean": 4076.37772925764,
+            "p50": 2349,
+            "p95": 8100
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 458,
+          "max_usec": 540,
+          "mean_usec": 114.967248908297,
+          "sample_usec": {
+            "max": 540,
+            "mean": 114.967248908297,
+            "p50": 109,
+            "p95": 162
+          }
+        },
+        "ui/atb_strip.gd:_draw": {
+          "calls": 40,
+          "max_usec": 555,
+          "mean_usec": 337.975,
+          "sample_usec": {
+            "max": 555,
+            "mean": 337.975,
+            "p50": 329,
+            "p95": 440
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 458,
+          "max_usec": 1598,
+          "mean_usec": 37.146288209607,
+          "sample_usec": {
+            "max": 1598,
+            "mean": 37.146288209607,
+            "p50": 13,
+            "p95": 210
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 458,
+          "max_usec": 351,
+          "mean_usec": 35.4039301310044,
+          "sample_usec": {
+            "max": 351,
+            "mean": 35.4039301310044,
+            "p50": 30,
+            "p95": 49
+          }
+        },
+        "ui/combat_screen.gd:refresh": {
+          "calls": 6,
+          "max_usec": 4293,
+          "mean_usec": 2659,
+          "sample_usec": {
+            "max": 4293,
+            "mean": 2659,
+            "p50": 2174,
+            "p95": 4293
+          }
+        }
+      },
+      "wall_seconds": 8.017192
+    },
+    "perf_revision_actions": {
+      "active": false,
+      "draw_calls_monitor": 73,
+      "fps_monitor": 59,
+      "frame_delta_ms": {
+        "max": 58.3306666666667,
+        "mean": 17.2605068394529,
+        "p50": 16.6666666666667,
+        "p95": 18.0555555555556
+      },
+      "frame_process_ms_monitor": 40.274,
+      "frames": 463,
+      "label": "final_revision_active",
+      "scopes": {
+        "arena:centered": {
+          "calls": 2771,
+          "max_usec": 3448,
+          "mean_usec": 37.6972212197763,
+          "sample_usec": {
+            "max": 3448,
+            "mean": 37.6972212197763,
+            "p50": 23,
+            "p95": 89
+          }
+        },
+        "systems/combat_engine.gd:_process": {
+          "calls": 464,
+          "max_usec": 3643,
+          "mean_usec": 59.6702586206897,
+          "sample_usec": {
+            "max": 3643,
+            "mean": 59.6702586206897,
+            "p50": 36,
+            "p95": 53
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 464,
+          "max_usec": 351,
+          "mean_usec": 23.010775862069,
+          "sample_usec": {
+            "max": 351,
+            "mean": 23.010775862069,
+            "p50": 22,
+            "p95": 32
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 430,
+          "max_usec": 37156,
+          "mean_usec": 4840.97441860465,
+          "sample_usec": {
+            "max": 37156,
+            "mean": 4840.97441860465,
+            "p50": 5413,
+            "p95": 8383
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 464,
+          "max_usec": 535,
+          "mean_usec": 122.359913793103,
+          "sample_usec": {
+            "max": 535,
+            "mean": 122.359913793103,
+            "p50": 116,
+            "p95": 167
+          }
+        },
+        "ui/atb_strip.gd:_draw": {
+          "calls": 40,
+          "max_usec": 2532,
+          "mean_usec": 431.575,
+          "sample_usec": {
+            "max": 2532,
+            "mean": 431.575,
+            "p50": 366,
+            "p95": 545
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 464,
+          "max_usec": 746,
+          "mean_usec": 38.8599137931034,
+          "sample_usec": {
+            "max": 746,
+            "mean": 38.8599137931034,
+            "p50": 13,
+            "p95": 219
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 464,
+          "max_usec": 2113,
+          "mean_usec": 34.9525862068966,
+          "sample_usec": {
+            "max": 2113,
+            "mean": 34.9525862068966,
+            "p50": 29,
+            "p95": 47
+          }
+        },
+        "ui/combat_screen.gd:refresh": {
+          "calls": 6,
+          "max_usec": 2456,
+          "mean_usec": 2001.83333333333,
+          "sample_usec": {
+            "max": 2456,
+            "mean": 2001.83333333333,
+            "p50": 2014,
+            "p95": 2456
+          }
+        }
+      },
+      "wall_seconds": 8.000968
+    },
+    "perf_revision_state": {
+      "actions": 2,
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "name": "Ataque básico",
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA 01"
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "name": "Defensa",
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA 02"
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "name": "Ataque cercano",
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR 01"
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "name": "Ataque distante",
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR 02"
+            }
+          ],
+          "atb": 0.49998,
+          "hp": 96,
+          "id": "main",
+          "max_hp": 100,
+          "name": "Principal",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 530,
+            "y": 150
+          },
+          "ready_at": {
+            "close": 4
+          },
+          "ready_time": -1,
+          "shield": 0,
+          "speed": 10,
+          "turns": 1
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "atb": 0,
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 0,
+          "id": "zone_1_0",
+          "max_hp": 30,
+          "name": "Enemigo 1",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {},
+          "ready_time": -1,
+          "shield": 0,
+          "speed": 8,
+          "turns": 0,
+          "zone_id": "zone_1"
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "name": "Ataque técnico",
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA"
+            }
+          ],
+          "atb": 58.2975840000002,
+          "home": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "hp": 30,
+          "id": "zone_1_1",
+          "max_hp": 30,
+          "name": "Enemigo 2",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 770,
+            "y": 210
+          },
+          "ready_at": {
+            "enemy_hit": 2
+          },
+          "ready_time": -1,
+          "shield": 0,
+          "speed": 12,
+          "turns": 1,
+          "zone_id": "zone_1"
+        }
+      ],
+      "atb": [
+        {
+          "charge": 58.2975840000002,
+          "id": "zone_1_1",
+          "name": "Enemigo 2",
+          "order": 3.47520133333332,
+          "rank": 2,
+          "status": "charging"
+        },
+        {
+          "charge": 0.49998,
+          "id": "main",
+          "name": "Principal",
+          "order": 9.950002,
+          "rank": 2,
+          "status": "charging"
+        },
+        {
+          "charge": 0,
+          "id": "zone_1_0",
+          "name": "Enemigo 1",
+          "order": 0,
+          "rank": 3,
+          "status": "defeated"
+        }
+      ],
+      "clock": 17.9999443333336,
+      "combat_hud_visible": true,
+      "combat_instance": 44073748025,
+      "elapsed": 0,
+      "exploration_help_visible": false,
+      "forecast": [
+        {
+          "current": false,
+          "id": "zone_1_1",
+          "name": "Enemigo 2",
+          "time": 3.47520133333332
+        },
+        {
+          "current": false,
+          "id": "main",
+          "name": "Principal",
+          "time": 9.950002
+        },
+        {
+          "current": false,
+          "id": "zone_1_1",
+          "name": "Enemigo 2",
+          "time": 16.6085346666667
+        },
+        {
+          "current": false,
+          "id": "main",
+          "name": "Principal",
+          "time": 24.750002
+        },
+        {
+          "current": false,
+          "id": "zone_1_1",
+          "name": "Enemigo 2",
+          "time": 29.741868
+        },
+        {
+          "current": false,
+          "id": "main",
+          "name": "Principal",
+          "time": 39.550002
+        },
+        {
+          "current": false,
+          "id": "zone_1_1",
+          "name": "Enemigo 2",
+          "time": 44.350002
+        }
+      ],
+      "pending": {},
+      "performance": {
+        "forecast_updates": 89,
+        "fps": 59,
+        "process_ms": 40.274
+      },
+      "priority": "basic",
+      "resolved": true,
+      "result": "",
+      "retained": "basic",
+      "running": true,
+      "scenario": -1,
+      "scene_instance": 43285218774,
+      "world": {
+        "actors": [
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 18,
+                "id": "basic",
+                "name": "Ataque básico",
+                "range": 400,
+                "shield": 0,
+                "slot": "FIJA 01"
+              },
+              {
+                "cooldown": 0,
+                "damage": 0,
+                "id": "guard",
+                "name": "Defensa",
+                "range": 0,
+                "shield": 24,
+                "slot": "FIJA 02"
+              },
+              {
+                "cooldown": 2,
+                "damage": 30,
+                "id": "close",
+                "name": "Ataque cercano",
+                "range": 240,
+                "shield": 0,
+                "slot": "MODULAR 01"
+              },
+              {
+                "cooldown": 1,
+                "damage": 12,
+                "id": "far",
+                "name": "Ataque distante",
+                "range": 600,
+                "shield": 0,
+                "slot": "MODULAR 02"
+              }
+            ],
+            "atb": 0.49998,
+            "hp": 96,
+            "id": "main",
+            "max_hp": 100,
+            "name": "Principal",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 530,
+              "y": 150
+            },
+            "ready_at": {
+              "close": 4
+            },
+            "ready_time": -1,
+            "shield": 0,
+            "speed": 10,
+            "turns": 1
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "name": "Ataque técnico",
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA"
+              }
+            ],
+            "atb": 0,
+            "home": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "hp": 0,
+            "id": "zone_1_0",
+            "max_hp": 30,
+            "name": "Enemigo 1",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "ready_at": {},
+            "ready_time": -1,
+            "shield": 0,
+            "speed": 8,
+            "turns": 0,
+            "zone_id": "zone_1"
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "name": "Ataque técnico",
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA"
+              }
+            ],
+            "atb": 58.2975840000002,
+            "home": {
+              "type": "Vector2",
+              "x": 770,
+              "y": 210
+            },
+            "hp": 30,
+            "id": "zone_1_1",
+            "max_hp": 30,
+            "name": "Enemigo 2",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 770,
+              "y": 210
+            },
+            "ready_at": {
+              "enemy_hit": 2
+            },
+            "ready_time": -1,
+            "shield": 0,
+            "speed": 12,
+            "turns": 1,
+            "zone_id": "zone_1"
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "name": "Ataque técnico",
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA"
+              }
+            ],
+            "home": {
+              "type": "Vector2",
+              "x": 1450,
+              "y": 380
+            },
+            "hp": 30,
+            "id": "zone_2_0",
+            "max_hp": 30,
+            "name": "Enemigo 1",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 1450,
+              "y": 380
+            },
+            "ready_at": {},
+            "shield": 0,
+            "speed": 8,
+            "turns": 0,
+            "zone_id": "zone_2"
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "name": "Ataque técnico",
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA"
+              }
+            ],
+            "home": {
+              "type": "Vector2",
+              "x": 1780,
+              "y": 180
+            },
+            "hp": 30,
+            "id": "zone_2_1",
+            "max_hp": 30,
+            "name": "Enemigo 2",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 1780,
+              "y": 180
+            },
+            "ready_at": {},
+            "shield": 0,
+            "speed": 12,
+            "turns": 0,
+            "zone_id": "zone_2"
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "name": "Ataque técnico",
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA"
+              }
+            ],
+            "home": {
+              "type": "Vector2",
+              "x": 2320,
+              "y": 130
+            },
+            "hp": 30,
+            "id": "zone_3_0",
+            "max_hp": 30,
+            "name": "Enemigo 1",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 2320,
+              "y": 130
+            },
+            "ready_at": {},
+            "shield": 0,
+            "speed": 8,
+            "turns": 0,
+            "zone_id": "zone_3"
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "name": "Ataque técnico",
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA"
+              }
+            ],
+            "home": {
+              "type": "Vector2",
+              "x": 2610,
+              "y": 360
+            },
+            "hp": 30,
+            "id": "zone_3_1",
+            "max_hp": 30,
+            "name": "Enemigo 2",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 2610,
+              "y": 360
+            },
+            "ready_at": {},
+            "shield": 0,
+            "speed": 12,
+            "turns": 0,
+            "zone_id": "zone_3"
+          }
+        ],
+        "alerted_groups": {
+          "zone_2": "idle"
+        },
+        "camera_x": 330,
+        "camera_y": 0,
+        "cleared": 0,
+        "confrontation": "",
+        "encounters": [
+          {
+            "enemy_positions": [
+              {
+                "type": "Vector2",
+                "x": 690,
+                "y": 150
+              },
+              {
+                "type": "Vector2",
+                "x": 770,
+                "y": 210
+              }
+            ],
+            "hp_at_start": 100,
+            "principal_position": {
+              "type": "Vector2",
+              "x": 530,
+              "y": 150
+            },
+            "zone": "zone_1"
+          }
+        ],
+        "obstacles": [
+          {
+            "h": 150,
+            "type": "Rect2",
+            "w": 120,
+            "x": 380,
+            "y": 175
+          },
+          {
+            "h": 100,
+            "type": "Rect2",
+            "w": 100,
+            "x": 1220,
+            "y": 200
+          },
+          {
+            "h": 150,
+            "type": "Rect2",
+            "w": 120,
+            "x": 2120,
+            "y": 140
+          }
+        ],
+        "route_recalculations": 0,
+        "spatial_events": [],
+        "state": "battle",
+        "visible_world": true,
+        "zone_index": 0
+      }
+    }
+  }
+}

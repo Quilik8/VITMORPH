@@ -24,3 +24,7 @@ Primero guardar los cambios locales pendientes en un commit. Git bloquea cambios
 ## Contenido
 
 Se versionan proyecto, escenas, scripts, addon, documentación y evidencias. Se excluyen cachés `.godot`, temporales, configuración personal `.codex` y logs. Los documentos originales externos en Downloads no están dentro del proyecto.
+
+## Punto de optimización
+
+`checkpoint-v0.1.1`: primera optimización medida de dibujo, con evidencia y límites en `PERFORMANCE.md`. Conserva `checkpoint-v0.1.0` para recuperar la base anterior. La etiqueta no certifica rendimiento constante ni juego completo.

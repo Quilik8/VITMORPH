@@ -116,3 +116,7 @@ No se certificó 60 FPS ni se realizó un benchmark. No se probaron exportación
 - Evidencia: `tests/evidence/cleanup_optimization.json`, `world_2d_no_preparation.png`, `event_sequence.png`. No se ejecutó ni amplió la suite automática histórica de iniciativa; sigue sin certificar ATB.
 - Punto de recuperación: `checkpoint-v0.1.0`. Alcance: prototipo compilable y observado, con rendimiento aún pendiente de resolver; no versión de lanzamiento.
 - Tras reiniciar con la última mejora de dibujo, lectura puntual en exploración inmóvil: 60 FPS / 19,984 ms de proceso. No es una comparación controlada con persecución o combate, ni demuestra la causa de la diferencia. Estado inicial final observado: travelling, 100 PV, comandos vacíos y sin nodo Preparation. Consola MCP sin advertencias/errores en la consulta.
+
+## Iteración 09 — rendimiento medido (3 octubre 2026)
+
+MCP confirmado por lectura de nombre del proyecto. Instrumentación optativa por componente, comparación de capturas antes/después y revisión del render. Detalle autocontenido, método, tiempos y límites en `PERFORMANCE.md`; datos en `tests/evidence/optimization_v0_1_1.json`. No se ejecutó la suite antigua ni se añadieron pruebas automáticas. Cola, P/R y feedback de combate observados con entrada real vía MCP. Punto recuperable: `checkpoint-v0.1.1`.

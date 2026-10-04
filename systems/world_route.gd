@@ -1,6 +1,8 @@
 extends Node
+var profile: Node
 ## Recorrido, encuentro y retorno al recorrido comparten actores y escena.
 signal route_changed
+signal world_rebuilt
 signal travelling_started
 const Geometry = preload("res://systems/world_geometry.gd")
 const World = preload("res://data/world_fixture.gd")
@@ -43,6 +45,7 @@ func preview() -> void:
 	alerted_groups.clear()
 	confrontation = ""
 	spatial_events.clear()
+	world_rebuilt.emit()
 
 func start() -> void:
 	preview()
@@ -64,6 +67,12 @@ func is_active() -> bool:
 	return visible_world and state in ["travelling", "battle", "aftermath"]
 
 func _process(delta: float) -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	_process_body(delta)
+	if stamp != 0:
+		profile.record("systems/world_route.gd:_process", Time.get_ticks_usec() - stamp)
+
+func _process_body(delta: float) -> void:
 	if not visible_world:
 		return
 	if state == "travelling":

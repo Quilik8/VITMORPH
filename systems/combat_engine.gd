@@ -1,4 +1,5 @@
 extends Node
+var profile: Node
 
 signal state_changed
 signal action_chosen(action: Dictionary)
@@ -46,6 +47,12 @@ func initialize_atb() -> void:
 	state_changed.emit()
 
 func _process(delta: float) -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	_process_body(delta)
+	if stamp != 0:
+		profile.record("systems/combat_engine.gd:_process", Time.get_ticks_usec() - stamp)
+
+func _process_body(delta: float) -> void:
 	if not running:
 		return
 	var previous_clock := combat_clock

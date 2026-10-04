@@ -12,3 +12,11 @@
 - Integración Git con Quilik8/VITMORPH; código, decisiones y evidencia versionados.
 
 Este punto no certifica un juego completo ni 60 FPS. Las pruebas antiguas de iniciativa virtual son históricas; el ATB conserva validación de ejecución documentada y casos pendientes. Movimiento de combate y bloqueo de ataques por terreno siguen pendientes.
+
+## 0.1.1 · 3 de octubre de 2026 · optimización de dibujo
+
+- Terreno retenido en capa independiente; seguimiento de cámara por transformación.
+- Mallas de figuras/sombras trianguladas una vez y contorno precalculado.
+- Invalidación por estado/animación; carga ATB no obliga a reconstruir el campo.
+- Perfilado optativo de CPU y capturas comparadas en `PERFORMANCE.md`.
+- Capturas cortas: navegación/persecución ~60 FPS medios; carga de combate ~59; acciones ~58 con picos aislados pendientes. No garantía para mapas finales.

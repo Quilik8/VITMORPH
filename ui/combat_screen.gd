@@ -1,4 +1,5 @@
 extends Control
+var profile: Node
 ## HUD de intervención: campo primero, detalles contextuales y diagnóstico optativo.
 const EngineScript = preload("res://systems/combat_engine.gd")
 const Fixture = preload("res://data/combat_fixture.gd")
@@ -32,13 +33,18 @@ var selected_skill := "basic"
 var log_lines: Array[String] = []
 
 func _ready() -> void:
+	profile = preload("res://systems/performance_probe.gd").new()
+	profile.name = "PerformanceProbe"
+	add_child(profile)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	theme = make_theme()
 	combat = EngineScript.new()
 	combat.name = "Combat"
+	combat.profile = profile
 	add_child(combat)
 	route = RouteScript.new()
 	route.name = "WorldRoute"
+	route.profile = profile
 	route.combat = combat
 	add_child(route)
 	build_screen()
@@ -134,12 +140,14 @@ func build_screen() -> void:
 	header.add_child(diagnostic_button)
 	arena = ArenaScript.new()
 	arena.name = "Battlefield"
+	arena.profile = profile
 	arena.combat = combat
 	arena.route = route
 	arena.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	root.add_child(arena)
 	atb_strip = ATBStrip.new()
 	atb_strip.name = "ATB"
+	atb_strip.profile = profile
 	atb_strip.combat = combat
 	atb_strip.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	atb_strip.offset_bottom = 64
@@ -265,6 +273,7 @@ func toggle_diagnostics() -> void:
 	var surface: Control = diagnostic_view.get_parent()
 	surface.visible = not surface.visible
 	diagnostic_button.text = "Cerrar detalles" if surface.visible else "Detalles"
+	refresh()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
@@ -303,6 +312,12 @@ func add_message(value: String) -> void:
 	log_label.text = "\n".join(log_lines)
 
 func refresh() -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	refresh_body()
+	if stamp != 0:
+		profile.record("ui/combat_screen.gd:refresh", Time.get_ticks_usec() - stamp)
+
+func refresh_body() -> void:
 	var active: bool = combat.running or route.state == "aftermath"
 	atb_strip.visible = combat.running
 	intervention_strip.visible = combat.running
@@ -322,7 +337,8 @@ func refresh() -> void:
 		if combat.pending.is_empty():
 			action_label.text = ""
 			arena.reset_feedback()
-	queue_label.text = "Orden ATB: " + " → ".join(combat.upcoming(4))
+	if diagnostic_view.get_parent().visible:
+		queue_label.text = "Orden ATB: " + " → ".join(combat.upcoming(4))
 	if route.visible_world and not combat.running:
 		queue_label.text = "Recorrido: %d / %d encuentros superados" % [route.cleared,route.zones.size()]
 		if route.state == "travelling":
@@ -361,7 +377,13 @@ func refresh() -> void:
 	detail_label.tooltip_text = "%s · alcance %d · reutilización %d elecciones" % [effect, selected.range, selected.cooldown]
 	arena.queue_redraw()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	_process_body(delta)
+	if stamp != 0:
+		profile.record("ui/combat_screen.gd:_process", Time.get_ticks_usec() - stamp)
+
+func _process_body(delta: float) -> void:
 	if combat != null and combat.running:
 		var phase := "Cargando ATB" if combat.pending.is_empty() else "Recuperación"
 		if not combat.resolved:

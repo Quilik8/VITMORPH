@@ -1,4 +1,5 @@
 extends Control
+var profile: Node
 ## Franja contextual de tiempo; no representa rondas fijas.
 var combat: Node
 var cached_forecast: Array[Dictionary] = []
@@ -14,6 +15,12 @@ func _ready() -> void:
 	combat.state_changed.connect(func(): dirty = true)
 
 func _process(delta: float) -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	_process_body(delta)
+	if stamp != 0:
+		profile.record("ui/atb_strip.gd:_process", Time.get_ticks_usec() - stamp)
+
+func _process_body(delta: float) -> void:
 	if visible and combat != null:
 		refresh_elapsed += delta
 		if dirty or refresh_elapsed >= 0.2:
@@ -24,6 +31,12 @@ func _process(delta: float) -> void:
 			queue_redraw()
 
 func _draw() -> void:
+	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
+	_draw_body()
+	if stamp != 0:
+		profile.record("ui/atb_strip.gd:_draw", Time.get_ticks_usec() - stamp)
+
+func _draw_body() -> void:
 	if combat == null:
 		return
 	var rows: Array[Dictionary] = cached_forecast

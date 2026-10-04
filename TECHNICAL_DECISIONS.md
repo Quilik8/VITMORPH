@@ -51,3 +51,6 @@ Godot 4.7.2 está instalado en `C:\Users\jp_va\AppData\Local\Programs\Godot\4.7.
 - T-025: exploración de 85 a 180 unidades/s tras crítica de lentitud; persecución enemiga permanece a 65 unidades/s.
 - T-026: ATB solicitado por el jugador. Carga 0–100 a velocidad puntos/s, demás bestias cargan durante acciones, FIFO por llegada con desempate estable, una oportunidad acumulada máximo y elección de IA al despachar. Reset de carga al terminar recuperación y al iniciar encuentro. Cooldown por elecciones propias se conserva.
 - T-027: franja superior contextual de orden y carga ATB, feedback textual además de color, sin retratos generados. La suite histórica no se reutiliza como certificación del nuevo planificador. Movimiento táctico y bloqueo de ataques siguen pendientes.
+
+- T-035: priorizar rendimiento según CPU medida: reconstrucción del dibujo era dominante (45–52 ms), mundo ~0,25 ms. Separar terreno retenido, reutilizar mallas y redibujar durante animación/cambio. No cambiar reglas ni radios.
+- T-036: medidor de CPU optativo y acotado; capturas cortas por estado con baseline 8950783. Documentar medias, p95, picos y limitaciones; no confundir monitor global de fotograma con CPU exclusiva de scripts.
