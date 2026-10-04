@@ -46,3 +46,5 @@ La pantalla de preparación fue rechazada y eliminada. El jugador construirá su
 Primera pasada medida: terreno retenido y mallas reutilizadas. Resultados, diagnóstico optativo y límites en [PERFORMANCE.md](PERFORMANCE.md). Punto recuperable de esta pasada: `checkpoint-v0.1.1`.
 
 Investigación para contenido futuro: [ASSET_PERFORMANCE_PLAN.md](ASSET_PERFORMANCE_PLAN.md). Recomendaciones técnicas para recursos, sprites, efectos y sectores; aún no implementadas ni certificadas.
+
+Segunda pasada: [PERFORMANCE_HEADROOM.md](PERFORMANCE_HEADROOM.md). Incluye CPU, p95/p99, tirones, memoria gráfica, nodos/recursos y costes de cachés. Punto recuperable `checkpoint-v0.1.2`. La etiqueta histórica de persecución en la primera comparación fue corregida: medía reposicionamiento de cámara.

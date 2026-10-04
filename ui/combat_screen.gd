@@ -408,6 +408,7 @@ func snapshot() -> Dictionary:
 	report["exploration_help_visible"] = exploration_help.visible
 	report["scene_instance"] = get_tree().current_scene.get_instance_id()
 	report["combat_instance"] = combat.get_instance_id()
+	report["presentation_cache"] = {"active_popups": arena.popups.size(), "free_popups": arena.popup_pool.size(), "peak_popups": arena.popup_peak, "text_widths": arena.text_widths.size(), "text_width_limit": 256, "free_popup_limit": 8}
 	return report
 
 func run_rule_checks() -> Dictionary:

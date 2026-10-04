@@ -20,6 +20,8 @@ static func segment_clear(from: Vector2, to: Vector2, obstacles: Array[Rect2], p
 	return true
 
 static func move_sliding(from: Vector2, motion: Vector2, obstacles: Array[Rect2]) -> Vector2:
+	if motion == Vector2.ZERO:
+		return from
 	var position := from
 	var steps := maxi(1, ceili(motion.length() / 4.0))
 	var step := motion / float(steps)

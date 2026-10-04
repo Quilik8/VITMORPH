@@ -12,6 +12,13 @@ var state := "ready"
 var actors: Array[Dictionary] = []
 var zones: Array[Dictionary] = []
 var obstacles: Array[Rect2] = []
+var group_members: Dictionary = {}
+var cleared_groups: Dictionary = {}
+var active_groups := 0
+var last_scanned_position := Vector2(INF, INF)
+var spatial_scans := 0
+const SPATIAL_EVENT_LIMIT := 128
+const ENCOUNTER_LOG_LIMIT := 64
 var zone_index := 0
 var cleared := 0
 var camera_x := 0.0
@@ -33,6 +40,18 @@ func preview() -> void:
 	zones = World.locations()
 	obstacles = World.obstacles()
 	actors = World.populate()
+	group_members.clear()
+	cleared_groups.clear()
+	active_groups = 0
+	last_scanned_position = Vector2(INF, INF)
+	spatial_scans = 0
+	for zone in zones:
+		var members: Array[Dictionary] = []
+		group_members[zone.id] = members
+	for actor in actors:
+		var id: String = actor.get("zone_id", "")
+		if group_members.has(id):
+			group_members[id].append(actor)
 	state = "ready"
 	zone_index = 0
 	cleared = 0
@@ -57,6 +76,7 @@ func start() -> void:
 	combat.result = ""
 	combat.pending = {}
 	combat.history.clear()
+	combat.action_count = 0
 	combat.elapsed = 0.0
 	visible_world = true
 	state = "travelling"
@@ -82,19 +102,26 @@ func _process_body(delta: float) -> void:
 		main.position.x = clampf(main.position.x, World.MOVEMENT_BOUNDS.position.x, World.MOVEMENT_BOUNDS.end.x)
 		main.position.y = clampf(main.position.y, World.MOVEMENT_BOUNDS.position.y, World.MOVEMENT_BOUNDS.end.y)
 		confrontation = ""
-		for index in zones.size():
-			var enemies := group_for(zones[index].id)
-			if enemies.is_empty():
-				continue
-			if zones[index].get("confronts", false):
-				update_pursuit(zones[index], enemies, main, delta)
-			for enemy in enemies:
-				if alerted_groups.get(zones[index].id, "idle") != "returning" and main.position.distance_to(enemy.position) <= World.ENCOUNTER_RADIUS and Geometry.segment_clear(main.position, enemy.position, obstacles):
-					zone_index = index
-					begin_encounter(enemies)
+		if main.position != last_scanned_position or active_groups > 0:
+			last_scanned_position = main.position
+			spatial_scans += 1
+			for index in zones.size():
+				if cleared_groups.has(zones[index].id):
+					continue
+				var enemies: Array[Dictionary] = group_members[zones[index].id]
+				if enemies.is_empty():
+					continue
+				if zones[index].get("confronts", false):
+					update_pursuit(zones[index], enemies, main, delta)
+				for enemy in enemies:
+					if enemy.hp <= 0:
+						continue
+					if alerted_groups.get(zones[index].id, "idle") != "returning" and main.position.distance_to(enemy.position) <= World.ENCOUNTER_RADIUS and Geometry.segment_clear(main.position, enemy.position, obstacles):
+						zone_index = index
+						begin_encounter(group_for(zones[index].id))
+						break
+				if state == "battle":
 					break
-			if state == "battle":
-				break
 	elif state == "aftermath":
 		aftermath += delta
 		if aftermath >= World.AFTERMATH_SECONDS:
@@ -148,6 +175,10 @@ func update_pursuit(zone: Dictionary, enemies: Array[Dictionary], main: Dictiona
 				enemy.position = enemy.home
 			mode = "idle"
 	if mode != alerted_groups.get(zone.id, "idle"):
+		var previous_mode: String = alerted_groups.get(zone.id, "idle")
+		active_groups += int(mode != "idle") - int(previous_mode != "idle")
+		if spatial_events.size() >= SPATIAL_EVENT_LIMIT:
+			spatial_events.pop_front()
 		spatial_events.append({"group": zone.id, "state": mode, "principal_position": main.position})
 	alerted_groups[zone.id] = mode
 
@@ -168,8 +199,8 @@ func _notification(what: int) -> void:
 
 func group_for(zone_id: String) -> Array[Dictionary]:
 	var group: Array[Dictionary] = []
-	for actor in actors:
-		if actor.get("zone_id", "") == zone_id and actor.hp > 0:
+	for actor in group_members.get(zone_id, []):
+		if actor.hp > 0:
 			group.append(actor)
 	return group
 
@@ -178,6 +209,8 @@ func begin_encounter(enemies: Array[Dictionary]) -> void:
 	held_keys.clear()
 	var participants: Array[Dictionary] = [actors[0]]
 	participants.append_array(enemies)
+	if encounter_record.size() >= ENCOUNTER_LOG_LIMIT:
+		encounter_record.pop_front()
 	encounter_record.append({"zone": zones[zone_index].id, "principal_position": actors[0].position,
 		"enemy_positions": enemies.map(func(actor): return actor.position), "hp_at_start": actors[0].hp})
 	combat.begin_encounter(participants)
@@ -188,6 +221,10 @@ func on_combat_finished(outcome: String) -> void:
 		return
 	if outcome == "Victoria":
 		cleared += 1
+		var id: String = zones[zone_index].id
+		cleared_groups[id] = true
+		active_groups -= int(alerted_groups.get(id, "idle") != "idle")
+		alerted_groups.erase(id)
 		aftermath = 0.0
 		state = "aftermath"
 	else:
@@ -196,4 +233,4 @@ func on_combat_finished(outcome: String) -> void:
 
 func snapshot() -> Dictionary:
 	return {"state": state, "visible_world": visible_world, "zone_index": zone_index, "cleared": cleared,
-		"spatial_events": spatial_events.duplicate(true), "obstacles": obstacles, "camera_x": camera_x, "camera_y": camera_y, "route_recalculations": route_recalculations, "confrontation": confrontation, "alerted_groups": alerted_groups.duplicate(), "actors": actors.duplicate(true), "encounters": encounter_record.duplicate(true)}
+		"spatial_events": spatial_events.duplicate(true), "obstacles": obstacles, "camera_x": camera_x, "camera_y": camera_y, "route_recalculations": route_recalculations, "spatial_scans": spatial_scans, "active_groups": active_groups, "spatial_event_limit": SPATIAL_EVENT_LIMIT, "encounter_log_limit": ENCOUNTER_LOG_LIMIT, "confrontation": confrontation, "alerted_groups": alerted_groups.duplicate(), "actors": actors.duplicate(true), "encounters": encounter_record.duplicate(true)}

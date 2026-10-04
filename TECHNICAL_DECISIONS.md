@@ -54,3 +54,8 @@ Godot 4.7.2 está instalado en `C:\Users\jp_va\AppData\Local\Programs\Godot\4.7.
 
 - T-035: priorizar rendimiento según CPU medida: reconstrucción del dibujo era dominante (45–52 ms), mundo ~0,25 ms. Separar terreno retenido, reutilizar mallas y redibujar durante animación/cambio. No cambiar reglas ni radios.
 - T-036: medidor de CPU optativo y acotado; capturas cortas por estado con baseline 8950783. Documentar medias, p95, picos y limitaciones; no confundir monitor global de fotograma con CPU exclusiva de scripts.
+
+- T-037: precalcular huella y protección; aislar arco de anticipación retenido con uniforme de progreso. Intercambiar ~5,25 KiB de buffers y un nodo por menor CPU de reconstrucción, sin alterar diseño visual.
+- T-038: cachear pertenencia a grupos y omitir detección espacial inmóvil solo sin grupos activos; perseguidores/regreso siguen por delta. Los futuros emisores de movimiento/geometría requerirán invalidación.
+- T-039: limitar historial reciente y cachés, reciclar feedback sin perder eventos; contador total de acciones independiente. Límites técnicos, no reglas de juego ni certificación de memoria a largo plazo.
+- T-040: observar p99/tirones, asignaciones del motor y carga del renderer además de FPS. Corregir etiqueta histórica de cámara mal descrita como persecución; conservar originales y medir persecución real separadamente. No atribuir ahorro GPU o RAM total sin evidencia.

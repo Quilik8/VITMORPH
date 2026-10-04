@@ -24,4 +24,15 @@ Este punto no certifica un juego completo ni 60 FPS. Las pruebas antiguas de ini
 - Mallas de figuras/sombras trianguladas una vez y contorno precalculado.
 - Invalidación por estado/animación; carga ATB no obliga a reconstruir el campo.
 - Perfilado optativo de CPU y capturas comparadas en `PERFORMANCE.md`.
-- Capturas cortas: navegación/persecución ~60 FPS medios; carga de combate ~59; acciones ~58 con picos aislados pendientes. No garantía para mapas finales.
+- Capturas cortas: navegación/reposicionamiento de cámara ~60 FPS medios; carga de combate ~59; acciones ~58 con picos aislados pendientes. No garantía para mapas finales.
+
+## 0.1.2 · 3 de octubre de 2026 · CPU, fluidez y memoria acotada
+
+- Mallas retenidas para huella/protección y arco de anticipación independiente; actualizar progreso no reconstruye toda la arena.
+- Grupos cacheados; detección espacial omitida solo cuando jugador y grupos están inmóviles. Perseguidores/regreso conservan actualización continua. Colisión de desplazamiento cero evita trabajo.
+- Pool de textos flotantes, caché de anchos y registros limitados; contador total de acciones separado de historial reciente.
+- Diagnóstico optativo: p95/p99, intervalos reales, tirones, memoria de texturas/buffers/motor, nodos, recursos, objetos y llamadas de dibujo.
+- Captura de acciones de 12 s: CPU acumulada del dibujo de arena 2,518 → 0,323 s; p95 real 33,658 → 18,865 ms. Persiste un pico aislado de 50 ms. Coste fijo observado +1 nodo/+3 recursos/+5.376 B de buffers.
+- Cinco reinicios sin crecimiento observado en nodos/recursos/objetos/memoria gráfica; no certifica sesiones largas ni ausencia de fugas.
+- Corregida etiqueta histórica de persecución: era cámara junto a grupo. Nueva persecución real confirmada separadamente por MCP; sin baseline equivalente.
+- Método, evidencia y límites en PERFORMANCE_HEADROOM.md. Diseño y reglas conservados; sin assets nuevos, streaming, movimiento táctico ni pruebas automáticas.

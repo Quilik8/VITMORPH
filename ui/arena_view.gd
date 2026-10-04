@@ -5,11 +5,18 @@ var combat: Node
 var route: Node
 var action: Dictionary = {}
 var popups: Array[Dictionary] = []
+var popup_pool: Array[Dictionary] = []
+var popup_peak := 0
+var cached_font: Font
+var text_widths: Dictionary = {}
 var ground: Node2D
 var last_ground_world := false
 var shadow_mesh: ArrayMesh
 var main_mesh: ArrayMesh
 var enemy_mesh: ArrayMesh
+var footprint_mesh: ArrayMesh
+var shield_mesh: ArrayMesh
+var anticipation_arc: Node2D
 var shadow_shape := PackedVector2Array()
 var footprint_shape := PackedVector2Array()
 var enemy_shape := PackedVector2Array()
@@ -25,6 +32,8 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	custom_minimum_size = Vector2(0, 340)
 	clip_contents = true
+	for index in 4:
+		popup_pool.append({"id": "", "text": "", "age": 0.0, "damage": 0})
 	ground = preload("res://ui/world_ground.gd").new()
 	ground.name = "WorldGround"
 	ground.arena = self
@@ -43,6 +52,15 @@ func _ready() -> void:
 	shadow_mesh = polygon_mesh(shadow_shape)
 	main_mesh = polygon_mesh(main_shape)
 	enemy_mesh = polygon_mesh(enemy_shape)
+	footprint_mesh = preload("res://ui/stroke_mesh.gd").build(footprint_shape, 2.0, true)
+	var shield_points := PackedVector2Array()
+	for index in 40:
+		var angle := TAU * index / 40.0
+		shield_points.append(Vector2(cos(angle), sin(angle)) * 40.0)
+	shield_mesh = preload("res://ui/stroke_mesh.gd").build(shield_points, 3.0, true)
+	anticipation_arc = preload("res://ui/anticipation_arc.gd").new()
+	anticipation_arc.name = "AnticipationArc"
+	add_child(anticipation_arc)
 	route.world_rebuilt.connect(ground.queue_redraw)
 	resized.connect(func(): ground.queue_redraw(); queue_redraw())
 
@@ -57,8 +75,16 @@ func polygon_mesh(points: PackedVector2Array) -> ArrayMesh:
 
 func reset_feedback() -> void:
 	action = {}
+	for popup in popups:
+		recycle_popup(popup)
 	popups.clear()
+	if anticipation_arc != null:
+		anticipation_arc.hide()
 	queue_redraw()
+
+func recycle_popup(popup: Dictionary) -> void:
+	if popup_pool.size() < 8:
+		popup_pool.append(popup)
 
 func show_action(value: Dictionary) -> void:
 	action = value.duplicate(true)
@@ -68,7 +94,13 @@ func flash(id: String, damage: int, absorbed: int) -> void:
 	var caption := "−%d" % damage
 	if absorbed > 0:
 		caption = "Bloqueado" if damage == 0 else "−%d · protegido" % damage
-	popups.append({"id": id, "text": caption, "age": 0.0, "damage": damage})
+	var popup: Dictionary = popup_pool.pop_back() if not popup_pool.is_empty() else {}
+	popup.id = id
+	popup.text = caption
+	popup.age = 0.0
+	popup.damage = damage
+	popups.append(popup)
+	popup_peak = maxi(popup_peak, popups.size())
 	queue_redraw()
 
 func _process(delta: float) -> void:
@@ -78,6 +110,11 @@ func _process(delta: float) -> void:
 		profile.record("ui/arena_view.gd:_process", Time.get_ticks_usec() - stamp)
 
 func _process_body(delta: float) -> void:
+	if combat.running and not combat.pending.is_empty() and not combat.resolved:
+		var actor: Dictionary = combat.actor_by_id(combat.pending.actor_id)
+		anticipation_arc.update_progress(screen_actor(actor), clampf(combat.elapsed / combat.resolve_seconds, 0.0, 1.0))
+	else:
+		anticipation_arc.hide()
 	var world_visible: bool = route != null and route.visible_world
 	if world_visible != last_ground_world:
 		last_ground_world = world_visible
@@ -90,6 +127,7 @@ func _process_body(delta: float) -> void:
 	for index in range(popups.size() - 1, -1, -1):
 		popups[index].age += delta
 		if popups[index].age >= 2.0:
+			recycle_popup(popups[index])
 			popups.remove_at(index)
 	var world_moved := false
 	if route != null and route.visible_world:
@@ -101,7 +139,7 @@ func _process_body(delta: float) -> void:
 			var position: Vector2 = route.actors[index].position
 			world_moved = world_moved or last_world_positions[index] != position
 			last_world_positions[index] = position
-	var animating: bool = combat != null and combat.running and not combat.pending.is_empty() and (not combat.resolved or combat.elapsed < combat.resolve_seconds + 0.65)
+	var animating: bool = combat.running and not combat.pending.is_empty() and not combat.pending.skill.is_empty() and combat.pending.skill.damage > 0 and combat.elapsed > combat.resolve_seconds * 0.64 and combat.elapsed < combat.resolve_seconds + 0.65
 	if animating or had_popups or world_moved:
 		queue_redraw()
 
@@ -136,7 +174,15 @@ func centered(font: Font, caption: String, at: Vector2, font_size: int, color: C
 		profile.record("arena:centered", Time.get_ticks_usec() - stamp)
 
 func centered_body(font: Font, caption: String, at: Vector2, font_size: int, color: Color) -> void:
-	var width := font.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	if cached_font != font:
+		cached_font = font
+		text_widths.clear()
+	var key := "%d:%s" % [font_size, caption]
+	if not text_widths.has(key):
+		if text_widths.size() >= 256:
+			text_widths.clear()
+		text_widths[key] = font.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+	var width: float = text_widths[key]
 	draw_string(font, at - Vector2(width / 2, 0), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
 
 func _draw() -> void:
@@ -168,16 +214,11 @@ func _draw_body() -> void:
 		if not action.is_empty() and action.target_id == actor.id and action.actor_id != actor.id and combat.running and not combat.resolved:
 			draw_polyline(PackedVector2Array([base+Vector2(-6,-86), base+Vector2(0,-80), base+Vector2(6,-86)]), INK, 2.0)
 		if acting:
-			draw_set_transform(base)
-			draw_polyline(footprint_shape, MAIN, 2)
-			draw_set_transform(Vector2.ZERO)
-			if not combat.resolved:
-				var anticipation: float = clampf(combat.elapsed / combat.resolve_seconds, 0, 1)
-				draw_arc(center, 37, -PI/2, -PI/2 + TAU * anticipation, 40, MAIN, 2)
+			draw_mesh(footprint_mesh, null, Transform2D(0.0, base), MAIN)
 		draw_mesh(main_mesh if actor.id == "main" else enemy_mesh, null, Transform2D(0.0, center), color)
 		if combat.running:
 			if actor.shield > 0:
-				draw_arc(center, 40, 0, TAU, 40, Color("86bbb0"), 3)
+				draw_mesh(shield_mesh, null, Transform2D(0.0, center), Color("86bbb0"))
 				centered(font, "Protección %d" % actor.shield, base + Vector2(0,91), 14, Color("86bbb0"))
 			centered(font, actor.name, base + Vector2(0,-62), 16, INK)
 			draw_line(base + Vector2(-45,53), base + Vector2(45,53), Color("122119"), 4)

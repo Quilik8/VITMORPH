@@ -18,6 +18,8 @@ var result := ""
 var pending: Dictionary = {}
 var elapsed := 0.0
 var resolved := false
+const HISTORY_LIMIT := 256
+var action_count := 0
 var history: Array[Dictionary] = []
 var scenario := 0
 var action_seconds := Fixture.ACTION_SECONDS
@@ -32,6 +34,7 @@ func start(which: int) -> void:
 	result = ""
 	pending = {}
 	history.clear()
+	action_count = 0
 	elapsed = 0.0
 	running = true
 	resolved = false
@@ -88,6 +91,7 @@ func begin_encounter(participants: Array[Dictionary]) -> void:
 	result = ""
 	pending = {}
 	history.clear()
+	action_count = 0
 	elapsed = 0.0
 	running = true
 	resolved = false
@@ -170,6 +174,9 @@ func resolve_pending() -> void:
 				damage_applied.emit(target.id, damage, absorbed)
 				message.emit("%s: −%d vida%s" % [target.name, damage, " · protección absorbió %d" % absorbed if absorbed > 0 else ""])
 			actor.ready_at[skill.id] = actor.turns + skill.cooldown + 1
+	action_count += 1
+	if history.size() >= HISTORY_LIMIT:
+		history.pop_front()
 	history.append(pending.duplicate(true))
 	action_executed.emit(pending.duplicate(true))
 	if actor_by_id("main").hp <= 0:
@@ -255,4 +262,4 @@ func forecast(count: int = 7) -> Array[Dictionary]:
 
 func snapshot() -> Dictionary:
 	return {"running": running, "result": result, "priority": priority, "retained": retained,
-		"clock": combat_clock, "atb": atb_snapshot(), "elapsed": elapsed, "resolved": resolved, "pending": pending.duplicate(true), "actors": actors.duplicate(true), "actions": history.size(), "scenario": scenario}
+		"clock": combat_clock, "atb": atb_snapshot(), "elapsed": elapsed, "resolved": resolved, "pending": pending.duplicate(true), "actors": actors.duplicate(true), "actions": action_count, "history_retained": history.size(), "history_limit": HISTORY_LIMIT, "scenario": scenario}

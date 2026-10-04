@@ -1,0 +1,48 @@
+{
+  "state_order": [
+    "world_state",
+    "hp",
+    "priority",
+    "retained",
+    "profile_active",
+    "has_preparation",
+    "free_popups",
+    "text_width_entries",
+    "spatial_scans"
+  ],
+  "state": {
+    "result": [
+      "travelling",
+      100,
+      "",
+      "",
+      false,
+      false,
+      4,
+      0,
+      1
+    ]
+  },
+  "console": {
+    "_summary": "0 lines (of 0 total)",
+    "entries": "<untrusted-b2531707 kind=\"console\" source=\"buffer\">\n[]\n</untrusted-b2531707>",
+    "has_more": false,
+    "next_id": -1,
+    "returned": 0,
+    "source": "buffer",
+    "success": true,
+    "total_lines": 0,
+    "hint": "For runtime crash logs use debugger_get_log. Use since_id for incremental reads."
+  },
+  "scripts_checked": [
+    "systems/combat_engine.gd",
+    "systems/world_route.gd",
+    "systems/world_geometry.gd",
+    "systems/performance_probe.gd",
+    "ui/arena_view.gd",
+    "ui/combat_screen.gd",
+    "ui/anticipation_arc.gd",
+    "ui/stroke_mesh.gd"
+  ],
+  "script_result": "all valid, no diagnostics; shader observed rendered"
+}

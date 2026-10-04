@@ -28,3 +28,7 @@ Se versionan proyecto, escenas, scripts, addon, documentación y evidencias. Se 
 ## Punto de optimización
 
 `checkpoint-v0.1.1`: primera optimización medida de dibujo, con evidencia y límites en `PERFORMANCE.md`. Conserva `checkpoint-v0.1.0` para recuperar la base anterior. La etiqueta no certifica rendimiento constante ni juego completo.
+
+## Segundo punto de optimización
+
+`checkpoint-v0.1.2`: geometría retenida de indicadores, menor trabajo espacial en reposo, registros/cachés acotados y diagnóstico de fluidez/memoria/renderer. Evidencia y límites en `PERFORMANCE_HEADROOM.md`; no certifica escenas finales ni ausencia de tirones.

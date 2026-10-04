@@ -48,3 +48,11 @@ La cámara sigue x/y; actores fuera del campo se omiten del dibujo. En exploraci
 `ui/world_ground.gd` dibuja el terreno detrás de los actores y conserva comandos hasta cambiar mapa/modo/tamaño. Movimiento de cámara mediante posición del nodo. `arena_view.gd` reutiliza mallas de siluetas/sombras y redibuja actores con feedback o animación. `WorldRoute.world_rebuilt` invalida el terreno al reconstruir el recorrido.
 
 `systems/performance_probe.gd` es diagnóstico optativo compartido por nodos; inactivo normalmente. Captura CPU por scope y deltas de frame, sin sumar scopes anidados ni atribuirles GPU. Ver `PERFORMANCE.md`.
+
+## Reutilización y límites 0.1.2
+
+`stroke_mesh.gd` construye trazos una vez. Huella/protección son buffers retenidos; `anticipation_arc.gd` usa un CanvasItem independiente y shader sobre geometría estrecha. La fracción cambia sin reconstruir la arena. El pool recicla diccionarios de feedback; reserva libre máxima ocho, sin descartar impactos. Caché de anchos de texto: 256 entradas.
+
+WorldRoute almacena referencias de grupos al reconstruir el mundo y omite detección si el jugador no cambió de posición y no hay persecución/regreso activo. Futuras patrullas, teletransportes o cambios geométricos deberán invalidar ese criterio. Registros de acciones/eventos/encuentros limitados a 256/128/64, respectivamente; `action_count` conserva el total del encuentro.
+
+PerformanceProbe añade intervalos reales, p99, conteos de tirones y monitores cada 0,25 s. Los scopes se solapan; memoria del motor no es RAM del proceso ni los monitores representan tiempo GPU. Método y evidencia en PERFORMANCE_HEADROOM.md.

@@ -120,3 +120,17 @@ No se certificó 60 FPS ni se realizó un benchmark. No se probaron exportación
 ## Iteración 09 — rendimiento medido (3 octubre 2026)
 
 MCP confirmado por lectura de nombre del proyecto. Instrumentación optativa por componente, comparación de capturas antes/después y revisión del render. Detalle autocontenido, método, tiempos y límites en `PERFORMANCE.md`; datos en `tests/evidence/optimization_v0_1_1.json`. No se ejecutó la suite antigua ni se añadieron pruebas automáticas. Cola, P/R y feedback de combate observados con entrada real vía MCP. Punto recuperable: `checkpoint-v0.1.1`.
+
+## Iteración 10 — margen visual y diagnóstico ampliado (3 octubre 2026)
+
+Probe MCP de lectura confirmó Vitmorph. Comparación antes/después con instrumentación equivalente, editor/runtime y ventana 1018×696. Capturas de reposo/movimiento de 3 s y acciones de 12 s con prioridad Defensa. Informe autocontenido en `PERFORMANCE_HEADROOM.md`, originales y método en `tests/evidence/headroom_v0_1_2.json`.
+
+CPU acumulada del dibujo de arena ~87 % menor en esa ventana, p95 real 33,658 → 18,865 ms; p99 35,476 → 33,042 ms. Persistió un intervalo de 50,034 ms. Llamadas del renderer 73–77, no se atribuye ahorro GPU. Coste fijo observado: +1 nodo, +3 recursos, +5.376 B de buffers en reposo.
+
+Capturas MCP de anticipación parcial y protección de Defensa (24), revisadas con ui-visual-qa: trazos, cola, campo y controles compactos legibles. No se cambió composición ni se generaron imágenes. Tras cinco reinicios, nodos/recursos/objetos/memoria gráfica estables, huérfanos cero; asignaciones del motor +5.460 B. No certifica ausencia de fugas ni sesiones largas. Los topes de registros fueron revisados en código, sin prueba de estrés automática.
+
+Auditoría de etiquetas: (1150,640) queda fuera del radio de detección y sus capturas son de cámara, no persecución. Se conserva el JSON histórico. Nueva observación (1150,600): grupo pursuing, un grupo activo, 20 recálculos, entrada en batalla; 59,99 FPS y CPU media de mundo 0,288 ms en 2 s. Sin baseline equivalente de persecución real.
+
+Scripts modificados comprobados por MCP y consola sin errores/advertencias en consulta final. No se agregó ni ejecutó la suite automática histórica. Punto recuperable `checkpoint-v0.1.2`. Continuidad, ritmo, ATB, comandos y reglas conservados; cobertura visual limitada a estos estados y resolución.
+
+Tras reiniciar el runtime final: travelling, 100 PV, comandos vacíos, diagnóstico inactivo, sin Preparation; cuatro elementos libres del pool y una sola detección espacial en reposo. Estado y resultados de compilación/consola en `tests/evidence/headroom_final_diagnostics.json`.
