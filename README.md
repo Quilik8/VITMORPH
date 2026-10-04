@@ -4,6 +4,8 @@
 
 Para UI/UX aplicar la skill del proyecto [.agents/skills/vitmorph-game-ui/SKILL.md](.agents/skills/vitmorph-game-ui/SKILL.md), junto con las skills de núcleo/Godot/revisión visual. Fuente versionada y vínculo exigido por AGENTS.md. Referencias adicionales de amuletos y mejoras: [GAME_UI_RESEARCH_EXTENDED.md](GAME_UI_RESEARCH_EXTENDED.md).
 
+Última revisión de UI: [UI_ASSEMBLY_REVISION.md](UI_ASSEMBLY_REVISION.md), paleta carbón/cobre y composición de ensamblaje con evidencia MCP; pendiente de evaluación del usuario. Se observa en el proyecto ejecutado desde Godot, no en el ejecutable 0.7.0 anterior.
+
 Estamos construyendo los sistemas de una demo que incorporará assets aportados por el usuario. 0.7.0 es el prototipo técnico recuperable. El editor de ensamblaje integra técnicamente colección, habilidades, montajes y selección/arrastre, pero el usuario rechazó su composición. Requiere rediseño de UX y, por separado, incorporación de assets. Investigación y siguiente capa de diseño: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md). El primer mapa y el refugio requieren sus propios bloques: refugio grande con personajes y acceso a otra instancia; historia única sin ramificaciones.
 
 Leer primero [DEMO_SCOPE.md](DEMO_SCOPE.md) y [ASSET_REQUESTS.md](ASSET_REQUESTS.md). El primero registra las correcciones vigentes y los pendientes; el segundo contiene inventario de assets, fichas de entrega, estados y registro de recepción. Los apartados siguientes describen la base técnica existente.

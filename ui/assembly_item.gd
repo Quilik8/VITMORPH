@@ -1,4 +1,7 @@
 extends Button
+const Palette=preload("res://ui/demo_theme.gd")
+var glyph := ""
+var piece_icon: Texture2D
 var editor: Control
 var payload: Dictionary={}
 var target_kind := ""
@@ -10,11 +13,22 @@ func _ready() -> void:
 		focus_entered.connect(queue_redraw);focus_exited.connect(queue_redraw);mouse_entered.connect(queue_redraw);mouse_exited.connect(queue_redraw)
 
 func _draw() -> void:
-	if target_kind not in ["normal","special"]: return
+	if target_kind not in ["normal","special"]:
+		if glyph.is_empty(): return
+		var at:=Vector2(size.x*.5,28)
+		if piece_icon!=null:
+			var dimensions:=piece_icon.get_size()
+			dimensions*=minf(40.0/dimensions.x,40.0/dimensions.y)
+			draw_texture_rect(piece_icon,Rect2(at-dimensions*.5,dimensions),false)
+		else:
+			draw_polyline(PackedVector2Array([at+Vector2(0,-16),at+Vector2(18,0),at+Vector2(0,16),at+Vector2(-18,0),at+Vector2(0,-16)]),Palette.LINE,1.0,true)
+			draw_string(ThemeDB.fallback_font,at+Vector2(-6,6),glyph,HORIZONTAL_ALIGNMENT_LEFT,-1,17,Palette.GOLD)
+		return
 	var center:=size*.5
-	var color:=Color("5c6b59") if disabled else Color("a5aa9b")
-	if not payload.is_empty(): color=Color("d4bb79")
-	if has_focus(): color=Color("eee5d3")
+	var color:=Palette.LINE if disabled else Palette.MUTED
+	if not payload.is_empty():
+		color=Palette.GOLD
+	if has_focus(): color=Palette.INK
 	draw_arc(center,19,0,TAU,32,color,2 if has_focus() else 1,true)
 
 func _get_drag_data(_at: Vector2) -> Variant:

@@ -8,9 +8,9 @@ const ArenaScript = preload("res://ui/arena_view.gd")
 const ATBStrip = preload("res://ui/atb_strip.gd")
 const RouteScript = preload("res://systems/world_route.gd")
 const INK := Color("eee5d3")
-const MUTED := Color("a5aa9b")
-const GOLD := Color("d4bb79")
-const TEAL := Color("86bbb0")
+const MUTED := Color("aaa3a0")
+const GOLD := Color("e0ad72")
+const TEAL := Color("a1bbd0")
 var save_service: Node
 var save_label: Label
 var diagnostic_mode := false
@@ -134,7 +134,7 @@ func button(text: String, callback: Callable, node_name: String) -> Button:
 func build_screen() -> void:
 	var background := ColorRect.new()
 	background.name = "Background"
-	background.color = Color("15261e")
+	background.color = Color("1c1c24")
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(background)
@@ -259,7 +259,7 @@ func build_screen() -> void:
 	diag_surface.offset_top = 155
 	diag_surface.offset_bottom = 395
 	var diag_style := StyleBoxFlat.new()
-	diag_style.bg_color = Color(0.06, 0.10, 0.08, 0.96)
+	diag_style.bg_color = Color(0.09, 0.09, 0.12, 0.96)
 	diag_style.set_content_margin_all(16)
 	diag_surface.add_theme_stylebox_override("panel", diag_style)
 	add_child(diag_surface)

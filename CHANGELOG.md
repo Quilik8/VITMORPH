@@ -1,5 +1,13 @@
 # Registro de cambios
 
+## UI carbón/cobre y ensamblaje · 4 octubre 2026
+
+- Reemplazado predominio verde por carbón, marfil, cobre/ámbar y azul grisáceo en editor, HUD y terreno provisional.
+- Bestia más grande, superficie de taller, biblioteca de piezas preparada para imágenes, habilidades equipadas reconocibles y detalle contextual sin comparaciones irrelevantes.
+- Destinos abren biblioteca correspondiente; foco enlaza selección y destino en estrecho. Pestaña activa y cambios pendientes visibles. Conservados controlador, pausa, guardado y reglas.
+- Revisión MCP amplia/estrecha, selección por click_node, teclado y capturas de mundo/combate. Correcciones y límites en UI_ASSEMBLY_REVISION.md. Arrastre nativo no confirmado en esta revisión; sin suite ni perfilado nuevos.
+- Sin imágenes generadas; aceptación de UX y arte final pendientes. Ejecutable 0.7.0 no reexportado.
+
 ## Skill de UI específica de Vitmorph · 4 octubre 2026
 
 - Ampliada investigación con menú de amuletos de Hollow Knight (captura histórica inspeccionada), opiniones de Monster Hunter y antecedentes de Hades/Dead Cells; límites y fuentes en GAME_UI_RESEARCH_EXTENDED.md.

@@ -64,8 +64,9 @@ func _draw() -> void:
 	elif not world_mode:
 		var points:=PackedVector2Array([Vector2(-.13,-.47),Vector2(.13,-.47),Vector2(.30,-.24),Vector2(.25,.08),Vector2(.36,.32),Vector2(.23,.45),Vector2(.07,.25),Vector2(-.07,.25),Vector2(-.23,.45),Vector2(-.36,.32),Vector2(-.25,.08),Vector2(-.30,-.24)])
 		for index in points.size(): points[index]*=body_size
-		draw_colored_polygon(points,Color("34483c"))
-		points.append(points[0]);draw_polyline(points,Color("83937c"),2.0,true)
+		draw_colored_polygon(points,Color("66515a"))
+		points.append(points[0]);draw_polyline(points,Color("d3a991"),2.0,true)
+		draw_line(Vector2(0,-.34)*body_size,Vector2(0,.20)*body_size,Color("977780"),2.0,true)
 
 func instance_effect(scene: PackedScene, at: Vector2, transient: bool, seconds: float) -> Node2D:
 	if transient and bursts.size()>=EFFECT_LIMIT: return null

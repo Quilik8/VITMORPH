@@ -26,8 +26,8 @@ var main_shape := PackedVector2Array([Vector2(0,-30),Vector2(28,-6),Vector2(18,2
 var last_world_positions: Array[Vector2] = []
 var last_camera := Vector2(INF, INF)
 const INK := Color("eee5d3")
-const MUTED := Color("9ba896")
-const MAIN := Color("d4bb79")
+const MUTED := Color("aaa3a0")
+const MAIN := Color("e0ad72")
 const ENEMY := Color("bc8875")
 
 func _ready() -> void:
@@ -239,7 +239,7 @@ func _draw_body() -> void:
 		var center := screen_actor(actor)
 		var color: Color = MAIN if actor.get("is_principal",false) else ENEMY
 		if actor.hp <= 0:
-			color = Color("556358")
+			color = Color("5c5662")
 		draw_mesh(shadow_mesh, null, Transform2D(0.0, base + Vector2(0,26)), Color(0.05,0.08,0.06,0.55))
 		var acting: bool = not action.is_empty() and action.actor_id == actor.id and combat.running
 		if not action.is_empty() and action.target_id == actor.id and action.actor_id != actor.id and combat.running and not combat.resolved:
@@ -250,21 +250,21 @@ func _draw_body() -> void:
 			draw_mesh(main_mesh if actor.get("is_principal",false) else enemy_mesh, null, Transform2D(0.0, center), color)
 		if combat.running:
 			if actor.shield > 0:
-				draw_mesh(shield_mesh, null, Transform2D(0.0, center), Color("86bbb0"))
-				centered(font, "Protección %d" % actor.shield, base + Vector2(0,91), 14, Color("86bbb0"))
+				draw_mesh(shield_mesh, null, Transform2D(0.0, center), Color("a1bbd0"))
+				centered(font, "Protección %d" % actor.shield, base + Vector2(0,91), 14, Color("a1bbd0"))
 			centered(font, actor.name, base + Vector2(0,-62), 16, INK)
-			draw_line(base + Vector2(-45,53), base + Vector2(45,53), Color("122119"), 4)
+			draw_line(base + Vector2(-45,53), base + Vector2(45,53), Color("25242b"), 4)
 			draw_line(base + Vector2(-45,53), base + Vector2(-45 + 90.0 * actor.hp / actor.max_hp,53), color, 4)
 			centered(font, "%d PV" % actor.hp, base + Vector2(0,75), 14, INK)
 			var status_text: Array[String]=[]
 			if actor.get("states",{}).has("dot"): status_text.append("Residuo")
 			if actor.get("states",{}).has("slow"): status_text.append("ATB −25 %")
-			if not status_text.is_empty(): centered(font," · ".join(status_text),base+Vector2(0,112),12,Color("86bbb0"))
+			if not status_text.is_empty(): centered(font," · ".join(status_text),base+Vector2(0,112),12,Color("a1bbd0"))
 	for popup in popups:
 		var actor: Dictionary = combat.actor_by_id(popup.id)
 		if actor.is_empty():
 			continue
 		var fade: float = 1.0 - clampf((popup.age - 1.3) / 0.7, 0, 1)
-		var color := INK if popup.damage > 0 else Color("86bbb0")
+		var color := INK if popup.damage > 0 else Color("a1bbd0")
 		color.a = fade
 		centered(font, popup.text, point(actor) + Vector2(90,-12-popup.age*16), 25, color)

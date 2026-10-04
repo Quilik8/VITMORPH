@@ -28,7 +28,7 @@ var mounts: Array[Button]=[]
 var preview: Control
 var beast_visual: Node2D
 var skills: GridContainer
-var library: VBoxContainer
+var library: GridContainer
 var detail: VBoxContainer
 var apply_button: Button
 var discard_button: Button
@@ -39,6 +39,8 @@ var suppress_render := false
 var selector_signature := ""
 var skills_signature := ""
 var library_signature := ""
+var skill_tab: Button
+var mod_tab: Button
 
 func text(value: String, font_size := 16, color := Palette.INK) -> Label:
 	var label:=Label.new();label.text=value
@@ -65,15 +67,15 @@ func _ready() -> void:
 	add_child(margin)
 	var layout:=VBoxContainer.new();margin.add_child(layout)
 	var header:=HBoxContainer.new();layout.add_child(header)
-	heading=text("Ensamblaje",24,Palette.GOLD);heading.size_flags_horizontal=SIZE_EXPAND_FILL;header.add_child(heading)
+	heading=text("Ensamblaje",30,Palette.INK);heading.size_flags_horizontal=SIZE_EXPAND_FILL;header.add_child(heading)
 	header.add_child(choice("Volver [Esc]",close))
 	subtitle=text("",13,Palette.MUTED);layout.add_child(subtitle)
-	var collection_scroll:=ScrollContainer.new();collection_scroll.follow_focus=true;collection_scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;collection_scroll.custom_minimum_size.y=60;layout.add_child(collection_scroll)
+	var collection_scroll:=ScrollContainer.new();collection_scroll.follow_focus=true;collection_scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;collection_scroll.custom_minimum_size.y=76;layout.add_child(collection_scroll)
 	selector=HBoxContainer.new();collection_scroll.add_child(selector)
 	var scroll:=ScrollContainer.new();scroll.follow_focus=true;scroll.size_flags_vertical=SIZE_EXPAND_FILL;scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;layout.add_child(scroll)
 	body=BoxContainer.new();body.size_flags_horizontal=SIZE_EXPAND_FILL;scroll.add_child(body)
-	equipment=VBoxContainer.new();equipment.size_flags_horizontal=SIZE_EXPAND_FILL;equipment.size_flags_stretch_ratio=1.6;body.add_child(equipment)
-	preview=Control.new();preview.custom_minimum_size.y=320;preview.mouse_filter=MOUSE_FILTER_IGNORE;equipment.add_child(preview)
+	equipment=VBoxContainer.new();equipment.size_flags_horizontal=SIZE_EXPAND_FILL;equipment.size_flags_stretch_ratio=1.65;body.add_child(equipment)
+	preview=preload("res://ui/assembly_stage.gd").new();preview.custom_minimum_size.y=340;preview.mouse_filter=MOUSE_FILTER_IGNORE;equipment.add_child(preview)
 	beast_visual=preload("res://ui/beast_visual.gd").new();beast_visual.visuals=visuals;beast_visual.catalog=session.catalog;preview.add_child(beast_visual)
 	for index in 10:
 		var slot:=index
@@ -83,21 +85,21 @@ func _ready() -> void:
 		point.disabled=index>=8;point.tooltip_text="Especial reservada" if index>=8 else "Montaje %d"%(index+1)
 		preview.add_child(point);mounts.append(point)
 	preview.resized.connect(position_mounts)
-	equipment.add_child(text("Habilidades de esta bestia",16,Palette.GOLD))
-	skills=GridContainer.new();skills.columns=2;equipment.add_child(skills)
-	equipment.add_child(text("Los puntos indican montaje visual; no cambian la función de la zona del cuerpo.",12,Palette.MUTED))
+	equipment.add_child(text("HABILIDADES EQUIPADAS",12,Palette.MUTED))
+	skills=GridContainer.new();skills.columns=4;skills.add_theme_constant_override("h_separation",8);equipment.add_child(skills)
 	context=VBoxContainer.new();context.size_flags_horizontal=SIZE_EXPAND_FILL;body.add_child(context)
 	var tabs:=HBoxContainer.new();context.add_child(tabs)
-	tabs.add_child(choice("Habilidades",func():set_section("skills")))
-	tabs.add_child(choice("Mods",func():set_section("mods")))
-	library=VBoxContainer.new();context.add_child(library)
+	skill_tab=choice("Habilidades",func():set_section("skills"));tabs.add_child(skill_tab)
+	mod_tab=choice("Mods",func():set_section("mods"));tabs.add_child(mod_tab)
+	library=GridContainer.new();library.columns=2;library.add_theme_constant_override("h_separation",12);library.add_theme_constant_override("v_separation",12);context.add_child(library)
 	detail=VBoxContainer.new();context.add_child(detail)
 	decision=VBoxContainer.new();layout.add_child(decision);decision.hide()
 	message=text("",13,Palette.TEAL);layout.add_child(message)
-	var footer:=HFlowContainer.new();layout.add_child(footer)
+	var footer:=HFlowContainer.new();footer.alignment=FlowContainer.ALIGNMENT_END;layout.add_child(footer)
 	principal_button=choice("Elegir como principal",func():request_action({"kind":"principal"}));footer.add_child(principal_button)
 	discard_button=choice("Descartar",discard);footer.add_child(discard_button)
 	apply_button=choice("Aplicar a esta bestia",apply);footer.add_child(apply_button)
+	apply_button.add_theme_stylebox_override("normal",Palette.tile(Palette.GOLD,Color("493329")))
 	resized.connect(reflow);hide()
 
 func open(id: String, as_collection := false) -> void:
@@ -111,24 +113,33 @@ func set_section(value: String) -> void:
 func reflow() -> void:
 	if body==null: return
 	body.vertical=size.x<900
-	context.custom_minimum_size.x=0 if body.vertical else 290
+	context.custom_minimum_size.x=0 if body.vertical else 350
+	preview.custom_minimum_size.y=270 if body.vertical else 340
+	skills.columns=2 if size.x<1050 else 4
+	library.columns=3 if body.vertical else 2
 	position_mounts()
 
 func position_mounts() -> void:
 	if owned_id.is_empty() or preview==null: return
-	var dimensions:=Vector2(minf(preview.size.x-36,300),280)
+	var dimensions:=Vector2(minf(preview.size.x-56,420),240 if body.vertical else 310)
 	beast_visual.position=preview.size*.5
 	beast_visual.configure(session.owned(owned_id).definition_id,draft,session.inventory,dimensions)
 	for index in mounts.size(): mounts[index].position=beast_visual.position+beast_visual.mount_point(index)-Vector2(22,22)
 
 func item_button(caption: String, data: Dictionary, kind := "", index := -1) -> Button:
-	var button:=Item.new();button.editor=self;button.text=caption;button.custom_minimum_size.y=48
+	var button:=Item.new();button.editor=self;button.text="\n\n"+caption;button.custom_minimum_size=Vector2(132,108)
+	button.glyph="M" if data.get("kind","")=="normal" else "H"
+	button.add_theme_font_size_override("font_size",14)
+	for state in ["normal","hover","pressed","focus","disabled"]:
+		button.add_theme_stylebox_override(state,Palette.tile(Palette.GOLD if state in ["hover","pressed"] else (Palette.INK if state=="focus" else Palette.LINE),Palette.SURFACE))
 	button.payload=data;button.target_kind=kind;button.target_index=index
 	button.size_flags_horizontal=SIZE_EXPAND_FILL
 	button.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	var asset_kind: String="modifier" if data.get("kind","")=="normal" else "skill"
 	var definition: String=session.inventory.get(data.get("id",""),"") if asset_kind=="modifier" else data.get("id","")
-	button.icon=visuals.icon(asset_kind,definition);button.expand_icon=true;button.add_theme_constant_override("icon_max_width",36)
+	button.glyph=definition.left(1).to_upper()
+	button.piece_icon=visuals.icon(asset_kind,definition)
+	button.tooltip_text=caption
 	return button
 
 func render() -> void:
@@ -140,8 +151,8 @@ func render() -> void:
 	owned_id=controller.owned_id;draft=controller.build
 	var beast: Dictionary=session.owned(owned_id)
 	clear(detail)
-	heading.text=beast.name+" · ensamblaje"
-	subtitle.text="Copia %s · %s · Exploración pausada"%[owned_id.trim_prefix("copy_"),"Vista previa sin aplicar" if controller.dirty() else "Build aplicada"]
+	heading.text=beast.name
+	subtitle.text="ENSAMBLAJE  /  Copia %s  /  %s"%[owned_id.trim_prefix("copy_"),"Principal" if owned_id==session.principal_id else "Colección"]
 	refresh_selector()
 	for index in 10:
 		var button: Button=mounts[index]
@@ -151,15 +162,29 @@ func render() -> void:
 		button.icon=visuals.icon("modifier",session.inventory.get(instance,""));button.expand_icon=true;button.add_theme_constant_override("icon_max_width",24)
 		button.tooltip_text="Especial reservada · sin contenido definido" if index>=8 else "Montaje %d · %s"%[index+1,"Vacío" if instance=="" else mod_name(instance)]
 		button.name="Mount_%d"%index
-		button.modulate=Palette.GOLD if selected_kind=="normal" and index==selected else (Color.WHITE if instance!="" else Color(.75,.82,.74,.7))
+		button.modulate=Palette.GOLD if selected_kind=="normal" and index==selected else (Color.WHITE if instance!="" else Color(.8,.77,.8,.7))
 		if index<8 and draft.normal[index]!=beast.build.normal[index]: button.text="+"+button.text;button.tooltip_text+=" · Cambio pendiente"
 	refresh_skills(beast)
+	for button in skills.get_children():
+		if button is Item:
+			var skill: Dictionary=session.catalog.skill(button.payload.get("id",""))
+			var affected: bool=not selection.is_empty() and selection.get("kind","")=="normal" and skill.get("range",0)>0
+			button.add_theme_color_override("font_color",Palette.TEAL if affected else Palette.INK)
+			button.add_theme_color_override("font_disabled_color",Palette.TEAL if affected else Palette.MUTED)
 	refresh_library()
+	skill_tab.text="● Habilidades" if section=="skills" else "Habilidades"
+	mod_tab.text="● Mods" if section=="mods" else "Mods"
+	skill_tab.add_theme_color_override("font_color",Palette.GOLD if section=="skills" else Palette.MUTED)
+	mod_tab.add_theme_color_override("font_color",Palette.GOLD if section=="mods" else Palette.MUTED)
+	for button in library.get_children():
+		if button is Item:
+			var chosen: bool=not selection.is_empty() and button.payload.get("id","")==selection.get("id","")
+			button.add_theme_stylebox_override("normal",Palette.tile(Palette.GOLD if chosen else Palette.LINE,Color("3b2d29") if chosen else Palette.SURFACE))
 	show_detail()
 	principal_button.disabled=owned_id==session.principal_id
 	principal_button.text="Principal actual" if principal_button.disabled else "Elegir como principal"
 	apply_button.disabled=not controller.dirty();discard_button.disabled=not controller.dirty()
-	message.text=controller.last_error if controller.last_error!="" else ("Cambios pendientes en esta copia" if controller.dirty() else "Sin cambios · Tab / flechas / Enter para ensamblar")
+	message.text=controller.last_error if controller.last_error!="" else ("VISTA PREVIA · Cambios sin aplicar" if controller.dirty() else "BUILD APLICADA · Exploración pausada")
 	reflow()
 	if focus_name!="":
 		call_deferred("restore_focus",focus_name)
@@ -175,23 +200,22 @@ func refresh_selector() -> void:
 	selector_signature=key;clear(selector)
 	for copy in session.collection:
 		var id: String=copy.id
-		var label: String=("› " if id==owned_id else "")+copy.name+" #"+id.trim_prefix("copy_")+(" · Principal" if id==session.principal_id else "")
+		var label: String=("● " if id==owned_id else "")+copy.name+"\n#"+id.trim_prefix("copy_")+(" · Principal" if id==session.principal_id else "")
 		var button:=choice(label,func():request_action({"kind":"copy","id":id}))
-		button.name="Copy_"+id;button.icon=visuals.icon("beast",copy.definition_id);button.expand_icon=true;button.add_theme_constant_override("icon_max_width",36);selector.add_child(button)
+		button.name="Copy_"+id;button.icon=visuals.icon("beast",copy.definition_id);button.expand_icon=true;button.add_theme_constant_override("icon_max_width",36)
+		button.add_theme_stylebox_override("normal",Palette.tile(Palette.GOLD if id==owned_id else Color.TRANSPARENT,Palette.SURFACE if id==owned_id else Color.TRANSPARENT));selector.add_child(button)
 
 func refresh_skills(beast: Dictionary) -> void:
-	var key:=str([owned_id,draft.modular])
+	var key:=str([owned_id,draft.modular,beast.build.modular])
 	if key==skills_signature: return
 	skills_signature=key;clear(skills)
 	for fixed in session.catalog.beast(beast.definition_id).fixed:
-		var row:=HBoxContainer.new();row.custom_minimum_size.y=36;skills.add_child(row)
-		var icon: Texture2D=visuals.icon("skill",fixed)
-		if icon!=null:
-			var image:=TextureRect.new();image.texture=icon;image.custom_minimum_size=Vector2(28,28);image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;row.add_child(image)
-		var label:=text(session.catalog.skill(fixed).name+" · Fija",14,Palette.MUTED);label.size_flags_horizontal=SIZE_EXPAND_FILL;row.add_child(label)
+		var fixed_item:=item_button(session.catalog.skill(fixed).name+"\nFija",{"id":fixed})
+		fixed_item.disabled=true;skills.add_child(fixed_item)
 	for index in 2:
 		var slot:=index;var id: String=draft.modular[index]
-		var button:=item_button(session.catalog.skill(id).name+" · Modular %d"%(index+1),controller.payload("modular",id,index),"modular",index)
+		var state_text: String="M%d · Pendiente"%(index+1) if id!=beast.build.modular[index] else "Modular %d"%(index+1)
+		var button:=item_button(session.catalog.skill(id).name+"\n"+state_text,controller.payload("modular",id,index),"modular",index)
 		button.name="Modular_%d"%index;button.pressed.connect(func():choose_target("modular",slot));skills.add_child(button)
 
 func refresh_library() -> void:
@@ -199,13 +223,11 @@ func refresh_library() -> void:
 	var key:=str([owned_id,section,session.library,session.inventory,mounted,draft.modular,session.collection.map(func(copy):return [copy.id,copy.build.normal])])
 	if key==library_signature: return
 	library_signature=key;clear(library)
-	library.add_child(text("Biblioteca de habilidades" if section=="skills" else "Mejoras disponibles",18,Palette.GOLD))
-	library.add_child(text("Selecciona una mejora y su destino, o arrástrala.",13,Palette.MUTED))
 	if section=="skills":
 		if session.library.is_empty(): library.add_child(text("Obtén una copia para desbloquear habilidades."))
 		for id in session.library:
 			var data: Dictionary=controller.payload("modular",id)
-			var button:=item_button(session.catalog.skill(id).name+(" · Equipada" if id in draft.modular else ""),data)
+			var button:=item_button(session.catalog.skill(id).name+("\nEquipada" if id in draft.modular else "\nDisponible"),data)
 			button.name="Library_"+id;button.pressed.connect(func():choose_item(data));library.add_child(button)
 	else:
 		if session.inventory.is_empty(): library.add_child(text("No hay modificadores disponibles."))
@@ -213,8 +235,9 @@ func refresh_library() -> void:
 			var data: Dictionary=controller.payload("normal",instance)
 			var owner: String=controller.owner_of(instance)
 			var caption: String=mod_name(instance)
-			if owner!="": caption+=" · En "+session.owned(owner).name+" #"+owner.trim_prefix("copy_")
-			elif instance in draft.normal: caption+=" · Montado"
+			if owner!="": caption+="\nEn "+session.owned(owner).name+" #"+owner.trim_prefix("copy_")
+			elif instance in draft.normal: caption+="\nMontado"
+			else: caption+="\nDisponible"
 			var button:=item_button(caption,data);button.name="Library_"+instance;button.disabled=owner!="";button.tooltip_text=caption
 			button.pressed.connect(func():choose_item(data));library.add_child(button)
 
@@ -223,7 +246,11 @@ func mod_name(instance: String) -> String:
 	return mod.get("name","Modificador")+" +%d %%"%roundi(mod.get("percent",0.0)*100)
 
 func show_detail() -> void:
-	detail.add_child(text("Detalle y resultado",16,Palette.GOLD))
+	if selection.is_empty() and selected<0:
+		detail.add_child(text("Selecciona una pieza",18,Palette.INK))
+		detail.add_child(text("Elige una habilidad o un mod. Después selecciona su destino, o arrástralo hasta él.",14,Palette.MUTED))
+		return
+	detail.add_child(text("RESULTADO DEL ENSAMBLAJE",12,Palette.GOLD))
 	if not selection.is_empty():
 		if selection.kind=="normal": detail.add_child(text(mod_name(selection.id)+" · afecta ataques compatibles",14))
 		else:
@@ -247,21 +274,27 @@ func show_detail() -> void:
 		for previous in before.changes:
 			if previous.id==row.id: original=previous.result
 		var compatible: bool=not selection.is_empty() and selection.kind=="normal" and row.base>0
+		if original==row.result and not compatible: continue
 		var label:=text(("› " if compatible else "")+row.name+": "+("Objetivo propio" if row.base==0 else "%.0f → %.0f alcance"%[original,row.result]),13,Palette.TEAL if original!=row.result or compatible else Palette.MUTED)
 		label.tooltip_text="Base %.0f · contribuciones: %s · resultado %.0f"%[row.base,str(row.contributions),row.result];detail.add_child(label)
 	if selected_kind=="normal" and selected>=0 and selected<8 and draft.normal[selected]!="": detail.add_child(choice("Retirar del montaje %d"%(selected+1),func():controller.remove(selected)))
-	if visuals.get_asset("beast",session.owned(owned_id).definition_id)==null: detail.add_child(text("Representación técnica · assets pendientes",12,Palette.MUTED))
 
 func choose_item(data: Dictionary) -> void:
 	selection=data.duplicate()
 	if target_armed and selected_kind==data.kind: receive_drop(data,selected_kind,selected)
-	else: render();highlight_targets(data)
+	else:
+		render();highlight_targets(data)
+		if body.vertical:
+			var destination: Control=mounts[0] if data.kind=="normal" else find_child("Modular_0",true,false)
+			if destination!=null: destination.call_deferred("grab_focus")
 
 func choose_target(kind: String, index: int) -> void:
 	if index>=8: return
 	selected_kind=kind;selected=index
 	if not selection.is_empty() and selection.kind==kind: receive_drop(selection,kind,index)
-	else: target_armed=true;render()
+	else:
+		target_armed=true;section="skills" if kind=="modular" else "mods";render()
+		if body.vertical and library.get_child_count()>0: library.get_child(0).call_deferred("grab_focus")
 
 func receive_drop(data: Dictionary, kind: String, index: int) -> void:
 	var mounted_id: String=str(data.get("id",""))

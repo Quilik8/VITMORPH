@@ -7,8 +7,8 @@ var refresh_elapsed := 1.0
 var dirty := true
 var forecast_updates := 0
 const INK := Color("eee5d3")
-const MUTED := Color("a5aa9b")
-const GOLD := Color("d4bb79")
+const MUTED := Color("aaa3a0")
+const GOLD := Color("e0ad72")
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE

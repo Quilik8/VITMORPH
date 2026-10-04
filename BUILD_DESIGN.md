@@ -4,6 +4,8 @@
 
 Capa específica ya creada: [vitmorph-game-ui](.agents/skills/vitmorph-game-ui/SKILL.md), exigida por AGENTS.md para próximos cambios UI/UX. Investigación ampliada: [GAME_UI_RESEARCH_EXTENDED.md](GAME_UI_RESEARCH_EXTENDED.md). Esto no aprueba una nueva composición.
 
+Nueva revisión implementada tras petición de reducir predominio verde: [UI_ASSEMBLY_REVISION.md](UI_ASSEMBLY_REVISION.md). Paleta carbón/cobre, biblioteca de piezas y mayor presencia de bestia; evidencia y límites separados de aprobación pendiente del usuario. La captura histórica rechazada permanece como comparación.
+
 El usuario autorizó implementar el plan de ensamblaje. Objetivo: identificar la copia editada, montar mejoras y comprender el resultado. Una superficie de lectura, bestia protagonista, selector de copias, biblioteca contextual y detalle compartido. Se aplican ui-design-core, godot-ui-design y ui-visual-qa. El contenido final lo aporta el usuario.
 
 ## Composición y estados
