@@ -3,11 +3,15 @@
 
 Primer prototipo de combate para el videojuego 2D **Vitmorph**, desarrollado con Godot y GDScript. El nombre del juego y del proyecto queda fijado como Vitmorph por la instrucción explícita del usuario.
 
-Recorrido técnico continuo con un principal, cuatro habilidades, Priorizar/Retener y tres grupos de enemigos en distintas posiciones. Caminar y combatir comparten escenario y estado. También se conservan los escenarios de combate aislado. Sin aliados, reserva, Parry, captura, progresión ni modificadores. Figuras y valores provisionales, sin arte generado.
+Demo técnica jugable con el ciclo **build → explorar → combatir → copiar → incorporar modulares → encuentro final → guardar y continuar**. Un solo principal, mundo continuo multidireccional, ATB y Priorizar/Retener. Figuras y valores provisionales; sin imágenes generadas.
 
-## Abrir el proyecto
+## Jugar
 
-Abre `project.godot` con Godot 4.7.2 y pulsa F5. En **Recorrido continuo**, el principal se controla con WASD o flechas desde el inicio. Rodea los obstáculos y acércate a un grupo para comenzar el combate; el segundo grupo se acerca al detectarte y regresa si te alejas antes de la batalla. El HUD de combate aparece solo durante la batalla y se oculta al terminar, recuperando el movimiento tras 2,8 s. No cambia de escena. Selecciona habilidad con 1–4 o clic y usa P para Priorizar / R para Retener durante combate. Detalles/F3 abre el diagnóstico sin pausar. Tab / Mayús+Tab navegan; Enter/Espacio activan. Al terminar puedes Reiniciar. Los encuentros aislados siguen en el selector. Exploración a 180 unidades/s. ATB independiente con franja superior; ejecución de 4,8 s e impacto a 2,2 s. Raíz `Control`, renderer `gl_compatibility`, base lógica 1200×820. No se ha certificado 60 FPS.
+Ejecuta `dist/Vitmorph.exe` o abre `project.godot` con Godot **4.7.2** y pulsa F5. La exportación local usa plantillas oficiales de esa misma versión.
+WASD/flechas: explorar. B: builds. C: colección. E: descansar en refugio. En batalla: 1–4, P, R y X para solicitar copia del objetivo seleccionado. Tab/Mayús+Tab/flechas/Enter/Escape: interfaz.
+El editor es voluntario y pausa únicamente exploración; no hay pantalla de preparación ni cambio de escena al combatir.
+
+Guía completa: [DEMO_GUIDE.md](DEMO_GUIDE.md). Contrato aprobado: [DEMO_IMPLEMENTATION.md](DEMO_IMPLEMENTATION.md). Evidencia y límites: [DEMO_DELIVERY.md](DEMO_DELIVERY.md).
 
 ## Godot MCP
 
@@ -16,8 +20,8 @@ El proyecto incluye Godot MCP Toolkit 1.0.2 en `addons/godot_mcp_toolkit`, habil
 ## Documentos del proyecto
 
 - `DESIGN_STATUS.md`: comprensión, decisiones aprobadas, temas abiertos y descartados.
-- `SYSTEMS_DESIGN.md`: propuesta de próximos sistemas y decisiones pendientes del bloque de habilidades/builds; no canon nuevo.
-- `BUILD_DESIGN.md`: diseño candidato de builds, compatibilidad y brief de interfaz; pendiente de revisión y render.
+- `SYSTEMS_DESIGN.md`: antecedente de sistemas; las decisiones de demo vigentes están en DEMO_IMPLEMENTATION.md.
+- `BUILD_DESIGN.md`: antecedente del editor; implementado y revisado en esta demo conforme al contrato aprobado.
 - `ARCHITECTURE.md`: estructura técnica actual y límites de la base.
 - `ASSET_REQUESTS.md`: necesidades de arte identificadas hasta ahora.
 - `TECHNICAL_DECISIONS.md`: registro breve de decisiones de implementación.
@@ -35,13 +39,13 @@ Las fuentes se consultaron sin modificarlas ni copiarlas al proyecto. El título
 
 Reglas de la carga activa: `ATB_PROTOTYPE.md`. La suite de 33 comprobaciones conserva evidencia histórica de iniciativa virtual; no certifica este ATB y necesita adaptación antes de volver a ejecutarse.
 
-La pantalla de preparación añadida por el agente fue rechazada y eliminada. Las builds serán armadas por el jugador con un diseño aún pendiente; no se introduce una pantalla previa obligatoria al combate.
+La pantalla de preparación añadida por el agente fue rechazada y eliminada. Las builds se editan voluntariamente fuera de combate y están implementadas; no se introduce una pantalla previa obligatoria al combate.
 
 ## Repositorio y recuperación
 
 [VITMORPH en GitHub](https://github.com/Quilik8/VITMORPH). Historial en `CHANGELOG.md`, decisiones en `DESIGN_STATUS.md` y `TECHNICAL_DECISIONS.md`; recuperación en `VERSIONING.md`.
 
-La pantalla de preparación fue rechazada y eliminada. El jugador construirá sus builds; no se impone un paso antes del encuentro. Navegación técnica en ambos ejes con cámara y terreno ampliado. Rendimiento aún pendiente de perfilado: las optimizaciones actuales reducen cálculos repetidos sin certificar una tasa de FPS.
+La pantalla de preparación fue rechazada y eliminada. El jugador construye sus builds con B; no se impone un paso antes del encuentro. Navegación técnica en ambos ejes con cámara y terreno ampliado. La comparación con tres repeticiones por escenario está en tests/evidence/performance_comparison.json; no constituye garantía para contenido futuro.
 
 ## Rendimiento
 

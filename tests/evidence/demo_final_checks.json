@@ -1,0 +1,492 @@
+{
+  "run_demo_checks": {
+    "checks": [
+      {
+        "name": "catalog references",
+        "passed": true
+      },
+      {
+        "name": "initial library",
+        "passed": true
+      },
+      {
+        "name": "slot structure",
+        "passed": true
+      },
+      {
+        "name": "normal equipped",
+        "passed": true
+      },
+      {
+        "name": "basic range",
+        "passed": true
+      },
+      {
+        "name": "guard unaffected",
+        "passed": true
+      },
+      {
+        "name": "close range",
+        "passed": true
+      },
+      {
+        "name": "far range",
+        "passed": true
+      },
+      {
+        "name": "definition untouched",
+        "passed": true
+      },
+      {
+        "name": "duplicate modular rejected",
+        "passed": true
+      },
+      {
+        "name": "duplicate instance rejected",
+        "passed": true
+      },
+      {
+        "name": "locked modular rejected",
+        "passed": true
+      },
+      {
+        "name": "swap accepted",
+        "passed": true
+      },
+      {
+        "name": "swap marks and health",
+        "passed": true
+      },
+      {
+        "name": "removed marks clear",
+        "passed": true
+      },
+      {
+        "name": "unequipped cooldown kept",
+        "passed": true
+      },
+      {
+        "name": "combat locks builds",
+        "passed": true
+      },
+      {
+        "name": "combat locks main",
+        "passed": true
+      },
+      {
+        "name": "select copied main",
+        "passed": true
+      },
+      {
+        "name": "individual identity and state",
+        "passed": true
+      }
+    ],
+    "count": 20,
+    "failures": [],
+    "passed": true
+  },
+  "run_combat_demo_checks": {
+    "checks": [
+      {
+        "name": "ATB arrival and action",
+        "passed": true
+      },
+      {
+        "name": "impact exact",
+        "passed": true
+      },
+      {
+        "name": "stable waiting actor dispatched",
+        "passed": true
+      },
+      {
+        "name": "dot first pulse",
+        "passed": true
+      },
+      {
+        "name": "dot reapply preserves cadence",
+        "passed": true
+      },
+      {
+        "name": "dot second pulse",
+        "passed": true
+      },
+      {
+        "name": "dot through shared protection",
+        "passed": true
+      },
+      {
+        "name": "dot extended final pulse and expiry",
+        "passed": true
+      },
+      {
+        "name": "slow retains accumulated charge",
+        "passed": true
+      },
+      {
+        "name": "slow expiry and future arrival",
+        "passed": true
+      },
+      {
+        "name": "forecast repeated sequence",
+        "passed": true
+      },
+      {
+        "name": "forecast accounts expiry",
+        "passed": true
+      },
+      {
+        "name": "large delta action parity",
+        "passed": true
+      },
+      {
+        "name": "large delta charge parity",
+        "passed": true
+      },
+      {
+        "name": "team targeting independent of ID",
+        "passed": true
+      },
+      {
+        "name": "valid priority",
+        "passed": true
+      },
+      {
+        "name": "retain beats priority",
+        "passed": true
+      },
+      {
+        "name": "invalid priority fallback",
+        "passed": true
+      },
+      {
+        "name": "priority becomes valid",
+        "passed": true
+      },
+      {
+        "name": "defense threshold",
+        "passed": true
+      },
+      {
+        "name": "no valid loses opportunity",
+        "passed": true
+      },
+      {
+        "name": "AI control advanced charge",
+        "passed": true
+      },
+      {
+        "name": "AI avoids equivalent control",
+        "passed": true
+      },
+      {
+        "name": "periodic death resolves encounter",
+        "passed": true
+      }
+    ],
+    "count": 24,
+    "failures": [],
+    "passed": true
+  },
+  "run_copy_demo_checks": {
+    "checks": [
+      {
+        "name": "copy above threshold rejected",
+        "passed": true
+      },
+      {
+        "name": "copy request accepted",
+        "passed": true
+      },
+      {
+        "name": "second request rejected",
+        "passed": true
+      },
+      {
+        "name": "pending cancellable",
+        "passed": true
+      },
+      {
+        "name": "support replaces skill opportunity",
+        "passed": true
+      },
+      {
+        "name": "process begins on resolution",
+        "passed": true
+      },
+      {
+        "name": "combat continuous before completion",
+        "passed": true
+      },
+      {
+        "name": "copy success and live withdrawal",
+        "passed": true
+      },
+      {
+        "name": "last withdrawal wins",
+        "passed": true
+      },
+      {
+        "name": "unlocks deduplicated library",
+        "passed": true
+      },
+      {
+        "name": "copy starts clean",
+        "passed": true
+      },
+      {
+        "name": "unique owned identity",
+        "passed": true
+      },
+      {
+        "name": "repeat acquires new instance no library duplicate",
+        "passed": true
+      },
+      {
+        "name": "dispatch revalidates uses ordinary opportunity",
+        "passed": true
+      },
+      {
+        "name": "due damage before simultaneous completion",
+        "passed": true
+      },
+      {
+        "name": "failed copy explained",
+        "passed": true
+      },
+      {
+        "name": "main defeat fails process",
+        "passed": true
+      }
+    ],
+    "count": 17,
+    "failures": [],
+    "passed": true
+  },
+  "run_save_demo_checks": {
+    "checks": [
+      {
+        "name": "snapshot references valid",
+        "passed": true
+      },
+      {
+        "name": "checkpoint queued",
+        "passed": true
+      },
+      {
+        "name": "write confirmed",
+        "passed": true
+      },
+      {
+        "name": "JSON roundtrip valid",
+        "passed": true
+      },
+      {
+        "name": "last valid backup retained",
+        "passed": true
+      },
+      {
+        "name": "corrupt main uses valid backup",
+        "passed": true
+      },
+      {
+        "name": "repair preserves usable backup",
+        "passed": true
+      },
+      {
+        "name": "latest write wins",
+        "passed": true
+      },
+      {
+        "name": "unknown definition rejected",
+        "passed": true
+      },
+      {
+        "name": "invalid saved build rejected",
+        "passed": true
+      },
+      {
+        "name": "invalid coordinates rejected",
+        "passed": true
+      },
+      {
+        "name": "copy retained in session",
+        "passed": true
+      },
+      {
+        "name": "restore pre encounter reverts copy",
+        "passed": true
+      },
+      {
+        "name": "restore keeps HP state",
+        "passed": true
+      },
+      {
+        "name": "write failure never reports saved",
+        "passed": true
+      },
+      {
+        "name": "incompatible schema preserves file",
+        "passed": true
+      },
+      {
+        "name": "incompatible not silently overwritten",
+        "passed": true
+      },
+      {
+        "name": "refuge rest valid",
+        "passed": true
+      },
+      {
+        "name": "rest discards pending battle copy",
+        "passed": true
+      },
+      {
+        "name": "rest resets health and encounters",
+        "passed": true
+      },
+      {
+        "name": "three milestones complete demo",
+        "passed": true
+      },
+      {
+        "name": "rest preserves completion and library",
+        "passed": true
+      },
+      {
+        "name": "continuous world ready after rest",
+        "passed": true
+      },
+      {
+        "name": "resolved defeat keeps collection in world controller",
+        "passed": true
+      },
+      {
+        "name": "resolved defeat returns refuge and resets groups",
+        "passed": true
+      }
+    ],
+    "count": 25,
+    "failures": [],
+    "passed": true
+  },
+  "run_journey_checks": {
+    "checks": [
+      {
+        "name": "new game applies build",
+        "passed": true
+      },
+      {
+        "name": "natural damage reaches copy eligibility",
+        "passed": true
+      },
+      {
+        "name": "new game completes copy",
+        "passed": true
+      },
+      {
+        "name": "copied library incorporated",
+        "passed": true
+      },
+      {
+        "name": "new modular used in actual decisions",
+        "passed": true
+      },
+      {
+        "name": "final encounter beaten",
+        "passed": true
+      },
+      {
+        "name": "full demo milestone cycle",
+        "passed": true
+      },
+      {
+        "name": "completed session restored",
+        "passed": true
+      },
+      {
+        "name": "resolved defeat preserves acquired copies",
+        "passed": true
+      },
+      {
+        "name": "refuge recovery retains builds",
+        "passed": true
+      }
+    ],
+    "count": 10,
+    "failures": [],
+    "passed": true
+  },
+  "run_edge_checks": {
+    "checks": [
+      {
+        "name": "percentage contributions add once",
+        "passed": true
+      },
+      {
+        "name": "second build remains intact",
+        "passed": true
+      },
+      {
+        "name": "catalog remains intact",
+        "passed": true
+      },
+      {
+        "name": "apply valid multiple instances",
+        "passed": true
+      },
+      {
+        "name": "owned modifier cannot equip twice across beasts",
+        "passed": true
+      },
+      {
+        "name": "fixed skills cannot replace",
+        "passed": true
+      },
+      {
+        "name": "slot limits enforced",
+        "passed": true
+      },
+      {
+        "name": "commands do not cancel begun action",
+        "passed": true
+      },
+      {
+        "name": "retained begun action still resolves",
+        "passed": true
+      },
+      {
+        "name": "next choice uses new priority",
+        "passed": true
+      },
+      {
+        "name": "slow preserves registered arrival",
+        "passed": true
+      },
+      {
+        "name": "reapply preserves stronger intensity and extends",
+        "passed": true
+      },
+      {
+        "name": "overkill capped stable skill order",
+        "passed": true
+      },
+      {
+        "name": "target tie stable order",
+        "passed": true
+      },
+      {
+        "name": "obstacles constrain world movement",
+        "passed": true
+      },
+      {
+        "name": "states clean at encounter end",
+        "passed": true
+      }
+    ],
+    "count": 16,
+    "failures": [],
+    "passed": true
+  }
+}

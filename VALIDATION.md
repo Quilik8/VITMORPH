@@ -135,6 +135,10 @@ Scripts modificados comprobados por MCP y consola sin errores/advertencias en co
 
 Tras reiniciar el runtime final: travelling, 100 PV, comandos vacíos, diagnóstico inactivo, sin Preparation; cuatro elementos libres del pool y una sola detección espacial en reposo. Estado y resultados de compilación/consola en `tests/evidence/headroom_final_diagnostics.json`.
 
+## Demo integrada 0.7.0 · 4 octubre 2026
+
+Se completaron catálogo, editor/colección, estados/IA, copia, guardado y recorrido. Las seis suites actuales aprobaron 112 comprobaciones tanto por MCP como dentro del ejecutable Windows. Se verificaron recuperación previa al encuentro, derrota con adquisiciones conservadas y ciclo completo de copia/build/encuentro final/restauración. Veinte reaperturas de UI y cinco recorridos no mostraron crecimiento sostenido de nodos, recursos ni memoria gráfica tras calentamiento. Comparación de tres repeticiones por escenario sin regresión de la mediana p95 superior al 10 %. Exportación Godot 4.7.2: salida 0, sin MCP ni archivos del addon. La revisión visual corresponde al runtime del proyecto; el ejecutable se comprobó headless. El detalle autocontenido, tamaños físicos observados y límites de perfilado están en DEMO_DELIVERY.md; JSON y capturas en tests/evidence. Las 33 pruebas históricas no se cuentan como validación nueva.
+
 ## Hito 0.2.0
 
 MCP reconectado tras apertura del editor. Tres capturas idle y tres acciones en tests/evidence/demo_baseline.json. Catálogo, sesión, builds y suite compilados por MCP. Suite aislada ejecutada sobre runtime; resultado en demo_build_checks.json. No altera partida visible.

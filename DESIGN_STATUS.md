@@ -1,5 +1,9 @@
 # Estado del diseño
 
+## Actualización de la demo · 4 octubre 2026
+
+El contrato vigente de esta entrega está en DEMO_IMPLEMENTATION.md: builds fuera de combate con exploración pausada, selección de un principal, copia como apoyo, biblioteca reutilizable, estados, guardado y refugio. Estos sistemas ya están implementados y técnicamente validados; los pendientes históricos de las secciones posteriores deben leerse junto al contrato. La evaluación humana del ritmo y balance continúa pendiente. Parámetros y geometría siguen siendo provisionales. Entrega y límites: DEMO_DELIVERY.md.
+
 Este resumen separa las decisiones de diseño contenidas en los dos documentos v1.0 de las propuestas técnicas de esta base. No convierte los temas abiertos en canon.
 
 ## Nombre del juego y del proyecto

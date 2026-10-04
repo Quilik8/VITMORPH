@@ -14,6 +14,7 @@ const TEAL := Color("86bbb0")
 var save_service: Node
 var save_label: Label
 var diagnostic_mode := false
+var demo_before_diagnostics: Dictionary = {}
 var session := preload("res://systems/demo_session.gd").new()
 var editor: Control
 var build_button: Button
@@ -40,6 +41,8 @@ var copy_targets: OptionButton
 var copy_button: Button
 var copy_label: Label
 var copy_target_ids: Array[String] = []
+var copy_notice := ""
+var copy_notice_seconds := 0.0
 var selected_skill := "basic"
 var log_lines: Array[String] = []
 
@@ -67,7 +70,10 @@ func _ready() -> void:
 	editor.applied.connect(on_build_applied)
 	editor.main_selected.connect(on_build_applied)
 	combat.copy_service.completed.connect(func(actor):session.acquire_actor(actor); refresh())
-	combat.copy_service.changed.connect(refresh)
+	combat.copy_service.changed.connect(func():
+		if combat.copy_service.message.begins_with("Copia obtenida") or combat.copy_service.message.begins_with("Copia fallida"):
+			copy_notice=combat.copy_service.message; copy_notice_seconds=8.0
+		refresh())
 	combat.action_executed.connect(func(action):
 		if combat.actor_by_id(action.actor_id).get("is_principal",false) and not action.skill.is_empty() and action.get("kind","")!="copy": session.record_skill(action.skill.id))
 	combat.state_changed.connect(refresh)
@@ -92,6 +98,7 @@ func _ready() -> void:
 	elif not restored.found: create_checkpoint()
 	save_label.text=save_service.status
 	refresh()
+	if "--validate-demo" in OS.get_cmdline_user_args(): call_deferred("validate_exported_demo")
 
 func underline(color: Color, fill: Color = Color(0,0,0,0)) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
@@ -185,6 +192,7 @@ func build_screen() -> void:
 	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	arena.add_child(overlay)
 	result_label = label("Elige un encuentro y comienza", 14, MUTED)
+	result_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	overlay.add_child(result_label)
 	action_label = label("", 22)
@@ -294,8 +302,15 @@ func begin() -> void:
 func on_mode_selected(index: int) -> void:
 	if combat.running or route.state == "aftermath":
 		return
+	if index!=3 and route.visible_world and route.state=="travelling":
+		session.sync_actor(route.actors[0],combat.priority,combat.retained)
+		demo_before_diagnostics={"session":session.export_data(),"world":route.export_data()}
 	diagnostic_mode=index!=3
 	route.visible_world = index == 3
+	if index==3 and not demo_before_diagnostics.is_empty():
+		restore_checkpoint(demo_before_diagnostics)
+		demo_before_diagnostics.clear()
+		return
 	if route.visible_world:
 		route.preview()
 	combat.actors.clear()
@@ -353,7 +368,11 @@ func on_action(action: Dictionary) -> void:
 func on_finished(outcome: String) -> void:
 	action_label.text = outcome
 	if route.visible_world:
+		if outcome=="Derrota":
+			copy_notice="Derrota · regreso al refugio · "+(combat.copy_service.message if combat.copy_service.message.begins_with("Copia fallida") else "colección conservada")
+			copy_notice_seconds=8.0
 		result_label.text = "Victoria · recuperando el movimiento" if outcome == "Victoria" else "La bestia ha caído"
+		if copy_notice_seconds>0: result_label.text=copy_notice
 	else:
 		result_label.text = "Encuentro terminado · puedes repetir o cambiar de escenario"
 
@@ -444,6 +463,7 @@ func _process(delta: float) -> void:
 		profile.record("ui/combat_screen.gd:_process", Time.get_ticks_usec() - stamp)
 
 func _process_body(delta: float) -> void:
+	copy_notice_seconds=maxf(0.0,copy_notice_seconds-delta)
 	if combat != null and combat.running:
 		if not combat.copy_service.process.is_empty():
 			var percent: int = int(combat.copy_service.snapshot(combat.combat_clock).progress*100)
@@ -455,7 +475,7 @@ func _process_body(delta: float) -> void:
 			result_label.text = phase
 	elif route != null and route.visible_world:
 		if route.state == "travelling":
-			result_label.text = route.confrontation
+			result_label.text = copy_notice if copy_notice_seconds>0 else route.confrontation
 			exploration_help.text="WASD / flechas · explorar   B · build   C · bestias"+("   E · descansar" if route.at_refuge() else "")
 			start_button.disabled=not route.at_refuge() or editor.visible
 			if session.objectives.completed: result_label.text="Demo completada · el mundo sigue abierto"
@@ -466,6 +486,9 @@ func _process_body(delta: float) -> void:
 
 func snapshot() -> Dictionary:
 	var report: Dictionary = combat.snapshot()
+	report["session"] = session.export_data()
+	report["save"] = {"status":save_service.status,"confirmed":save_service.confirmed,"requested":save_service.sequence,"last_write_usec":save_service.last_write_usec,"diagnostic_profile":diagnostic_mode}
+	report["editor"] = {"visible":editor.visible,"exploration_paused":route.menu_paused,"draft":editor.draft.duplicate(true)}
 	report["world"] = route.snapshot()
 	report["forecast"] = combat.forecast(7)
 	report["performance"] = {"fps": Performance.get_monitor(Performance.TIME_FPS), "process_ms": Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0, "forecast_updates": atb_strip.forecast_updates}
@@ -493,6 +516,38 @@ func run_save_demo_checks() -> Dictionary:
 
 func run_journey_checks() -> Dictionary:
 	return preload("res://tests/demo_journey.gd").new().run()
+
+func run_edge_checks() -> Dictionary:
+	return preload("res://tests/demo_edges.gd").new().run()
+
+func start_runtime_cycles() -> void:
+	var previous := get_node_or_null("RuntimeCycles")
+	if previous!=null: previous.free()
+	var driver := preload("res://tests/runtime_cycles.gd").new()
+	driver.name="RuntimeCycles"
+	add_child(driver)
+	driver.run(self)
+
+func benchmark_fixture(actions: bool) -> void:
+	diagnostic_mode=true
+	if editor.visible: editor.close()
+	route.start()
+	route.actors=preload("res://data/legacy_world_fixture.gd").populate()
+	route.zones=preload("res://data/legacy_world_fixture.gd").locations()
+	route.group_members.clear()
+	for zone in route.zones:
+		var members: Array[Dictionary]=[]
+		for actor in route.actors:
+			if actor.get("zone_id","")==zone.id: members.append(actor)
+		route.group_members[zone.id]=members
+	combat.actors.clear();combat.actors.append(route.actors[0])
+	if actions:
+		route.actors[0].position=Vector2(530,150)
+		route.zone_index=0
+		route.begin_encounter(route.group_for("zone_1"))
+		combat.command("priority","guard")
+	else: combat.running=false
+	refresh()
 
 func open_build(collection_mode: bool) -> void:
 	if combat.running or route.state != "travelling" or not route.visible_world: return
@@ -556,6 +611,7 @@ func validate_snapshot(data: Dictionary) -> Dictionary:
 func restore_checkpoint(data: Dictionary) -> Dictionary:
 	var validation := validate_snapshot(data)
 	if not validation.ok: return validation
+	copy_notice=""; copy_notice_seconds=0.0
 	session.restore_data(data.session)
 	route.restore_data(data.world)
 	combat.priority=session.principal().priority
@@ -567,3 +623,21 @@ func _notification(what: int) -> void:
 	if what==NOTIFICATION_WM_CLOSE_REQUEST:
 		if save_service!=null: save_service.flush()
 		get_tree().quit()
+
+func validate_exported_demo() -> void:
+	# Explicit CLI verification of the distributed executable; never a player menu.
+	diagnostic_mode=true
+	var outcomes := {}
+	var passed := not get_tree().root.has_node("MCPRuntimeServer")
+	for method in ["run_demo_checks","run_combat_demo_checks","run_copy_demo_checks","run_save_demo_checks","run_journey_checks","run_edge_checks"]:
+		var result: Dictionary=call(method)
+		outcomes[method]=result
+		passed=passed and result.passed
+	save_service.flush()
+	DirAccess.make_dir_recursive_absolute("user://tests")
+	var report := {"passed":passed,"mcp_present":get_tree().root.has_node("MCPRuntimeServer"),"version":Engine.get_version_info(),"checks":outcomes,"world":route.state}
+	var output := FileAccess.open("user://tests/export_validation.json",FileAccess.WRITE)
+	if output==null: passed=false
+	else: output.store_string(JSON.stringify(report)); output.close()
+	print("EXPORT_VALIDATION "+JSON.stringify(report))
+	get_tree().quit(0 if passed else 3)

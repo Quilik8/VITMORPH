@@ -136,12 +136,15 @@ func principal_actor() -> Dictionary:
 	return {}
 
 func apply_damage(target: Dictionary, amount: int) -> void:
-	if not Status.active(target): return
+	if not running or not Status.active(target): return
 	var absorbed: int = mini(int(target.shield),amount)
 	var damage := amount-absorbed
 	target.shield=0
 	target.hp=maxi(0,int(target.hp)-damage)
 	if target.hp==0: target.atb=0.0; target.ready_time=-1.0; target.states.clear()
+	if target.hp==0 and not copy_service.process.is_empty():
+		if target.id==copy_service.process.target_id: copy_service.fail("Objetivo derrotado")
+		elif target.get("is_principal",false): copy_service.fail("Principal derrotado")
 	damage_applied.emit(target.id,damage,absorbed)
 	message.emit("%s: −%d vida%s"%[target.name,damage," · protección %d"%absorbed if absorbed>0 else ""])
 	check_finish()

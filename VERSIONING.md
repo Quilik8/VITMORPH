@@ -25,6 +25,10 @@ Primero guardar los cambios locales pendientes en un commit. Git bloquea cambios
 
 Se versionan proyecto, escenas, scripts, addon, documentación y evidencias. Se excluyen cachés `.godot`, temporales, configuración personal `.codex` y logs. Los documentos originales externos en Downloads no están dentro del proyecto.
 
+## Demo técnica integrada · 4 octubre 2026
+
+Puntos comprobados y publicados: `checkpoint-v0.2.0` (catálogo/builds), `checkpoint-v0.3.0` (editor/colección), `checkpoint-v0.4.0` (estados/IA), `checkpoint-v0.5.0` (copia) y `checkpoint-v0.6.0` (guardado/refugio/recorrido). El cierre `checkpoint-v0.7.0` reúne integración, 112 comprobaciones aprobadas, revisión MCP, estabilidad y exportación Windows 4.7.2 sin dependencia MCP. Detalle y límites en DEMO_DELIVERY.md. El ejecutable local se excluye de Git; se versiona el preset.
+
 ## Punto de optimización
 
 `checkpoint-v0.1.1`: primera optimización medida de dibujo, con evidencia y límites en `PERFORMANCE.md`. Conserva `checkpoint-v0.1.0` para recuperar la base anterior. La etiqueta no certifica rendimiento constante ni juego completo.

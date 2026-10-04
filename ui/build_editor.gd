@@ -179,7 +179,11 @@ func render() -> void:
 	context.add_child(text("Comparación de alcance",16,Palette.GOLD))
 	var preview: Dictionary = session.preview_build(owned_id,draft)
 	for row in preview.changes:
-		context.add_child(text(row.name+": "+("Objetivo propio · sin cambio" if row.base==0 else "%.0f → %.0f"%[row.base,row.result]),14))
+		var comparison := text(row.name+": "+("Objetivo propio · sin cambio" if row.base==0 else "%.0f → %.0f"%[row.base,row.result]),14)
+		var total := 0.0
+		for contribution in row.contributions: total+=float(contribution.percent)
+		comparison.tooltip_text="%.0f × (1 + %.2f) = %.0f · contribuciones porcentuales sumadas"%[row.base,total,row.result] if row.base>0 else "Defensa tiene objetivo propio; Alcance no aplica."
+		context.add_child(comparison)
 	var validation: Dictionary = session.validate_build(owned_id,draft)
 	apply_button.disabled = not validation.ok or draft==beast.build
 	message.text = " · ".join(validation.errors) if not validation.ok else ("Sin cambios" if draft==beast.build else "Vista previa · Aplicar actualiza la build")

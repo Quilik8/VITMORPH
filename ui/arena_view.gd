@@ -225,6 +225,10 @@ func _draw_body() -> void:
 			draw_line(base + Vector2(-45,53), base + Vector2(45,53), Color("122119"), 4)
 			draw_line(base + Vector2(-45,53), base + Vector2(-45 + 90.0 * actor.hp / actor.max_hp,53), color, 4)
 			centered(font, "%d PV" % actor.hp, base + Vector2(0,75), 14, INK)
+			var status_text: Array[String]=[]
+			if actor.get("states",{}).has("dot"): status_text.append("Residuo")
+			if actor.get("states",{}).has("slow"): status_text.append("ATB −25 %")
+			if not status_text.is_empty(): centered(font," · ".join(status_text),base+Vector2(0,112),12,Color("86bbb0"))
 	for popup in popups:
 		var actor: Dictionary = combat.actor_by_id(popup.id)
 		if actor.is_empty():

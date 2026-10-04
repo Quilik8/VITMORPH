@@ -1,0 +1,27 @@
+{
+  "method": "Controlled two-enemy runtime, isolated user://tests/live_interruption.json; clock advanced diagnostically, not a wall-time playtest. Before restore copy had completed but encounter remained active. Resolved defeat run repeated after fresh encounter.",
+  "before_restore": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"result\":[2,true,\"Copia obtenida · original retirado vivo\",2,100,84]}"
+      }
+    ]
+  },
+  "after_restore": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"result\":[1,100,100,\"Copia obtenida · original retirado vivo\"]}"
+      }
+    ]
+  },
+  "resolved_defeat": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"result\":[2,\"travelling\",true,100,{\"completed\":false,\"copied\":true,\"final_won\":false,\"new_modular_used\":false},\"Guardado\"]}"
+      }
+    ]
+  }
+}

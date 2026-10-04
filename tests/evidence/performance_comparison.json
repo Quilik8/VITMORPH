@@ -1,0 +1,40 @@
+{
+  "rows": [
+    {
+      "scenario": "idle",
+      "baseline_p95_median_ms": 18.891,
+      "integrated_p95_median_ms": 18.819,
+      "change_percent": -0.3811338732729874,
+      "combat_cpu_p95_median_ms": 0.014,
+      "hitches_33_33": [
+        2,
+        1,
+        1
+      ],
+      "hitches_50": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "scenario": "actions",
+      "baseline_p95_median_ms": 19.664,
+      "integrated_p95_median_ms": 19.177,
+      "change_percent": -2.4766069975590055,
+      "combat_cpu_p95_median_ms": 0.516,
+      "hitches_33_33": [
+        27,
+        4,
+        5
+      ],
+      "hitches_50": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "passed": true,
+  "limits": "Editor/MCP timing, wall frames; one slow actions repetition retained. CPU scope includes synchronous UI callbacks. No GPU timings or total OS RAM claims."
+}

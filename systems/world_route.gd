@@ -80,6 +80,9 @@ func start() -> void:
 	combat.retained = session.principal().retained if session!=null else ""
 	combat.result = ""
 	combat.pending = {}
+	combat.resolved = true
+	combat.combat_clock = 0.0
+	combat.copy_service.reset()
 	combat.history.clear()
 	combat.action_count = 0
 	combat.elapsed = 0.0

@@ -1,5 +1,14 @@
 # Registro de cambios
 
+## 0.7.0 · 4 octubre 2026 · demo técnica integrada
+
+- Cierre de etapas: 0.3.0 editor de builds/colección; 0.4.0 reloj determinista, estados e IA; 0.5.0 copia y retirada viva; 0.6.0 guardado seguro, refugio y recorrido. Cada alcance tiene su etiqueta recuperable en Git.
+- Integración: validación de campos de builds, comandos durante acciones, protección frente a daño fuera de batalla, limpieza de procesos al recuperar y avisos de copia/derrota conservados tras ocultar el HUD.
+- 112 comprobaciones nuevas aprobadas en proyecto y ejecutable; veinte reaperturas y cinco regresos al refugio sin crecimiento sostenido de nodos/recursos/memoria gráfica tras calentamiento.
+- Perfilado equivalente de tres repeticiones por escenario, sin regresión >10 % de la mediana p95; se conserva y documenta una repetición lenta.
+- Exportación Windows local con editor/plantillas 4.7.2 exactos, PCK integrado, sin addon ni runtime MCP. Prueba headless de la exportación: salida 0.
+- Guía, informe autocontenido, evidencias JSON y capturas en DEMO_GUIDE.md, DEMO_DELIVERY.md y tests/evidence. Revisión visual del runtime del proyecto; ritmo/balance pendientes de evaluación humana. Sin imágenes generadas ni nuevas mecánicas fuera del contrato.
+
 ## Diseño posterior a 0.1.2 · 3 de octubre de 2026
 
 - Desarrollo del bloque en BUILD_DESIGN.md: candidatos de intercambio, combinación, comandos e interfaz; skills de diseño aplicadas. Brief sin implementación ni nuevas reglas aprobadas.

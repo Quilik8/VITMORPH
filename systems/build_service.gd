@@ -10,6 +10,8 @@ func empty_build(modular: Array) -> Dictionary:
 func validate_build(beast: Dictionary, build: Dictionary, library: Array, inventory: Dictionary, collection: Array = []) -> Dictionary:
 	var errors: Array[String] = []
 	var warnings: Array[String] = []
+	for key in build:
+		if key not in ["modular","normal","special"]: errors.append("Campo de build no editable: "+str(key))
 	if not build.get("modular") is Array or not build.get("normal") is Array or not build.get("special") is Array:
 		return {"ok":false,"errors":["Configuración incompleta"],"warnings":[]}
 	if build.modular.size()!=2 or build.normal.size()!=8 or build.special.size()!=2:

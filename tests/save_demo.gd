@@ -68,13 +68,22 @@ func run() -> Dictionary:
 	session.principal().hp=20;session.principal().shield=10;session.principal().ready_at.basic=9
 	route.actors[1].retired=true;route.actors[1].hp=30;route.cleared_groups.zone_1=true
 	route.state="travelling";route.actors[0].position=World.START_POSITION
+	engine.copy_service.pending_id="old_request"
+	engine.copy_service.process={"target_id":"old_process","start":0.0,"finish":18.0}
 	check("refuge rest valid",route.rest().ok)
+	check("rest discards pending battle copy",engine.copy_service.pending_id=="" and engine.copy_service.process.is_empty())
 	check("rest resets health and encounters",session.principal().hp==100 and session.principal().shield==0 and session.principal().ready_at.is_empty() and route.cleared_groups.is_empty() and not route.actors[1].retired)
 	session.objectives.copied=true;session.objectives.new_modular_used=true;session.objectives.final_won=true;session.update_objectives()
 	check("three milestones complete demo",session.objectives.completed)
 	route.rest()
 	check("rest preserves completion and library",session.objectives.completed and session.library.size()==2)
 	check("continuous world ready after rest",route.state=="travelling" and route.visible_world)
+	session.acquire_actor(route.actors[1])
+	route.state="battle"
+	route.actors[0].hp=0
+	route.on_combat_finished("Derrota")
+	check("resolved defeat keeps collection in world controller",session.collection.size()==2 and session.library.size()==4)
+	check("resolved defeat returns refuge and resets groups",route.at_refuge() and route.actors[0].hp==100 and route.cleared_groups.is_empty())
 	engine.free();route.free();save.free()
 	var failures:=checks.filter(func(row):return not row.passed)
 	return {"passed":failures.is_empty(),"count":checks.size(),"checks":checks,"failures":failures}

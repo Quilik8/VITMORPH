@@ -1,3 +1,5 @@
+> Actualización de demo · 4 de octubre de 2026: contrato vigente en DEMO_IMPLEMENTATION.md, uso en DEMO_GUIDE.md y evidencia en DEMO_DELIVERY.md. Este documento conserva el antecedente; las restricciones superadas no describen la demo actual.
+
 # Primera prueba de combate de Vitmorph
 
 ## Para jugar

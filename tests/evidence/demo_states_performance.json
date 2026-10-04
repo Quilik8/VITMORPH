@@ -1,0 +1,1867 @@
+{
+  "method": "New demo first encounter; principal prioritizes guard; enemy autonomous residual/slow kit; 12-second captures, three repetitions; separate first-use capture retained; no equivalent legacy baseline for these new enemy kits",
+  "first_use": {
+    "combat": {
+      "actions": 3,
+      "actors": [
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 18,
+              "id": "basic",
+              "modular": false,
+              "name": "Ataque básico",
+              "order": 0,
+              "range": 400,
+              "shield": 0,
+              "slot": "FIJA",
+              "status": ""
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "guard",
+              "modular": false,
+              "name": "Defensa",
+              "order": 1,
+              "range": 0,
+              "shield": 24,
+              "slot": "FIJA",
+              "status": ""
+            },
+            {
+              "cooldown": 2,
+              "damage": 30,
+              "id": "close",
+              "modular": true,
+              "name": "Ataque cercano",
+              "order": 2,
+              "range": 240,
+              "shield": 0,
+              "slot": "MODULAR",
+              "status": ""
+            },
+            {
+              "cooldown": 1,
+              "damage": 12,
+              "id": "far",
+              "modular": true,
+              "name": "Ataque distante",
+              "order": 3,
+              "range": 600,
+              "shield": 0,
+              "slot": "MODULAR",
+              "status": ""
+            }
+          ],
+          "atb": 30.7536700000003,
+          "build": {
+            "modular": [
+              "close",
+              "far"
+            ],
+            "normal": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            "special": [
+              "",
+              ""
+            ]
+          },
+          "definition_id": "starter",
+          "hp": 78,
+          "id": "main",
+          "is_principal": true,
+          "max_hp": 100,
+          "name": "Principal inicial",
+          "next_at": 0,
+          "owned_id": "copy_000001",
+          "position": {
+            "type": "Vector2",
+            "x": 610,
+            "y": 150
+          },
+          "ready_at": {
+            "basic": 3,
+            "close": 4
+          },
+          "ready_time": -1,
+          "retired": false,
+          "shield": 0,
+          "speed": 10,
+          "states": {},
+          "team": "player",
+          "turns": 2
+        },
+        {
+          "abilities": [
+            {
+              "cooldown": 0,
+              "damage": 4,
+              "id": "enemy_hit",
+              "modular": false,
+              "name": "Ataque técnico",
+              "order": 6,
+              "range": 600,
+              "shield": 0,
+              "slot": "FIJA",
+              "status": ""
+            },
+            {
+              "cooldown": 0,
+              "damage": 0,
+              "id": "enemy_guard",
+              "modular": false,
+              "name": "Protección técnica",
+              "order": 7,
+              "range": 0,
+              "shield": 12,
+              "slot": "FIJA",
+              "status": ""
+            },
+            {
+              "cooldown": 2,
+              "damage": 10,
+              "id": "residual",
+              "modular": true,
+              "name": "Impacto residual",
+              "order": 4,
+              "range": 400,
+              "shield": 0,
+              "slot": "MODULAR",
+              "status": "dot"
+            },
+            {
+              "cooldown": 2,
+              "damage": 6,
+              "id": "slow",
+              "modular": true,
+              "name": "Freno",
+              "order": 5,
+              "range": 400,
+              "shield": 0,
+              "slot": "MODULAR",
+              "status": "slow"
+            }
+          ],
+          "atb": 0,
+          "build": {
+            "modular": [
+              "residual",
+              "slow"
+            ],
+            "normal": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            "special": [
+              "",
+              ""
+            ]
+          },
+          "definition_id": "residual_beast",
+          "home": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "hp": 52,
+          "id": "zone_1_0",
+          "is_principal": false,
+          "max_hp": 100,
+          "name": "Bestia residual",
+          "next_at": 0,
+          "position": {
+            "type": "Vector2",
+            "x": 690,
+            "y": 150
+          },
+          "ready_at": {
+            "residual": 4
+          },
+          "ready_time": -1,
+          "retired": false,
+          "shield": 0,
+          "speed": 8,
+          "states": {},
+          "team": "enemy",
+          "turns": 2,
+          "zone_id": "zone_1"
+        }
+      ],
+      "atb": [
+        {
+          "charge": 0,
+          "id": "zone_1_0",
+          "name": "Bestia residual",
+          "order": 0,
+          "rank": 0,
+          "status": "acting"
+        },
+        {
+          "charge": 30.7536700000003,
+          "id": "main",
+          "name": "Principal inicial",
+          "order": 6.92463299999997,
+          "rank": 2,
+          "status": "charging"
+        }
+      ],
+      "clock": 32.6753670000002,
+      "copy": {
+        "message": "",
+        "pending_id": "",
+        "process": {},
+        "progress": 0
+      },
+      "elapsed": 0.575367000000233,
+      "history_limit": 256,
+      "history_retained": 3,
+      "pending": {
+        "actor_id": "zone_1_0",
+        "reason": "Mayor daño aprovechable",
+        "skill": {
+          "cooldown": 2,
+          "damage": 6,
+          "id": "slow",
+          "modular": true,
+          "name": "Freno",
+          "order": 5,
+          "range": 400,
+          "shield": 0,
+          "slot": "MODULAR",
+          "status": "slow"
+        },
+        "target_id": "main"
+      },
+      "priority": "",
+      "resolved": false,
+      "result": "",
+      "retained": "",
+      "running": true,
+      "scenario": -1
+    },
+    "profile": {
+      "active": false,
+      "average_fps": 58.1143729048212,
+      "draw_calls_monitor": 87,
+      "fps_monitor": 58,
+      "frame_delta_ms": {
+        "max": 141.558666666657,
+        "mean": 17.0868038095238,
+        "p50": 16.6666666666667,
+        "p95": 18.0555555555556,
+        "p99": 25
+      },
+      "frame_process_ms_monitor": 32.413,
+      "frames": 700,
+      "hitches": {
+        "over_16_67_ms": 355,
+        "over_33_33_ms": 8,
+        "over_50_ms": 2
+      },
+      "label": "new_demo_states_1",
+      "limits": "Memory is engine allocations, not OS working set; sampled peaks at 0.25s are not exact peaks. Some monitors can lag or be unavailable. Zero is not proof of no usage. Scopes overlap; no direct GPU timing. Samples capped at 8192; counters include all frames.",
+      "monitor_sample_count": 47,
+      "monitors": {
+        "draw_calls": {
+          "delta": 5,
+          "end": 87,
+          "min_sampled": 82,
+          "peak_sampled": 87,
+          "start": 82
+        },
+        "engine_memory_bytes": {
+          "delta": 580482,
+          "end": 68415147,
+          "min_sampled": 67834665,
+          "peak_sampled": 68419377,
+          "start": 67834665
+        },
+        "nodes": {
+          "delta": 0,
+          "end": 109,
+          "min_sampled": 109,
+          "peak_sampled": 109,
+          "start": 109
+        },
+        "objects": {
+          "delta": 46,
+          "end": 1997,
+          "min_sampled": 1951,
+          "peak_sampled": 1997,
+          "start": 1951
+        },
+        "orphan_nodes": {
+          "delta": 0,
+          "end": 0,
+          "min_sampled": 0,
+          "peak_sampled": 0,
+          "start": 0
+        },
+        "primitives": {
+          "delta": 220,
+          "end": 1966,
+          "min_sampled": 1742,
+          "peak_sampled": 1972,
+          "start": 1746
+        },
+        "render_buffer_bytes": {
+          "delta": 144,
+          "end": 10703650,
+          "min_sampled": 10703506,
+          "peak_sampled": 10703650,
+          "start": 10703506
+        },
+        "resources": {
+          "delta": 0,
+          "end": 58,
+          "min_sampled": 58,
+          "peak_sampled": 58,
+          "start": 58
+        },
+        "texture_bytes": {
+          "delta": 131072,
+          "end": 8138249,
+          "min_sampled": 8007177,
+          "peak_sampled": 8138249,
+          "start": 8007177
+        },
+        "video_memory_bytes": {
+          "delta": 131216,
+          "end": 18841899,
+          "min_sampled": 18710683,
+          "peak_sampled": 18841899,
+          "start": 18710683
+        }
+      },
+      "scopes": {
+        "arena:centered": {
+          "calls": 544,
+          "max_usec": 2803,
+          "mean_usec": 88.9375,
+          "sample_usec": {
+            "max": 2803,
+            "mean": 88.9375,
+            "p50": 44,
+            "p95": 213,
+            "p99": 303
+          }
+        },
+        "systems/combat_engine.gd:_process": {
+          "calls": 701,
+          "max_usec": 19914,
+          "mean_usec": 240.309557774608,
+          "sample_usec": {
+            "max": 19914,
+            "mean": 240.309557774608,
+            "p50": 208,
+            "p95": 247,
+            "p99": 321
+          }
+        },
+        "systems/world_route.gd:_process": {
+          "calls": 701,
+          "max_usec": 278,
+          "mean_usec": 29.7132667617689,
+          "sample_usec": {
+            "max": 278,
+            "mean": 29.7132667617689,
+            "p50": 29,
+            "p95": 37,
+            "p99": 47
+          }
+        },
+        "ui/arena_view.gd:_draw": {
+          "calls": 136,
+          "max_usec": 5455,
+          "mean_usec": 1399.16176470588,
+          "sample_usec": {
+            "max": 5455,
+            "mean": 1399.16176470588,
+            "p50": 726,
+            "p95": 3336,
+            "p99": 4796
+          }
+        },
+        "ui/arena_view.gd:_process": {
+          "calls": 701,
+          "max_usec": 39603,
+          "mean_usec": 235.631954350927,
+          "sample_usec": {
+            "max": 39603,
+            "mean": 235.631954350927,
+            "p50": 130,
+            "p95": 288,
+            "p99": 375
+          }
+        },
+        "ui/atb_strip.gd:_draw": {
+          "calls": 56,
+          "max_usec": 2233,
+          "mean_usec": 974.625,
+          "sample_usec": {
+            "max": 2233,
+            "mean": 974.625,
+            "p50": 870,
+            "p95": 2060,
+            "p99": 2233
+          }
+        },
+        "ui/atb_strip.gd:_process": {
+          "calls": 701,
+          "max_usec": 510,
+          "mean_usec": 47.490727532097,
+          "sample_usec": {
+            "max": 510,
+            "mean": 47.490727532097,
+            "p50": 18,
+            "p95": 357,
+            "p99": 414
+          }
+        },
+        "ui/combat_screen.gd:_process": {
+          "calls": 701,
+          "max_usec": 143,
+          "mean_usec": 47.7275320970043,
+          "sample_usec": {
+            "max": 143,
+            "mean": 47.7275320970043,
+            "p50": 51,
+            "p95": 66,
+            "p99": 75
+          }
+        },
+        "ui/combat_screen.gd:refresh": {
+          "calls": 3,
+          "max_usec": 2307,
+          "mean_usec": 1834.33333333333,
+          "sample_usec": {
+            "max": 2307,
+            "mean": 1834.33333333333,
+            "p50": 1671,
+            "p95": 2307,
+            "p99": 2307
+          }
+        }
+      },
+      "wall_frame_ms": {
+        "max": 168.613,
+        "mean": 17.2078755364807,
+        "p50": 16.885,
+        "p95": 18.677,
+        "p99": 35.369
+      },
+      "wall_seconds": 12.045213
+    }
+  },
+  "captures": [
+    {
+      "combat": {
+        "actions": 4,
+        "actors": [
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 18,
+                "id": "basic",
+                "modular": false,
+                "name": "Ataque básico",
+                "order": 0,
+                "range": 400,
+                "shield": 0,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 0,
+                "damage": 0,
+                "id": "guard",
+                "modular": false,
+                "name": "Defensa",
+                "order": 1,
+                "range": 0,
+                "shield": 24,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 2,
+                "damage": 30,
+                "id": "close",
+                "modular": true,
+                "name": "Ataque cercano",
+                "order": 2,
+                "range": 240,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": ""
+              },
+              {
+                "cooldown": 1,
+                "damage": 12,
+                "id": "far",
+                "modular": true,
+                "name": "Ataque distante",
+                "order": 3,
+                "range": 600,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": ""
+              }
+            ],
+            "atb": 77.5612150000005,
+            "build": {
+              "modular": [
+                "close",
+                "far"
+              ],
+              "normal": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "special": [
+                "",
+                ""
+              ]
+            },
+            "definition_id": "starter",
+            "hp": 86,
+            "id": "main",
+            "is_principal": true,
+            "max_hp": 100,
+            "name": "Principal inicial",
+            "next_at": 0,
+            "owned_id": "copy_000001",
+            "position": {
+              "type": "Vector2",
+              "x": 610,
+              "y": 150
+            },
+            "ready_at": {
+              "guard": 3
+            },
+            "ready_time": -1,
+            "retired": false,
+            "shield": 0,
+            "speed": 10,
+            "states": {
+              "slow": {
+                "expires": 42.2999999999995,
+                "intensity": 0.25,
+                "next": null
+              }
+            },
+            "team": "player",
+            "turns": 2
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "modular": false,
+                "name": "Ataque técnico",
+                "order": 6,
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 0,
+                "damage": 0,
+                "id": "enemy_guard",
+                "modular": false,
+                "name": "Protección técnica",
+                "order": 7,
+                "range": 0,
+                "shield": 12,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 2,
+                "damage": 10,
+                "id": "residual",
+                "modular": true,
+                "name": "Impacto residual",
+                "order": 4,
+                "range": 400,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": "dot"
+              },
+              {
+                "cooldown": 2,
+                "damage": 6,
+                "id": "slow",
+                "modular": true,
+                "name": "Freno",
+                "order": 5,
+                "range": 400,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": "slow"
+              }
+            ],
+            "atb": 11.798629333335,
+            "build": {
+              "modular": [
+                "residual",
+                "slow"
+              ],
+              "normal": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "special": [
+                "",
+                ""
+              ]
+            },
+            "definition_id": "residual_beast",
+            "home": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "hp": 100,
+            "id": "zone_1_0",
+            "is_principal": false,
+            "max_hp": 100,
+            "name": "Bestia residual",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "ready_at": {
+              "residual": 4,
+              "slow": 5
+            },
+            "ready_time": -1,
+            "retired": false,
+            "shield": 0,
+            "speed": 8,
+            "states": {},
+            "team": "enemy",
+            "turns": 2,
+            "zone_id": "zone_1"
+          }
+        ],
+        "atb": [
+          {
+            "charge": 77.5612150000005,
+            "id": "main",
+            "name": "Principal inicial",
+            "order": 2.99183799999993,
+            "rank": 2,
+            "status": "charging"
+          },
+          {
+            "charge": 11.798629333335,
+            "id": "zone_1_0",
+            "name": "Bestia residual",
+            "order": 11.0251713333331,
+            "rank": 2,
+            "status": "charging"
+          }
+        ],
+        "clock": 38.3748286666661,
+        "copy": {
+          "message": "",
+          "pending_id": "",
+          "process": {},
+          "progress": 0
+        },
+        "elapsed": 0,
+        "history_limit": 256,
+        "history_retained": 4,
+        "pending": {},
+        "priority": "guard",
+        "resolved": true,
+        "result": "",
+        "retained": "",
+        "running": true,
+        "scenario": -1
+      },
+      "profile": {
+        "active": false,
+        "average_fps": 59.4805349949229,
+        "draw_calls_monitor": 83,
+        "fps_monitor": 59,
+        "frame_delta_ms": {
+          "max": 32.0056666666768,
+          "mean": 16.7951633986927,
+          "p50": 16.6666666666667,
+          "p95": 16.6666666666667,
+          "p99": 19.046
+        },
+        "frame_process_ms_monitor": 25.907,
+        "frames": 714,
+        "hitches": {
+          "over_16_67_ms": 362,
+          "over_33_33_ms": 3,
+          "over_50_ms": 0
+        },
+        "label": "new_demo_states_2",
+        "limits": "Memory is engine allocations, not OS working set; sampled peaks at 0.25s are not exact peaks. Some monitors can lag or be unavailable. Zero is not proof of no usage. Scopes overlap; no direct GPU timing. Samples capped at 8192; counters include all frames.",
+        "monitor_sample_count": 47,
+        "monitors": {
+          "draw_calls": {
+            "delta": 4,
+            "end": 86,
+            "min_sampled": 82,
+            "peak_sampled": 86,
+            "start": 82
+          },
+          "engine_memory_bytes": {
+            "delta": 255952,
+            "end": 68756785,
+            "min_sampled": 68500833,
+            "peak_sampled": 68756785,
+            "start": 68500833
+          },
+          "nodes": {
+            "delta": 0,
+            "end": 109,
+            "min_sampled": 109,
+            "peak_sampled": 109,
+            "start": 109
+          },
+          "objects": {
+            "delta": -2,
+            "end": 2000,
+            "min_sampled": 2000,
+            "peak_sampled": 2002,
+            "start": 2002
+          },
+          "orphan_nodes": {
+            "delta": 0,
+            "end": 0,
+            "min_sampled": 0,
+            "peak_sampled": 0,
+            "start": 0
+          },
+          "primitives": {
+            "delta": 204,
+            "end": 1968,
+            "min_sampled": 1760,
+            "peak_sampled": 1974,
+            "start": 1764
+          },
+          "render_buffer_bytes": {
+            "delta": 0,
+            "end": 10703506,
+            "min_sampled": 10703506,
+            "peak_sampled": 10703506,
+            "start": 10703506
+          },
+          "resources": {
+            "delta": 0,
+            "end": 58,
+            "min_sampled": 58,
+            "peak_sampled": 58,
+            "start": 58
+          },
+          "texture_bytes": {
+            "delta": 0,
+            "end": 8269321,
+            "min_sampled": 8269321,
+            "peak_sampled": 8269321,
+            "start": 8269321
+          },
+          "video_memory_bytes": {
+            "delta": 0,
+            "end": 18972827,
+            "min_sampled": 18972827,
+            "peak_sampled": 18972827,
+            "start": 18972827
+          }
+        },
+        "scopes": {
+          "arena:centered": {
+            "calls": 380,
+            "max_usec": 399,
+            "mean_usec": 73.1078947368421,
+            "sample_usec": {
+              "max": 399,
+              "mean": 73.1078947368421,
+              "p50": 40,
+              "p95": 199,
+              "p99": 258
+            }
+          },
+          "systems/combat_engine.gd:_process": {
+            "calls": 715,
+            "max_usec": 3149,
+            "mean_usec": 190.606993006993,
+            "sample_usec": {
+              "max": 3149,
+              "mean": 190.606993006993,
+              "p50": 190,
+              "p95": 236,
+              "p99": 301
+            }
+          },
+          "systems/world_route.gd:_process": {
+            "calls": 715,
+            "max_usec": 101,
+            "mean_usec": 26.7174825174825,
+            "sample_usec": {
+              "max": 101,
+              "mean": 26.7174825174825,
+              "p50": 27,
+              "p95": 34,
+              "p99": 42
+            }
+          },
+          "ui/arena_view.gd:_draw": {
+            "calls": 95,
+            "max_usec": 1037,
+            "mean_usec": 626.273684210526,
+            "sample_usec": {
+              "max": 1037,
+              "mean": 626.273684210526,
+              "p50": 613,
+              "p95": 772,
+              "p99": 1037
+            }
+          },
+          "ui/arena_view.gd:_process": {
+            "calls": 715,
+            "max_usec": 451,
+            "mean_usec": 135.367832167832,
+            "sample_usec": {
+              "max": 451,
+              "mean": 135.367832167832,
+              "p50": 121,
+              "p95": 216,
+              "p99": 248
+            }
+          },
+          "ui/atb_strip.gd:_draw": {
+            "calls": 56,
+            "max_usec": 1316,
+            "mean_usec": 716.517857142857,
+            "sample_usec": {
+              "max": 1316,
+              "mean": 716.517857142857,
+              "p50": 579,
+              "p95": 1169,
+              "p99": 1316
+            }
+          },
+          "ui/atb_strip.gd:_process": {
+            "calls": 715,
+            "max_usec": 446,
+            "mean_usec": 43.0545454545455,
+            "sample_usec": {
+              "max": 446,
+              "mean": 43.0545454545455,
+              "p50": 17,
+              "p95": 334,
+              "p99": 368
+            }
+          },
+          "ui/combat_screen.gd:_process": {
+            "calls": 715,
+            "max_usec": 199,
+            "mean_usec": 43.7874125874126,
+            "sample_usec": {
+              "max": 199,
+              "mean": 43.7874125874126,
+              "p50": 47,
+              "p95": 60,
+              "p99": 102
+            }
+          },
+          "ui/combat_screen.gd:refresh": {
+            "calls": 1,
+            "max_usec": 2329,
+            "mean_usec": 2329,
+            "sample_usec": {
+              "max": 2329,
+              "mean": 2329,
+              "p50": 2329,
+              "p95": 2329,
+              "p99": 2329
+            }
+          }
+        },
+        "wall_frame_ms": {
+          "max": 38.182,
+          "mean": 16.810904628331,
+          "p50": 16.987,
+          "p95": 18.571,
+          "p99": 21.825
+        },
+        "wall_seconds": 12.003927
+      }
+    },
+    {
+      "combat": {
+        "actions": 4,
+        "actors": [
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 18,
+                "id": "basic",
+                "modular": false,
+                "name": "Ataque básico",
+                "order": 0,
+                "range": 400,
+                "shield": 0,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 0,
+                "damage": 0,
+                "id": "guard",
+                "modular": false,
+                "name": "Defensa",
+                "order": 1,
+                "range": 0,
+                "shield": 24,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 2,
+                "damage": 30,
+                "id": "close",
+                "modular": true,
+                "name": "Ataque cercano",
+                "order": 2,
+                "range": 240,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": ""
+              },
+              {
+                "cooldown": 1,
+                "damage": 12,
+                "id": "far",
+                "modular": true,
+                "name": "Ataque distante",
+                "order": 3,
+                "range": 600,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": ""
+              }
+            ],
+            "atb": 51.6925350000007,
+            "build": {
+              "modular": [
+                "close",
+                "far"
+              ],
+              "normal": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "special": [
+                "",
+                ""
+              ]
+            },
+            "definition_id": "starter",
+            "hp": 86,
+            "id": "main",
+            "is_principal": true,
+            "max_hp": 100,
+            "name": "Principal inicial",
+            "next_at": 0,
+            "owned_id": "copy_000001",
+            "position": {
+              "type": "Vector2",
+              "x": 610,
+              "y": 150
+            },
+            "ready_at": {
+              "guard": 3
+            },
+            "ready_time": -1,
+            "retired": false,
+            "shield": 0,
+            "speed": 10,
+            "states": {
+              "slow": {
+                "expires": 42.2999999999995,
+                "intensity": 0.25,
+                "next": null
+              }
+            },
+            "team": "player",
+            "turns": 2
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "modular": false,
+                "name": "Ataque técnico",
+                "order": 6,
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 0,
+                "damage": 0,
+                "id": "enemy_guard",
+                "modular": false,
+                "name": "Protección técnica",
+                "order": 7,
+                "range": 0,
+                "shield": 12,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 2,
+                "damage": 10,
+                "id": "residual",
+                "modular": true,
+                "name": "Impacto residual",
+                "order": 4,
+                "range": 400,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": "dot"
+              },
+              {
+                "cooldown": 2,
+                "damage": 6,
+                "id": "slow",
+                "modular": true,
+                "name": "Freno",
+                "order": 5,
+                "range": 400,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": "slow"
+              }
+            ],
+            "atb": 0,
+            "build": {
+              "modular": [
+                "residual",
+                "slow"
+              ],
+              "normal": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "special": [
+                "",
+                ""
+              ]
+            },
+            "definition_id": "residual_beast",
+            "home": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "hp": 100,
+            "id": "zone_1_0",
+            "is_principal": false,
+            "max_hp": 100,
+            "name": "Bestia residual",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "ready_at": {
+              "residual": 4,
+              "slow": 5
+            },
+            "ready_time": -1,
+            "retired": false,
+            "shield": 0,
+            "speed": 8,
+            "states": {},
+            "team": "enemy",
+            "turns": 2,
+            "zone_id": "zone_1"
+          }
+        ],
+        "atb": [
+          {
+            "charge": 0,
+            "id": "zone_1_0",
+            "name": "Bestia residual",
+            "order": 0,
+            "rank": 0,
+            "status": "acting"
+          },
+          {
+            "charge": 51.6925350000007,
+            "id": "main",
+            "name": "Principal inicial",
+            "order": 6.44099533333324,
+            "rank": 2,
+            "status": "charging"
+          }
+        ],
+        "clock": 34.9256713333331,
+        "copy": {
+          "message": "",
+          "pending_id": "",
+          "process": {},
+          "progress": 0
+        },
+        "elapsed": 2.82567133333357,
+        "history_limit": 256,
+        "history_retained": 4,
+        "pending": {
+          "actor_id": "zone_1_0",
+          "reason": "Mayor daño aprovechable",
+          "skill": {
+            "cooldown": 2,
+            "damage": 6,
+            "id": "slow",
+            "modular": true,
+            "name": "Freno",
+            "order": 5,
+            "range": 400,
+            "shield": 0,
+            "slot": "MODULAR",
+            "status": "slow"
+          },
+          "target_id": "main"
+        },
+        "priority": "guard",
+        "resolved": true,
+        "result": "",
+        "retained": "",
+        "running": true,
+        "scenario": -1
+      },
+      "profile": {
+        "active": false,
+        "average_fps": 59.3955825658492,
+        "draw_calls_monitor": 87,
+        "fps_monitor": 58,
+        "frame_delta_ms": {
+          "max": 30.2216666666782,
+          "mean": 16.8301232492996,
+          "p50": 16.6666666666667,
+          "p95": 16.6666666666667,
+          "p99": 19.4444444444444
+        },
+        "frame_process_ms_monitor": 32.189,
+        "frames": 714,
+        "hitches": {
+          "over_16_67_ms": 360,
+          "over_33_33_ms": 4,
+          "over_50_ms": 0
+        },
+        "label": "new_demo_states_3",
+        "limits": "Memory is engine allocations, not OS working set; sampled peaks at 0.25s are not exact peaks. Some monitors can lag or be unavailable. Zero is not proof of no usage. Scopes overlap; no direct GPU timing. Samples capped at 8192; counters include all frames.",
+        "monitor_sample_count": 47,
+        "monitors": {
+          "draw_calls": {
+            "delta": 4,
+            "end": 86,
+            "min_sampled": 82,
+            "peak_sampled": 86,
+            "start": 82
+          },
+          "engine_memory_bytes": {
+            "delta": 254068,
+            "end": 68764461,
+            "min_sampled": 68510393,
+            "peak_sampled": 68764461,
+            "start": 68510393
+          },
+          "nodes": {
+            "delta": 0,
+            "end": 109,
+            "min_sampled": 109,
+            "peak_sampled": 109,
+            "start": 109
+          },
+          "objects": {
+            "delta": -2,
+            "end": 2000,
+            "min_sampled": 2000,
+            "peak_sampled": 2002,
+            "start": 2002
+          },
+          "orphan_nodes": {
+            "delta": 0,
+            "end": 0,
+            "min_sampled": 0,
+            "peak_sampled": 0,
+            "start": 0
+          },
+          "primitives": {
+            "delta": 210,
+            "end": 1974,
+            "min_sampled": 1760,
+            "peak_sampled": 1974,
+            "start": 1764
+          },
+          "render_buffer_bytes": {
+            "delta": 0,
+            "end": 10703506,
+            "min_sampled": 10703506,
+            "peak_sampled": 10703506,
+            "start": 10703506
+          },
+          "resources": {
+            "delta": 0,
+            "end": 58,
+            "min_sampled": 58,
+            "peak_sampled": 58,
+            "start": 58
+          },
+          "texture_bytes": {
+            "delta": 0,
+            "end": 8269321,
+            "min_sampled": 8269321,
+            "peak_sampled": 8269321,
+            "start": 8269321
+          },
+          "video_memory_bytes": {
+            "delta": 0,
+            "end": 18972827,
+            "min_sampled": 18972827,
+            "peak_sampled": 18972827,
+            "start": 18972827
+          }
+        },
+        "scopes": {
+          "arena:centered": {
+            "calls": 373,
+            "max_usec": 292,
+            "mean_usec": 74.8927613941019,
+            "sample_usec": {
+              "max": 292,
+              "mean": 74.8927613941019,
+              "p50": 41,
+              "p95": 206,
+              "p99": 272
+            }
+          },
+          "systems/combat_engine.gd:_process": {
+            "calls": 715,
+            "max_usec": 3326,
+            "mean_usec": 195.138461538462,
+            "sample_usec": {
+              "max": 3326,
+              "mean": 195.138461538462,
+              "p50": 189,
+              "p95": 248,
+              "p99": 336
+            }
+          },
+          "systems/world_route.gd:_process": {
+            "calls": 715,
+            "max_usec": 134,
+            "mean_usec": 27.6307692307692,
+            "sample_usec": {
+              "max": 134,
+              "mean": 27.6307692307692,
+              "p50": 27,
+              "p95": 34,
+              "p99": 80
+            }
+          },
+          "ui/arena_view.gd:_draw": {
+            "calls": 93,
+            "max_usec": 1139,
+            "mean_usec": 660.698924731183,
+            "sample_usec": {
+              "max": 1139,
+              "mean": 660.698924731183,
+              "p50": 626,
+              "p95": 918,
+              "p99": 1139
+            }
+          },
+          "ui/arena_view.gd:_process": {
+            "calls": 715,
+            "max_usec": 333,
+            "mean_usec": 135.359440559441,
+            "sample_usec": {
+              "max": 333,
+              "mean": 135.359440559441,
+              "p50": 121,
+              "p95": 220,
+              "p99": 269
+            }
+          },
+          "ui/atb_strip.gd:_draw": {
+            "calls": 57,
+            "max_usec": 1133,
+            "mean_usec": 630.263157894737,
+            "sample_usec": {
+              "max": 1133,
+              "mean": 630.263157894737,
+              "p50": 547,
+              "p95": 1043,
+              "p99": 1133
+            }
+          },
+          "ui/atb_strip.gd:_process": {
+            "calls": 715,
+            "max_usec": 502,
+            "mean_usec": 43.779020979021,
+            "sample_usec": {
+              "max": 502,
+              "mean": 43.779020979021,
+              "p50": 17,
+              "p95": 334,
+              "p99": 375
+            }
+          },
+          "ui/combat_screen.gd:_process": {
+            "calls": 715,
+            "max_usec": 390,
+            "mean_usec": 44.006993006993,
+            "sample_usec": {
+              "max": 390,
+              "mean": 44.006993006993,
+              "p50": 47,
+              "p95": 61,
+              "p99": 73
+            }
+          },
+          "ui/combat_screen.gd:refresh": {
+            "calls": 2,
+            "max_usec": 2594,
+            "mean_usec": 2353.5,
+            "sample_usec": {
+              "max": 2594,
+              "mean": 2353.5,
+              "p50": 2113,
+              "p95": 2594,
+              "p99": 2594
+            }
+          }
+        },
+        "wall_frame_ms": {
+          "max": 36.91,
+          "mean": 16.836252454418,
+          "p50": 17.005,
+          "p95": 18.643,
+          "p99": 30.134
+        },
+        "wall_seconds": 12.021096
+      }
+    },
+    {
+      "combat": {
+        "actions": 4,
+        "actors": [
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 18,
+                "id": "basic",
+                "modular": false,
+                "name": "Ataque básico",
+                "order": 0,
+                "range": 400,
+                "shield": 0,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 0,
+                "damage": 0,
+                "id": "guard",
+                "modular": false,
+                "name": "Defensa",
+                "order": 1,
+                "range": 0,
+                "shield": 24,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 2,
+                "damage": 30,
+                "id": "close",
+                "modular": true,
+                "name": "Ataque cercano",
+                "order": 2,
+                "range": 240,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": ""
+              },
+              {
+                "cooldown": 1,
+                "damage": 12,
+                "id": "far",
+                "modular": true,
+                "name": "Ataque distante",
+                "order": 3,
+                "range": 600,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": ""
+              }
+            ],
+            "atb": 75.1792000000004,
+            "build": {
+              "modular": [
+                "close",
+                "far"
+              ],
+              "normal": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "special": [
+                "",
+                ""
+              ]
+            },
+            "definition_id": "starter",
+            "hp": 86,
+            "id": "main",
+            "is_principal": true,
+            "max_hp": 100,
+            "name": "Principal inicial",
+            "next_at": 0,
+            "owned_id": "copy_000001",
+            "position": {
+              "type": "Vector2",
+              "x": 610,
+              "y": 150
+            },
+            "ready_at": {
+              "guard": 3
+            },
+            "ready_time": -1,
+            "retired": false,
+            "shield": 0,
+            "speed": 10,
+            "states": {
+              "slow": {
+                "expires": 42.2999999999992,
+                "intensity": 0.25,
+                "next": null
+              }
+            },
+            "team": "player",
+            "turns": 2
+          },
+          {
+            "abilities": [
+              {
+                "cooldown": 0,
+                "damage": 4,
+                "id": "enemy_hit",
+                "modular": false,
+                "name": "Ataque técnico",
+                "order": 6,
+                "range": 600,
+                "shield": 0,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 0,
+                "damage": 0,
+                "id": "enemy_guard",
+                "modular": false,
+                "name": "Protección técnica",
+                "order": 7,
+                "range": 0,
+                "shield": 12,
+                "slot": "FIJA",
+                "status": ""
+              },
+              {
+                "cooldown": 2,
+                "damage": 10,
+                "id": "residual",
+                "modular": true,
+                "name": "Impacto residual",
+                "order": 4,
+                "range": 400,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": "dot"
+              },
+              {
+                "cooldown": 2,
+                "damage": 6,
+                "id": "slow",
+                "modular": true,
+                "name": "Freno",
+                "order": 5,
+                "range": 400,
+                "shield": 0,
+                "slot": "MODULAR",
+                "status": "slow"
+              }
+            ],
+            "atb": 9.25781333333514,
+            "build": {
+              "modular": [
+                "residual",
+                "slow"
+              ],
+              "normal": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "special": [
+                "",
+                ""
+              ]
+            },
+            "definition_id": "residual_beast",
+            "home": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "hp": 100,
+            "id": "zone_1_0",
+            "is_principal": false,
+            "max_hp": 100,
+            "name": "Bestia residual",
+            "next_at": 0,
+            "position": {
+              "type": "Vector2",
+              "x": 690,
+              "y": 150
+            },
+            "ready_at": {
+              "residual": 4,
+              "slow": 5
+            },
+            "ready_time": -1,
+            "retired": false,
+            "shield": 0,
+            "speed": 8,
+            "states": {},
+            "team": "enemy",
+            "turns": 2,
+            "zone_id": "zone_1"
+          }
+        ],
+        "atb": [
+          {
+            "charge": 75.1792000000004,
+            "id": "main",
+            "name": "Principal inicial",
+            "order": 3.30943999999995,
+            "rank": 2,
+            "status": "charging"
+          },
+          {
+            "charge": 9.25781333333514,
+            "id": "zone_1_0",
+            "name": "Bestia residual",
+            "order": 11.3427733333331,
+            "rank": 2,
+            "status": "charging"
+          }
+        ],
+        "clock": 38.0572266666659,
+        "copy": {
+          "message": "",
+          "pending_id": "",
+          "process": {},
+          "progress": 0
+        },
+        "elapsed": 0,
+        "history_limit": 256,
+        "history_retained": 4,
+        "pending": {},
+        "priority": "guard",
+        "resolved": true,
+        "result": "",
+        "retained": "",
+        "running": true,
+        "scenario": -1
+      },
+      "profile": {
+        "active": false,
+        "average_fps": 59.1620076585636,
+        "draw_calls_monitor": 83,
+        "fps_monitor": 60,
+        "frame_delta_ms": {
+          "max": 33.332,
+          "mean": 16.9016821596243,
+          "p50": 16.6666666666667,
+          "p95": 18.0555555555556,
+          "p99": 25.5313333333334
+        },
+        "frame_process_ms_monitor": 18.692,
+        "frames": 710,
+        "hitches": {
+          "over_16_67_ms": 359,
+          "over_33_33_ms": 4,
+          "over_50_ms": 0
+        },
+        "label": "new_demo_states_4",
+        "limits": "Memory is engine allocations, not OS working set; sampled peaks at 0.25s are not exact peaks. Some monitors can lag or be unavailable. Zero is not proof of no usage. Scopes overlap; no direct GPU timing. Samples capped at 8192; counters include all frames.",
+        "monitor_sample_count": 47,
+        "monitors": {
+          "draw_calls": {
+            "delta": 5,
+            "end": 87,
+            "min_sampled": 82,
+            "peak_sampled": 87,
+            "start": 82
+          },
+          "engine_memory_bytes": {
+            "delta": 238752,
+            "end": 68754337,
+            "min_sampled": 68515585,
+            "peak_sampled": 68754337,
+            "start": 68515585
+          },
+          "nodes": {
+            "delta": 0,
+            "end": 109,
+            "min_sampled": 109,
+            "peak_sampled": 109,
+            "start": 109
+          },
+          "objects": {
+            "delta": -2,
+            "end": 2000,
+            "min_sampled": 2000,
+            "peak_sampled": 2002,
+            "start": 2002
+          },
+          "orphan_nodes": {
+            "delta": 0,
+            "end": 0,
+            "min_sampled": 0,
+            "peak_sampled": 0,
+            "start": 0
+          },
+          "primitives": {
+            "delta": 234,
+            "end": 1998,
+            "min_sampled": 1760,
+            "peak_sampled": 1998,
+            "start": 1764
+          },
+          "render_buffer_bytes": {
+            "delta": 0,
+            "end": 10703506,
+            "min_sampled": 10703506,
+            "peak_sampled": 10703506,
+            "start": 10703506
+          },
+          "resources": {
+            "delta": 0,
+            "end": 58,
+            "min_sampled": 58,
+            "peak_sampled": 58,
+            "start": 58
+          },
+          "texture_bytes": {
+            "delta": 0,
+            "end": 8269321,
+            "min_sampled": 8269321,
+            "peak_sampled": 8269321,
+            "start": 8269321
+          },
+          "video_memory_bytes": {
+            "delta": 0,
+            "end": 18972827,
+            "min_sampled": 18972827,
+            "peak_sampled": 18972827,
+            "start": 18972827
+          }
+        },
+        "scopes": {
+          "arena:centered": {
+            "calls": 341,
+            "max_usec": 331,
+            "mean_usec": 76.8973607038123,
+            "sample_usec": {
+              "max": 331,
+              "mean": 76.8973607038123,
+              "p50": 42,
+              "p95": 212,
+              "p99": 263
+            }
+          },
+          "systems/combat_engine.gd:_process": {
+            "calls": 711,
+            "max_usec": 3470,
+            "mean_usec": 210.722925457103,
+            "sample_usec": {
+              "max": 3470,
+              "mean": 210.722925457103,
+              "p50": 200,
+              "p95": 267,
+              "p99": 335
+            }
+          },
+          "systems/world_route.gd:_process": {
+            "calls": 711,
+            "max_usec": 358,
+            "mean_usec": 30.6736990154712,
+            "sample_usec": {
+              "max": 358,
+              "mean": 30.6736990154712,
+              "p50": 29,
+              "p95": 42,
+              "p99": 68
+            }
+          },
+          "ui/arena_view.gd:_draw": {
+            "calls": 85,
+            "max_usec": 1012,
+            "mean_usec": 652.682352941176,
+            "sample_usec": {
+              "max": 1012,
+              "mean": 652.682352941176,
+              "p50": 649,
+              "p95": 787,
+              "p99": 1012
+            }
+          },
+          "ui/arena_view.gd:_process": {
+            "calls": 711,
+            "max_usec": 369,
+            "mean_usec": 144.330520393812,
+            "sample_usec": {
+              "max": 369,
+              "mean": 144.330520393812,
+              "p50": 131,
+              "p95": 221,
+              "p99": 283
+            }
+          },
+          "ui/atb_strip.gd:_draw": {
+            "calls": 56,
+            "max_usec": 1488,
+            "mean_usec": 809.642857142857,
+            "sample_usec": {
+              "max": 1488,
+              "mean": 809.642857142857,
+              "p50": 688,
+              "p95": 1446,
+              "p99": 1488
+            }
+          },
+          "ui/atb_strip.gd:_process": {
+            "calls": 711,
+            "max_usec": 468,
+            "mean_usec": 45.6090014064698,
+            "sample_usec": {
+              "max": 468,
+              "mean": 45.6090014064698,
+              "p50": 18,
+              "p95": 354,
+              "p99": 407
+            }
+          },
+          "ui/combat_screen.gd:_process": {
+            "calls": 711,
+            "max_usec": 156,
+            "mean_usec": 48.2405063291139,
+            "sample_usec": {
+              "max": 156,
+              "mean": 48.2405063291139,
+              "p50": 51,
+              "p95": 71,
+              "p99": 104
+            }
+          },
+          "ui/combat_screen.gd:refresh": {
+            "calls": 2,
+            "max_usec": 2658,
+            "mean_usec": 2609.5,
+            "sample_usec": {
+              "max": 2658,
+              "mean": 2609.5,
+              "p50": 2561,
+              "p95": 2658,
+              "p99": 2658
+            }
+          }
+        },
+        "wall_frame_ms": {
+          "max": 37.101,
+          "mean": 16.908029619182,
+          "p50": 16.864,
+          "p95": 19.046,
+          "p99": 31.229
+        },
+        "wall_seconds": 12.000945
+      }
+    }
+  ]
+}

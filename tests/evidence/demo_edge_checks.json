@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":{\"checks\":[{\"name\":\"percentage contributions add once\",\"passed\":true},{\"name\":\"second build remains intact\",\"passed\":true},{\"name\":\"catalog remains intact\",\"passed\":true},{\"name\":\"apply valid multiple instances\",\"passed\":true},{\"name\":\"owned modifier cannot equip twice across beasts\",\"passed\":true},{\"name\":\"fixed skills cannot replace\",\"passed\":true},{\"name\":\"slot limits enforced\",\"passed\":true},{\"name\":\"commands do not cancel begun action\",\"passed\":true},{\"name\":\"retained begun action still resolves\",\"passed\":true},{\"name\":\"next choice uses new priority\",\"passed\":true},{\"name\":\"slow preserves registered arrival\",\"passed\":true},{\"name\":\"reapply preserves stronger intensity and extends\",\"passed\":true},{\"name\":\"overkill capped stable skill order\",\"passed\":true},{\"name\":\"target tie stable order\",\"passed\":true},{\"name\":\"obstacles constrain world movement\",\"passed\":true},{\"name\":\"states clean at encounter end\",\"passed\":true}],\"count\":16,\"failures\":[],\"passed\":true}}"
+    }
+  ]
+}
