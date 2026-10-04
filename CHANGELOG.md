@@ -1,5 +1,10 @@
 # Registro de cambios
 
+## Diseño posterior a 0.1.2 · 3 de octubre de 2026
+
+- Propuesta de sistemas y dependencias en SYSTEMS_DESIGN.md, con primer bloque candidato de habilidades, builds y compatibilidad.
+- Separadas reglas aprobadas de fórmulas, intercambio y política de edición pendientes. Sin cambios de gameplay ni UI.
+
 ## Investigación posterior a 0.1.1 · 3 de octubre de 2026
 
 - Documentación oficial consultada sobre carga asíncrona, importación, batching, partículas, visibilidad y Compatibility.
