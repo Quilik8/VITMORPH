@@ -28,7 +28,7 @@ static func blocked_reason(actor: Dictionary, skill: Dictionary, actors: Array[D
 		return "Sin objetivo vivo en alcance"
 	return ""
 
-static func choose(actor: Dictionary, actors: Array[Dictionary], priority: String, retained: String) -> Dictionary:
+static func choose(actor: Dictionary, actors: Array[Dictionary], priority: String, retained: String, clock := 0.0) -> Dictionary:
 	var valid: Array[Dictionary] = []
 	for skill in actor.abilities:
 		if blocked_reason(actor, skill, actors, retained, actor.turns).is_empty():
@@ -60,9 +60,11 @@ static func choose(actor: Dictionary, actors: Array[Dictionary], priority: Strin
 			if skill.damage<=0: continue
 			var target := target_for(actor,skill,actors)
 			var extra := 0.0
-			if skill.get("status","")=="dot" and float(target.get("states",{}).get("dot",{}).get("intensity",0))<Rules.DOT_DAMAGE: extra=Rules.DOT_DAMAGE*3.0
+			if skill.get("status","")=="dot": extra=Status.additional_dot(target,clock,float(skill.get("status_duration",Rules.DOT_DURATION)))
 			var benefit: float = minf(float(target.hp),maxf(0.0,float(skill.damage)-float(target.shield))+extra)
-			if benefit>highest: selected=skill; highest=benefit; reason="Mayor daño aprovechable"
+			if benefit>highest:
+				selected=skill; highest=benefit
+				reason=("Extender desgaste" if target.get("states",{}).has("dot") else "Aplicar desgaste") if extra>0 else "Mayor daño aprovechable"
 	if selected.is_empty() and not valid.is_empty():
 		selected = valid[0]
 		reason = "Única alternativa válida"

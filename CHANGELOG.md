@@ -1,5 +1,11 @@
 # Registro de cambios
 
+## Builds e intenciones · entrega B · 4 octubre 2026
+
+- Editor compara Daño, Alcance y Duración y explica incompatibilidades. Selección resalta compatibilidad sin cambiar composición aprobada.
+- Estados reciben duración derivada; cadencia y potencia periódica conservadas. IA cuenta beneficio adicional y extensión, no duplica daño activo.
+- Ocho suites: 159 comprobaciones aprobadas. Captura MCP de Potencia a 1100×751 físicos en tests/evidence/build_power.png. Tres referencias de veinte ciclos recogidas antes de integrar editor/estados/intenciones; límites en JSON.
+
 ## Builds e intenciones · entrega A · 4 octubre 2026
 
 - Acción común de 3,8 s; impacto 2,2 s, ATB y copia sin cambios.

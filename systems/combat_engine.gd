@@ -218,7 +218,7 @@ func choose_next() -> void:
 	pending = {}
 	if actor.get("is_principal",false) and copy_service.pending_id!="":
 		pending=copy_service.dispatch(actor_by_id(copy_service.pending_id),actor)
-	if pending.is_empty(): pending = AI.choose(actor, actors, priority, retained)
+	if pending.is_empty(): pending = AI.choose(actor, actors, priority, retained,combat_clock)
 	actor.atb = 0.0
 	actor.ready_time = -1.0
 	elapsed = 0.0
@@ -243,7 +243,7 @@ func resolve_pending() -> void:
 			else:
 				apply_damage(target,int(skill.damage))
 				if running and Status.active(target) and skill.get("status","")!="":
-					Status.apply(target,skill.status,combat_clock); states_changed.emit()
+					Status.apply(target,skill.status,combat_clock,-1.0,float(skill.get("status_duration",-1.0))); states_changed.emit()
 		actor.ready_at[skill.id]=actor.turns+skill.cooldown+1
 	action_count+=1
 	if history.size()>=HISTORY_LIMIT: history.pop_front()

@@ -168,7 +168,7 @@ func render() -> void:
 	for button in skills.get_children():
 		if button is Item:
 			var skill: Dictionary=session.catalog.skill(button.payload.get("id",""))
-			var affected: bool=not selection.is_empty() and selection.get("kind","")=="normal" and skill.get("range",0)>0
+			var affected: bool=not selection.is_empty() and selection.get("kind","")=="normal" and session.builds.compatible(skill,selected_property())
 			button.add_theme_color_override("font_color",Palette.TEAL if affected else Palette.INK)
 			button.add_theme_color_override("font_disabled_color",Palette.TEAL if affected else Palette.MUTED)
 	refresh_library()
@@ -252,7 +252,7 @@ func show_detail() -> void:
 		return
 	detail.add_child(text("RESULTADO DEL ENSAMBLAJE",12,Palette.GOLD))
 	if not selection.is_empty():
-		if selection.kind=="normal": detail.add_child(text(mod_name(selection.id)+" · afecta ataques compatibles",14))
+		if selection.kind=="normal": detail.add_child(text(mod_name(selection.id)+" · "+property_caption(selected_property()),14))
 		else:
 			var skill: Dictionary=session.catalog.skill(selection.id)
 			detail.add_child(text("%s · %d daño · reutilización %d"%[skill.name,skill.damage,skill.cooldown],14))
@@ -270,14 +270,23 @@ func show_detail() -> void:
 				after=session.preview_build(owned_id,result.build);tentative=true
 	if tentative: detail.add_child(text("Al montar el mod seleccionado · sin aplicar",12,Palette.TEAL))
 	for row in after.changes:
-		var original: float=row.base
-		for previous in before.changes:
-			if previous.id==row.id: original=previous.result
-		var compatible: bool=not selection.is_empty() and selection.kind=="normal" and row.base>0
-		if original==row.result and not compatible: continue
-		var label:=text(("› " if compatible else "")+row.name+": "+("Objetivo propio" if row.base==0 else "%.0f → %.0f alcance"%[original,row.result]),13,Palette.TEAL if original!=row.result or compatible else Palette.MUTED)
-		label.tooltip_text="Base %.0f · contribuciones: %s · resultado %.0f"%[row.base,str(row.contributions),row.result];detail.add_child(label)
+		for property in row.properties:
+			var values: Dictionary=row.properties[property]
+			var original: float=values.base
+			for previous in before.changes:
+				if previous.id==row.id: original=previous.properties[property].result
+			var chosen: bool=not selection.is_empty() and selection.kind=="normal" and property==selected_property()
+			if not chosen and is_equal_approx(original,float(values.result)): continue
+			var description: String=values.reason if not values.compatible else ("%s %.0f → %.0f%s"%[property_caption(property),original,values.result," s" if property=="status_duration" else ""])
+			var label:=text(("› " if chosen and values.compatible else "")+row.name+": "+description,13,Palette.TEAL if values.compatible else Palette.MUTED)
+			label.tooltip_text="Base %s · contribuciones: %s · resultado %s"%[values.base,str(values.contributions),values.result];detail.add_child(label)
 	if selected_kind=="normal" and selected>=0 and selected<8 and draft.normal[selected]!="": detail.add_child(choice("Retirar del montaje %d"%(selected+1),func():controller.remove(selected)))
+
+func selected_property() -> String:
+	return session.catalog.get_value("modifier:"+session.inventory.get(selection.get("id",""),"")).get("property","")
+
+func property_caption(property: String) -> String:
+	return {"range":"Alcance","damage":"Daño","status_duration":"Duración"}.get(property,property)
 
 func choose_item(data: Dictionary) -> void:
 	selection=data.duplicate()
