@@ -2,6 +2,8 @@
 
 4 de octubre de 2026. Investigación previa a otro rediseño. Base examinada: commit `7ac300d`. **La composición del editor actual fue rechazada por el usuario por seguir siendo casi la misma.** Su funcionamiento técnico no equivale a aceptación de diseño.
 
+**Actualización posterior:** investigación ampliada con Hollow Knight, Monster Hunter, Hades y Dead Cells en [GAME_UI_RESEARCH_EXTENDED.md](GAME_UI_RESEARCH_EXTENDED.md). El usuario autorizó crear la skill; ya existe [vitmorph-game-ui](.agents/skills/vitmorph-game-ui/SKILL.md) y AGENTS.md exige su uso. Las menciones siguientes a una skill todavía no creada describen el estado de la investigación inicial.
+
 ## 1. Resultado y límites de la investigación
 
 La recomendación es añadir una skill personal de **diseño de interfaces para videojuegos**, complementaria a `ui-design-core` y `godot-ui-design`. Debe reforzar fantasía de interacción, jerarquía visual, objetos equipables, estados y evaluación por tareas. El problema anterior también fue de aplicación: las skills existentes ya advertían contra formularios genéricos, cambios cosméticos y validación basada únicamente en código.

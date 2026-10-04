@@ -1,0 +1,7 @@
+interface:
+  display_name: "Vitmorph · UI de videojuegos"
+  short_description: "Diseño de builds, ensamblaje y HUD para Vitmorph"
+  default_prompt: "Usa $vitmorph-game-ui para diseñar y revisar esta interfaz de Vitmorph con sus reglas y referencias vigentes."
+
+policy:
+  allow_implicit_invocation: true

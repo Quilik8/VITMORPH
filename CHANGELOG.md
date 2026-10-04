@@ -1,5 +1,12 @@
 # Registro de cambios
 
+## Skill de UI específica de Vitmorph · 4 octubre 2026
+
+- Ampliada investigación con menú de amuletos de Hollow Knight (captura histórica inspeccionada), opiniones de Monster Hunter y antecedentes de Hades/Dead Cells; límites y fuentes en GAME_UI_RESEARCH_EXTENDED.md.
+- Creada skill `vitmorph-game-ui` en .agents/skills, con referencias de ensamblaje, HUD y revisión. Vinculada a reglas/documentos del juego; AGENTS.md exige su aplicación y README/BUILD_DESIGN registran el vínculo.
+- Instalación personal mediante enlace a la fuente del repositorio para evitar divergencias. Sin instalar skills o mods de terceros.
+- Validación de empaquetado y escenarios de decisión documentada en la investigación ampliada. La eficacia de la skill en el próximo rediseño requiere render y evaluación. Sin cambios de gameplay/UI ni imágenes generadas.
+
 ## Investigación y rechazo de composición UI · 4 octubre 2026
 
 - Registrado rechazo del usuario a la composición del editor; separado de las comprobaciones mecánicas anteriores y de la falta de assets.

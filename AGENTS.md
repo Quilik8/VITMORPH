@@ -11,5 +11,6 @@
 - Cola de sucesos con repeticiones. Comandos: Priorizar y Retener. Mantener validez y acciones ya elegidas. Copiar es apoyo, no un tercer comando de habilidades.
 - No generar imágenes. Separar diseño aprobado, hipótesis, preguntas y decisiones descartadas.
 - UI/UX requieren fase explícita de diseño: objetivo, jerarquía, acción, contexto, estados, restricciones y dirección visual antes de implementar. Preservar el Theme actual.
-- Cambios de UI: aplicar ui-design-core, godot-ui-design y ui-visual-qa cuando sea posible observar el render. Código no sustituye revisión visual. Revisar y corregir los renders importantes.
+- Cambios de UI/UX: leer y aplicar `.agents/skills/vitmorph-game-ui/SKILL.md` como capa específica obligatoria de Vitmorph, junto con ui-design-core, godot-ui-design y ui-visual-qa cuando sea posible observar el render. La skill remite a decisiones vigentes y criterios de ensamblaje/HUD; no concede nuevas mecánicas. Código no sustituye revisión visual. Revisar y corregir los renders importantes.
+- La composición del editor posterior a checkpoint-v0.7.0 fue rechazada por el usuario. Leer GAME_UI_RESEARCH.md y GAME_UI_RESEARCH_EXTENDED.md antes de rediseñarla; pruebas mecánicas no equivalen a aceptación de UX.
 - Versionar cambios con commits descriptivos, actualizar CHANGELOG.md y conservar evidencias y límites de validación. Excluir cachés, temporales, credenciales y configuración personal.

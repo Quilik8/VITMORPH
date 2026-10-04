@@ -2,6 +2,8 @@
 
 **Revisión posterior del usuario:** la composición implementada fue rechazada por seguir siendo casi la misma UI. El contrato de reglas sigue vigente; la aceptación de UX y dirección visual está pendiente de rediseño, no únicamente de assets. Investigación y propuesta de skill especializada: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md).
 
+Capa específica ya creada: [vitmorph-game-ui](.agents/skills/vitmorph-game-ui/SKILL.md), exigida por AGENTS.md para próximos cambios UI/UX. Investigación ampliada: [GAME_UI_RESEARCH_EXTENDED.md](GAME_UI_RESEARCH_EXTENDED.md). Esto no aprueba una nueva composición.
+
 El usuario autorizó implementar el plan de ensamblaje. Objetivo: identificar la copia editada, montar mejoras y comprender el resultado. Una superficie de lectura, bestia protagonista, selector de copias, biblioteca contextual y detalle compartido. Se aplican ui-design-core, godot-ui-design y ui-visual-qa. El contenido final lo aporta el usuario.
 
 ## Composición y estados
