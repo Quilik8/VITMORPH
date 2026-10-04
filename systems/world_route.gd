@@ -6,6 +6,8 @@ signal world_rebuilt
 signal travelling_started
 const Geometry = preload("res://systems/world_geometry.gd")
 const World = preload("res://data/world_fixture.gd")
+var session: RefCounted
+var menu_paused := false
 var combat: Node
 var visible_world := false
 var state := "ready"
@@ -40,6 +42,7 @@ func preview() -> void:
 	zones = World.locations()
 	obstacles = World.obstacles()
 	actors = World.populate()
+	if session != null: actors[0] = session.actor_at(World.START_POSITION)
 	group_members.clear()
 	cleared_groups.clear()
 	active_groups = 0
@@ -71,8 +74,8 @@ func start() -> void:
 	combat.actors.clear()
 	combat.actors.append(actors[0])
 	combat.running = false
-	combat.priority = ""
-	combat.retained = ""
+	combat.priority = session.principal().priority if session!=null else ""
+	combat.retained = session.principal().retained if session!=null else ""
 	combat.result = ""
 	combat.pending = {}
 	combat.history.clear()
@@ -93,7 +96,7 @@ func _process(delta: float) -> void:
 		profile.record("systems/world_route.gd:_process", Time.get_ticks_usec() - stamp)
 
 func _process_body(delta: float) -> void:
-	if not visible_world:
+	if not visible_world or menu_paused:
 		return
 	if state == "travelling":
 		var main: Dictionary = actors[0]
@@ -187,7 +190,7 @@ func pressed(first: int, second: int) -> bool:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode in [KEY_W, KEY_A, KEY_S, KEY_D, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT]:
-		if visible_world and state == "travelling":
+		if visible_world and state == "travelling" and not menu_paused:
 			held_keys[event.keycode] = event.pressed
 			get_viewport().set_input_as_handled()
 		elif not event.pressed:

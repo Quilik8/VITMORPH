@@ -11,6 +11,10 @@ const INK := Color("eee5d3")
 const MUTED := Color("a5aa9b")
 const GOLD := Color("d4bb79")
 const TEAL := Color("86bbb0")
+var session := preload("res://systems/demo_session.gd").new()
+var editor: Control
+var build_button: Button
+var collection_button: Button
 var combat: Node
 var route: Node
 var arena: Control
@@ -46,8 +50,15 @@ func _ready() -> void:
 	route.name = "WorldRoute"
 	route.profile = profile
 	route.combat = combat
+	route.session = session
 	add_child(route)
 	build_screen()
+	editor = preload("res://ui/build_editor.gd").new()
+	editor.session = session
+	add_child(editor)
+	editor.closed.connect(func():route.menu_paused=false;route.held_keys.clear();build_button.grab_focus())
+	editor.applied.connect(on_build_applied)
+	editor.main_selected.connect(on_build_applied)
 	combat.state_changed.connect(refresh)
 	combat.action_chosen.connect(on_action)
 	combat.message.connect(add_message)
@@ -71,22 +82,7 @@ func underline(color: Color, fill: Color = Color(0,0,0,0)) -> StyleBoxFlat:
 	return style
 
 func make_theme() -> Theme:
-	var value := Theme.new()
-	value.default_font_size = 16
-	value.set_color("font_color", "Label", INK)
-	value.set_color("font_color", "Button", INK)
-	value.set_color("font_disabled_color", "Button", Color("727b70"))
-	value.set_stylebox("normal", "Button", underline(Color("566755")))
-	value.set_stylebox("hover", "Button", underline(GOLD, Color("263a2e")))
-	value.set_stylebox("pressed", "Button", underline(GOLD))
-	value.set_stylebox("disabled", "Button", underline(Color("354238")))
-	value.set_stylebox("focus", "Button", underline(INK))
-	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
-		value.set_stylebox(state, "OptionButton", value.get_stylebox(state, "Button"))
-	value.set_color("font_color", "OptionButton", INK)
-	value.set_constant("separation", "VBoxContainer", 6)
-	value.set_constant("separation", "HBoxContainer", 16)
-	return value
+	return preload("res://ui/demo_theme.gd").make()
 
 func label(text: String, font_size: int = 16, color: Color = INK) -> Label:
 	var node := Label.new()
@@ -126,6 +122,10 @@ func build_screen() -> void:
 	var title := label("VITMORPH  /  campo de prueba", 19, GOLD)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(title)
+	build_button=button("Build [B]",func():open_build(false),"Build")
+	header.add_child(build_button)
+	collection_button=button("Bestias [C]",func():open_build(true),"Collection")
+	header.add_child(collection_button)
 	selection = OptionButton.new()
 	selection.name = "Scenario"
 	for title_text in Fixture.SCENARIOS:
@@ -279,6 +279,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo:
 		return
 	var key: int = event.keycode
+	if not combat.running and key in [KEY_B,KEY_C]:
+		open_build(key==KEY_C)
+		get_viewport().set_input_as_handled()
+		return
 	if not combat.running and key != KEY_F3:
 		return
 	if key >= KEY_1 and key <= KEY_4:
@@ -319,6 +323,9 @@ func refresh() -> void:
 
 func refresh_body() -> void:
 	var active: bool = combat.running or route.state == "aftermath"
+	session.combat_locked = active
+	build_button.disabled = active or not route.visible_world
+	collection_button.disabled = build_button.disabled
 	atb_strip.visible = combat.running
 	intervention_strip.visible = combat.running
 	exploration_help.visible = route.visible_world and not combat.running
@@ -416,3 +423,19 @@ func run_rule_checks() -> Dictionary:
 
 func run_demo_checks() -> Dictionary:
 	return preload("res://tests/demo_rules.gd").new().run()
+
+func open_build(collection_mode: bool) -> void:
+	if combat.running or route.state != "travelling" or not route.visible_world: return
+	session.sync_actor(route.actors[0],combat.priority,combat.retained)
+	route.menu_paused = true
+	route.held_keys.clear()
+	editor.open(session.principal_id,collection_mode)
+
+func on_build_applied() -> void:
+	var position: Vector2 = route.actors[0].position
+	route.actors[0] = session.actor_at(position)
+	combat.actors.clear()
+	combat.actors.append(route.actors[0])
+	combat.priority = session.principal().priority
+	combat.retained = session.principal().retained
+	refresh()
