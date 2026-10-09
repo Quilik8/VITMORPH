@@ -5,6 +5,7 @@ var route: Node
 var profile: Node
 
 func project(point: Vector2) -> Vector2:
+	if arena.combat.running: return point
 	return Vector2(point.x / 800.0 * arena.size.x, arena.projection_height() * (0.20 + point.y / 430.0 * 0.70))
 
 func polygon(points: Array[Vector2], color: Color) -> void:
@@ -30,7 +31,7 @@ func _draw() -> void:
 	var path := PackedVector2Array([project(route.actors[0].get("route_start",Vector2(150,260)))])
 	for zone in route.zones:
 		path.append(project(zone.approach))
-		draw_string(ThemeDB.fallback_font,project(zone.center+Vector2(-55,-90)),zone.name,HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("aaa3a0"))
+		if not arena.combat.running: draw_string(ThemeDB.fallback_font,project(zone.center+Vector2(-55,-90)),zone.name,HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color("aaa3a0"))
 		draw_circle(project(zone.center), 8.0, Color("9e7964"))
 	draw_polyline(path, Color("453c42"), 44.0)
 	for obstacle in route.obstacles:

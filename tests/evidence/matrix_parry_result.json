@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":[true,{\"positions\":[0,3,5],\"resolved\":false,\"selected\":1},{\"path\":\"/root/Main/Layout/Body/BattleRegion/Matrix/@BoxContainer@11/Rings\",\"type\":\"NodePath\"}]}"
+    }
+  ]
+}

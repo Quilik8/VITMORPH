@@ -4,6 +4,8 @@ Actualizado: 4 octubre 2026, después de checkpoint-v0.7.0. Autoridad: instrucci
 
 ## Estado del proyecto
 
+9 octubre 2026: aprobado HUD preparado para matrices de combate, contrato COMBAT_MATRIX_DESIGN.md. Prueba de Rotación de Anillos y aviso Parry sin efectos mecánicos; no Vulnerabilidad/combos/Parry funcional. Puzzles exclusivamente de combate. Mapa, recuperación de PV y sustitución en bloques posteriores.
+
 Actualización autorizada: la revisión carbón/cobre fue valorada positivamente por el usuario. Siguiente bloque aprobado en BUILD_INTENTS_IMPLEMENTATION.md: builds diferenciadas e intenciones enemigas. Assets aplazados por instrucción actual; la demo artística sigue pendiente. Los rechazos que siguen describen composiciones históricas.
 
 El usuario rechazó también la composición del editor de ensamblaje posterior a 0.7.0 por seguir siendo casi la misma. Antes de modificarla de nuevo se investiga UI de videojuegos y una skill especializada: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md). La validación mecánica previa permanece como evidencia técnica; no certifica aprobación de UX.

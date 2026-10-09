@@ -1,0 +1,182 @@
+{
+	"checks": [
+		{
+			"name": "(1200, 820) footer within window",
+			"passed": true
+		},
+		{
+			"name": "(1200, 820) panel within window",
+			"passed": true
+		},
+		{
+			"name": "(1200, 820) status within window",
+			"passed": true
+		},
+		{
+			"name": "(1200, 820) correct orientation",
+			"passed": true
+		},
+		{
+			"name": "(1200, 820) allocated matrix size",
+			"passed": true
+		},
+		{
+			"name": "(1018, 696) footer within window",
+			"passed": true
+		},
+		{
+			"name": "(1018, 696) panel within window",
+			"passed": true
+		},
+		{
+			"name": "(1018, 696) status within window",
+			"passed": true
+		},
+		{
+			"name": "(1018, 696) correct orientation",
+			"passed": true
+		},
+		{
+			"name": "(1018, 696) allocated matrix size",
+			"passed": true
+		},
+		{
+			"name": "(760, 820) footer within window",
+			"passed": true
+		},
+		{
+			"name": "(760, 820) panel within window",
+			"passed": true
+		},
+		{
+			"name": "(760, 820) status within window",
+			"passed": true
+		},
+		{
+			"name": "(760, 820) correct orientation",
+			"passed": true
+		},
+		{
+			"name": "(760, 820) allocated matrix size",
+			"passed": true
+		},
+		{
+			"name": "(640, 640) footer within window",
+			"passed": true
+		},
+		{
+			"name": "(640, 640) panel within window",
+			"passed": true
+		},
+		{
+			"name": "(640, 640) status within window",
+			"passed": true
+		},
+		{
+			"name": "(640, 640) correct orientation",
+			"passed": true
+		},
+		{
+			"name": "(640, 640) allocated matrix size",
+			"passed": true
+		},
+		{
+			"name": "world positions untouched",
+			"passed": true
+		},
+		{
+			"name": "below minimum closes",
+			"passed": true
+		},
+		{
+			"name": "below minimum message",
+			"passed": true
+		},
+		{
+			"name": "below minimum retains progress",
+			"passed": true
+		},
+		{
+			"name": "Parry probe keeps focus",
+			"passed": true
+		},
+		{
+			"name": "Parry probe keeps matrix",
+			"passed": true
+		},
+		{
+			"name": "closing focuses target",
+			"passed": true
+		},
+		{
+			"name": "reopening keeps progress",
+			"passed": true
+		}
+	],
+	"count": 28,
+	"failures": [],
+	"layouts": [
+		{
+			"field": [
+				852.0,
+				507.0
+			],
+			"footer_end": 788.0,
+			"logical": [
+				1200.0,
+				820.0
+			],
+			"matrix": [
+				320.0,
+				507.0
+			]
+		},
+		{
+			"field": [
+				670.0,
+				383.0
+			],
+			"footer_end": 664.0,
+			"logical": [
+				1018.0,
+				696.0
+			],
+			"matrix": [
+				320.0,
+				383.0
+			]
+		},
+		{
+			"field": [
+				736.0,
+				319.0
+			],
+			"footer_end": 788.0,
+			"logical": [
+				760.0,
+				820.0
+			],
+			"matrix": [
+				736.0,
+				220.0
+			]
+		},
+		{
+			"field": [
+				616.0,
+				140.0
+			],
+			"footer_end": 609.0,
+			"logical": [
+				640.0,
+				640.0
+			],
+			"matrix": [
+				616.0,
+				220.0
+			]
+		}
+	],
+	"passed": true,
+	"running": false
+}

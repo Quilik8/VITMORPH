@@ -16,6 +16,8 @@ var text_widths: Dictionary = {}
 var ground: Node2D
 var last_ground_world := false
 var last_projection_height := -1.0
+var presentation_transform := Transform2D.IDENTITY
+var drawn_label_bounds: Array[Rect2]=[]
 var shadow_mesh: ArrayMesh
 var main_mesh: ArrayMesh
 var enemy_mesh: ArrayMesh
@@ -35,7 +37,7 @@ const ENEMY := Color("bc8875")
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	custom_minimum_size = Vector2(0, 340)
+	custom_minimum_size = Vector2(0, 140)
 	clip_contents = true
 	for index in 4:
 		popup_pool.append({"id": "", "text": "", "age": 0.0, "damage": 0})
@@ -69,6 +71,7 @@ func _ready() -> void:
 	route.world_rebuilt.connect(ground.queue_redraw)
 	route.world_rebuilt.connect(func():sync_visuals(true))
 	resized.connect(func(): ground.queue_redraw(); queue_redraw())
+	resized.connect(frame_combat)
 	combat.intentions_changed.connect(sync_intentions)
 	combat.action_chosen.connect(func(_value):sync_intentions())
 	combat.action_executed.connect(func(_value):sync_intentions())
@@ -89,6 +92,7 @@ func intention_brief(actor_id: String) -> String:
 	return str(combat.actor_by_id(value.target_id).get("name","Sin objetivo"))+" · "+value.reason
 
 func sync_intentions() -> void:
+	frame_combat()
 	var active := {}
 	if combat.running:
 		for actor in combat.actors:
@@ -110,28 +114,37 @@ func sync_intentions() -> void:
 			if not value.is_empty() and not value.skill.is_empty():
 				caption=("! " if value.skill.damage>=30 else "")+value.skill.name
 			var button: Button=intention_buttons[actor.id]
-			button.text=("Ejecuta: " if chosen else "Prevé: ")+caption
+			button.text="Actuando" if chosen else "Prevé: "+caption
 			button.tooltip_text=intention_detail(actor.id)
 	for id in intention_buttons.keys():
 		if not active.has(id): intention_buttons[id].queue_free();intention_buttons.erase(id)
 	position_intentions()
 
 func position_intentions() -> void:
+	var occupied: Array[Rect2]=[]
 	for id in intention_buttons:
 		var actor: Dictionary=combat.actor_by_id(id)
 		if actor.is_empty(): continue
 		var button: Button=intention_buttons[id]
-		button.size=Vector2(minf(230,size.x-16),26)
+		var small: bool=size.y<260
+		var font_size:=11 if small else 13
+		if button.get_theme_font_size("font_size")!=font_size: button.add_theme_font_size_override("font_size",font_size)
+		button.size=Vector2(minf(180 if small else 230,size.x-16),26)
 		var base:=point(actor)
 		var candidates: Array[Vector2]=[base+Vector2(-button.size.x/2.0,-105),base+Vector2(-button.size.x-62,-16),base+Vector2(62,-16),base+Vector2(-button.size.x/2.0,-175),base+Vector2(-button.size.x/2.0,-230),base+Vector2(-button.size.x-62,-105),base+Vector2(62,-105)]
 		for location in candidates:
-			location=Vector2(clampf(location.x,8,size.x-button.size.x-8),clampf(location.y,150,size.y-30))
+			location=Vector2(clampf(location.x,8,size.x-button.size.x-8),clampf(location.y,4,maxf(4,size.y-30)))
 			var bounds:=Rect2(location,button.size)
-			var blocked: bool=bounds.end.y>size.y-(224 if size.x<950 else 170)
+			var blocked: bool=bounds.end.y>size.y-4
+			var radius:=22 if small else 42
+			if bounds.intersects(Rect2(base-Vector2(radius,radius),Vector2(radius*2,radius*2))): blocked=true
 			for other in combat.actors:
-				if other.id!=id and other.hp>0 and not other.get("retired",false) and bounds.intersects(Rect2(point(other)+Vector2(-62,-78),Vector2(124,174))): blocked=true;break
+				if other.id!=id and other.hp>0 and not other.get("retired",false) and bounds.intersects(Rect2(point(other)-Vector2(radius,radius),Vector2(radius*2,radius*2))): blocked=true;break
+			for previous in occupied:
+				if bounds.intersects(previous): blocked=true
 			button.position=location
 			if not blocked: break
+		occupied.append(Rect2(button.position,button.size))
 
 func polygon_mesh(points: PackedVector2Array) -> ArrayMesh:
 	var arrays := []
@@ -169,7 +182,7 @@ func show_impact(value: Dictionary) -> void:
 
 func sync_visuals(update_build := false) -> void:
 	if visuals.entries.is_empty() and actor_visuals.is_empty(): return
-	var actors: Array=route.actors if route!=null and route.visible_world else combat.actors
+	var actors: Array=route.actors if route!=null and route.visible_world and not combat.running else combat.actors
 	var active: Dictionary={}
 	for actor in actors:
 		if actor.get("retired",false): continue
@@ -181,6 +194,7 @@ func sync_visuals(update_build := false) -> void:
 		var view: Node2D=actor_visuals[actor.id]
 		if update_build: view.configure(actor.get("definition_id",""),actor.get("build",{}),route.session.inventory,Vector2(70,76),true)
 		view.position=screen_actor(actor)
+		view.scale=Vector2.ONE*(.6 if combat.running and size.y<260 else 1.0)
 		view.visible=view.position.x>=-120 and view.position.x<=size.x+120 and view.position.y>=-120 and view.position.y<=size.y+120
 	for id in actor_visuals.keys():
 		if not active.has(id): actor_visuals[id].queue_free();actor_visuals.erase(id)
@@ -211,6 +225,7 @@ func _process_body(delta: float) -> void:
 		last_projection_height=projection_height();ground.queue_redraw();queue_redraw()
 	if combat.running and not combat.pending.is_empty() and not combat.resolved:
 		var actor: Dictionary = combat.actor_by_id(combat.pending.actor_id)
+		anticipation_arc.scale=Vector2.ONE*(.6 if size.y<260 else 1.0)
 		anticipation_arc.update_progress(screen_actor(actor), clampf(combat.elapsed / combat.resolve_seconds, 0.0, 1.0))
 	else:
 		anticipation_arc.hide()
@@ -219,9 +234,10 @@ func _process_body(delta: float) -> void:
 		last_ground_world = world_visible
 		ground.queue_redraw()
 	if world_visible:
-		ground.position = Vector2(-route.camera_x * size.x / 800.0, -route.camera_y * projection_height() * 0.70 / 430.0)
+		if combat.running: ground.transform=presentation_transform
+		else: ground.transform=Transform2D(0,Vector2(-route.camera_x * size.x / 800.0, -route.camera_y * projection_height() * 0.70 / 430.0))
 	else:
-		ground.position = Vector2.ZERO
+		ground.transform = Transform2D.IDENTITY
 	var had_popups := not popups.is_empty()
 	for index in range(popups.size() - 1, -1, -1):
 		popups[index].age += delta
@@ -243,15 +259,29 @@ func _process_body(delta: float) -> void:
 		queue_redraw()
 
 func point(actor: Dictionary) -> Vector2:
+	if combat.running: return presentation_transform*actor.position
 	if route != null and route.visible_world:
 		return world_point(actor.position)
 	return Vector2((actor.position.x + 55.0) / 800.0 * size.x, projection_height() * (0.20 + actor.position.y / 430.0 * 0.70))
 
 func projection_height() -> float:
-	# Reserve the two-row narrow HUD; transform presentation only, not world positions.
-	return maxf(100.0,size.y-(244.0 if combat.running and size.x<950 else 130.0))
+	return maxf(100.0,size.y)
+
+func frame_combat() -> void:
+	if combat==null or not combat.running or combat.actors.is_empty(): return
+	var minimum:=Vector2(INF,INF);var maximum:=Vector2(-INF,-INF)
+	for actor in combat.actors:
+		if actor.hp<=0 or actor.get("retired",false): continue
+		minimum=minimum.min(actor.position);maximum=maximum.max(actor.position)
+	if not minimum.is_finite(): return
+	var span: Vector2=(maximum-minimum).max(Vector2(240,180))
+	var scale_value:=minf(maxf(80,size.x-180)/span.x,maxf(60,size.y-(90 if size.y<260 else 150))/span.y)
+	var center: Vector2=(minimum+maximum)*.5
+	presentation_transform=Transform2D(Vector2(scale_value,0),Vector2(0,scale_value),size*.5-center*scale_value)
+	if ground!=null: ground.queue_redraw()
 
 func world_point(position: Vector2) -> Vector2:
+	if combat.running: return presentation_transform*position
 	return Vector2((position.x - route.camera_x) / 800.0 * size.x, projection_height() * (0.20 + (position.y - route.camera_y) / 430.0 * 0.70))
 
 func screen_actor(actor: Dictionary) -> Vector2:
@@ -293,13 +323,24 @@ func actor_label_point(actor: Dictionary, caption: String, font_size: int, offse
 	# Labels may be positioned before the first draw initializes the text cache.
 	var width:=ThemeDB.fallback_font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x
 	var candidates: Array[Vector2]=[base,base+Vector2(-110,0),base+Vector2(110,0),base+Vector2(180,62),base+Vector2(-180,62)]
+	for step in [-24,24,-48,48,-72,72]:
+		for side in [0,-110,110]: candidates.append(base+Vector2(side,step))
 	for at in candidates:
 		at.x=clampf(at.x,width/2.0+8,size.x-width/2.0-8)
+		at.y=clampf(at.y,font_size+4,maxf(font_size+4,size.y-6))
 		var bounds:=Rect2(at-Vector2(width/2.0,font_size),Vector2(width,font_size+4))
-		var blocked: bool=offset.y<0 and bounds.position.y<150
+		var blocked: bool=bounds.position.y<4 or bounds.end.y>size.y-4
+		var radius:=22 if size.y<260 else 38
 		for other in combat.actors:
-			if other.hp>0 and not other.get("retired",false) and bounds.intersects(Rect2(point(other)-Vector2(38,38),Vector2(76,76))): blocked=true;break
-		if not blocked: return at
+			if other.hp<=0 or other.get("retired",false): continue
+			if bounds.intersects(Rect2(point(other)-Vector2(radius,radius),Vector2(radius*2,radius*2))): blocked=true
+			var bar_y:=25 if size.y<260 else 53
+			if bounds.intersects(Rect2(point(other)+Vector2(-45,bar_y-3),Vector2(90,6))): blocked=true
+		for previous in drawn_label_bounds:
+			if bounds.intersects(previous): blocked=true
+		for button in intention_buttons.values():
+			if bounds.intersects(Rect2(button.position,button.size)): blocked=true
+		if not blocked: drawn_label_bounds.append(bounds);return at
 	return base
 
 func _draw() -> void:
@@ -309,12 +350,13 @@ func _draw() -> void:
 		profile.record("ui/arena_view.gd:_draw", Time.get_ticks_usec() - stamp)
 
 func _draw_body() -> void:
+	drawn_label_bounds.clear()
 	var w := size.x
 	var h := size.y
 	# Área de encuentro abstracta. El borde irregular comunica suelo, no un panel de HUD.
 	var in_world: bool = route != null and route.visible_world
 	var font := ThemeDB.fallback_font
-	var visible_actors: Array[Dictionary] = route.actors if in_world else combat.actors
+	var visible_actors: Array[Dictionary] = route.actors if in_world and not combat.running else combat.actors
 	if combat == null or visible_actors.is_empty():
 		centered(font, "Un principal · decisiones automáticas", Vector2(w*.5,h*.52), 20, MUTED)
 		return
@@ -327,26 +369,33 @@ func _draw_body() -> void:
 		var color: Color = MAIN if actor.get("is_principal",false) else ENEMY
 		if actor.hp <= 0:
 			color = Color("5c5662")
-		draw_mesh(shadow_mesh, null, Transform2D(0.0, base + Vector2(0,26)), Color(0.05,0.08,0.06,0.55))
+		var small: bool=combat.running and size.y<260
+		var body_scale:=Vector2.ONE*.6 if small else Vector2.ONE
+		draw_mesh(shadow_mesh, null, Transform2D(0.0,body_scale,0,base+Vector2(0,16 if small else 26)), Color(0.05,0.08,0.06,0.55))
 		var acting: bool = not action.is_empty() and action.actor_id == actor.id and combat.running
 		if not action.is_empty() and action.target_id == actor.id and action.actor_id != actor.id and combat.running and not combat.resolved:
 			draw_polyline(PackedVector2Array([base+Vector2(-6,-86), base+Vector2(0,-80), base+Vector2(6,-86)]), INK, 2.0)
 		if acting:
-			draw_mesh(footprint_mesh, null, Transform2D(0.0, base), MAIN)
+			draw_mesh(footprint_mesh, null, Transform2D(0.0,body_scale,0,base), MAIN)
 		if not actor_visuals.has(actor.id) or not actor_visuals[actor.id].has_body():
-			draw_mesh(main_mesh if actor.get("is_principal",false) else enemy_mesh, null, Transform2D(0.0, center), color)
+			draw_mesh(main_mesh if actor.get("is_principal",false) else enemy_mesh, null, Transform2D(0.0,body_scale,0,center), color)
 		if combat.running:
 			if actor.shield > 0:
-				draw_mesh(shield_mesh, null, Transform2D(0.0, center), Color("a1bbd0"))
-				centered(font, "Protección %d" % actor.shield, base + Vector2(0,91), 14, Color("a1bbd0"))
-			centered(font, actor.name, actor_label_point(actor,actor.name,16,Vector2(0,-62)), 16, INK)
-			draw_line(base + Vector2(-45,53), base + Vector2(45,53), Color("25242b"), 4)
-			draw_line(base + Vector2(-45,53), base + Vector2(-45 + 90.0 * actor.hp / actor.max_hp,53), color, 4)
-			centered(font, "%d PV" % actor.hp, actor_label_point(actor,"%d PV"%actor.hp,14,Vector2(0,75)), 14, INK)
+				draw_mesh(shield_mesh, null, Transform2D(0.0,body_scale,0,center), Color("a1bbd0"))
+				var caption: String="Protección %d"%actor.shield
+				centered(font,caption,actor_label_point(actor,caption,11 if small else 14,Vector2(0,60 if small else 91)),11 if small else 14,Color("a1bbd0"))
+			var name_caption: String=actor.name.replace("Bestia de ","").replace("Principal inicial","Principal") if small else actor.name
+			centered(font,name_caption,actor_label_point(actor,name_caption,12 if small else 16,Vector2(0,-28 if small else -62)),12 if small else 16,INK)
+			var bar_y:=25 if small else 53
+			draw_line(base+Vector2(-35 if small else -45,bar_y),base+Vector2(35 if small else 45,bar_y),Color("25242b"),4)
+			draw_line(base+Vector2(-35 if small else -45,bar_y),base+Vector2((-35+70.0*actor.hp/actor.max_hp) if small else (-45+90.0*actor.hp/actor.max_hp),bar_y),color,4)
+			centered(font,"%d PV"%actor.hp,actor_label_point(actor,"%d PV"%actor.hp,12 if small else 14,Vector2(0,40 if small else 75)),12 if small else 14,INK)
 			var status_text: Array[String]=[]
 			if actor.get("states",{}).has("dot"): status_text.append("Residuo")
 			if actor.get("states",{}).has("slow"): status_text.append("ATB −25 %")
-			if not status_text.is_empty(): centered(font," · ".join(status_text),base+Vector2(0,112),12,Color("a1bbd0"))
+			if not status_text.is_empty():
+				var caption: String=" · ".join(status_text)
+				centered(font,caption,actor_label_point(actor,caption,11 if small else 12,Vector2(0,60 if small else 112)),11 if small else 12,Color("a1bbd0"))
 	for popup in popups:
 		var actor: Dictionary = combat.actor_by_id(popup.id)
 		if actor.is_empty():

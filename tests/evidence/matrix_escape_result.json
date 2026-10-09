@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":[{\"active\":true,\"encounter\":1,\"matrices\":{\"main\":{\"positions\":[0,3,5],\"resolved\":false,\"selected\":0}},\"owner_id\":\"\"},{\"path\":\"/root/Main/Layout/Body/Interventions/TargetContext/CopyTargets\",\"type\":\"NodePath\"}]}"
+    }
+  ]
+}

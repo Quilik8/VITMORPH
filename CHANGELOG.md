@@ -1,5 +1,13 @@
 # Registro de cambios
 
+## HUD y matrices de combate · 9 octubre 2026
+
+- HUD por regiones, encuadre de presentación y lectura compacta; matriz lateral o inferior sin ocultar comandos. Revisión en cuatro tamaños lógicos hasta 640×640.
+- Rotación de Anillos de diagnóstico, estado independiente por actor/encuentro, selección y giro con ratón/teclado, cierre conservando progreso y limpieza por muerte/retirada/final.
+- Aviso manual de Parry y respuesta Espacio preservan foco/progreso. Sin Vulnerabilidad, combos ni Parry funcional; puzzles exclusivamente de combate.
+- Nueve suites: 198 comprobaciones aprobadas; 28 de UI aprobadas y entradas reales por MCP. Tres pares de perfilado y veinte ciclos sin crecimiento de nodos/recursos/memoria gráfica. Informe y límites en COMBAT_MATRIX_DELIVERY.md.
+
+
 ## Builds e intenciones · entrega C y cierre · 9 octubre 2026
 
 - Kits de desgaste/control/presión e intenciones provisionales durante carga y cola; consulta sin mutaciones, actualización por condiciones, nueva elección al despachar y detalle por foco.

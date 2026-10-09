@@ -1,4 +1,15 @@
 extends Control
+var matrix := preload("res://systems/combat_matrix.gd").new()
+var matrix_view: Control
+var matrix_button: Button
+var battle_region: BoxContainer
+var skill_row: GridContainer
+var feedback: VBoxContainer
+var parry_notice: Label
+var parry_remaining := 0.0
+var parry_answered := false
+var matrix_notice := ""
+var narrow_hud := false
 var profile: Node
 ## HUD de intervención: campo primero, detalles contextuales y diagnóstico optativo.
 const EngineScript = preload("res://systems/combat_engine.gd")
@@ -129,152 +140,149 @@ func button(text: String, callback: Callable, node_name: String) -> Button:
 	var node := Button.new()
 	node.name = node_name
 	node.text = text
-	node.custom_minimum_size.y = 38
+	node.custom_minimum_size.y = 30
+	node.add_theme_font_size_override("font_size",14)
+	for state in ["normal","hover","pressed","disabled","focus"]:
+		var style: StyleBox=theme.get_stylebox(state,"Button").duplicate()
+		style.content_margin_top=4;style.content_margin_bottom=4
+		node.add_theme_stylebox_override(state,style)
 	node.pressed.connect(callback)
 	return node
 
 func build_screen() -> void:
-	var background := ColorRect.new()
-	background.name = "Background"
-	background.color = Color("1c1c24")
-	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(background)
-	var margins := MarginContainer.new()
-	margins.name = "Layout"
+	var background:=ColorRect.new()
+	background.color=Color("1c1c24");background.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);add_child(background)
+	var margins:=MarginContainer.new();margins.name="Layout"
 	margins.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for side in ["left", "right", "top", "bottom"]:
-		margins.add_theme_constant_override("margin_" + side, 20)
+	for side in ["left","right","top","bottom"]: margins.add_theme_constant_override("margin_"+side,12)
 	add_child(margins)
-	var root := VBoxContainer.new()
-	root.name = "Body"
-	root.add_theme_constant_override("separation", 10)
-	margins.add_child(root)
-	var header := HFlowContainer.new()
-	header.name = "Header"
-	root.add_child(header)
-	var title := label("VITMORPH  /  campo de prueba", 19, GOLD)
-	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_child(title)
-	build_button=button("Build [B]",func():open_build(false),"Build")
-	header.add_child(build_button)
-	collection_button=button("Bestias [C]",func():open_build(true),"Collection")
-	header.add_child(collection_button)
-	selection = OptionButton.new()
-	selection.name = "Scenario"
-	for title_text in Fixture.SCENARIOS:
-		selection.add_item(title_text)
-	selection.add_item("Recorrido continuo")
-	selection.select(3)
-	selection.item_selected.connect(on_mode_selected)
-	header.add_child(selection)
-	start_button = button("Comenzar", begin, "Start")
-	header.add_child(start_button)
-	diagnostic_button = button("Detalles", toggle_diagnostics, "Diagnostics")
-	header.add_child(diagnostic_button)
-	arena = ArenaScript.new()
-	arena.name = "Battlefield"
-	arena.profile = profile
-	arena.combat = combat
-	arena.route = route
-	arena.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	root.add_child(arena)
-	save_label=label("",12,MUTED)
-	save_label.clip_text=true
-	root.add_child(save_label)
-	atb_strip = ATBStrip.new()
-	atb_strip.name = "ATB"
-	atb_strip.profile = profile
-	atb_strip.combat = combat
-	atb_strip.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	atb_strip.offset_bottom = 64
-	arena.add_child(atb_strip)
-	var overlay := VBoxContainer.new()
-	overlay.name = "Feedback"
-	overlay.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	overlay.offset_top = 76
-	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	arena.add_child(overlay)
-	result_label = label("Elige un encuentro y comienza", 14, MUTED)
-	result_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	overlay.add_child(result_label)
-	action_label = label("", 22)
-	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	overlay.add_child(action_label)
-	var footer := VBoxContainer.new()
-	intervention_strip = footer
-	footer.name = "Interventions"
-	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	footer.offset_top = -170
-	arena.add_child(footer)
-	exploration_help = label("WASD / flechas · desplazarte", 14, MUTED)
-	exploration_help.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	exploration_help.offset_top = -28
-	exploration_help.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	arena.add_child(exploration_help)
-	var skill_row := GridContainer.new()
-	skill_row.columns=4
-	arena.resized.connect(func(): skill_row.columns=2 if arena.size.x<950 else 4; footer.offset_top=-224 if arena.size.x<950 else -170)
-	skill_row.name = "Skills"
-	footer.add_child(skill_row)
+	var root:=VBoxContainer.new();root.name="Body";root.add_theme_constant_override("separation",4);margins.add_child(root)
+	var header:=HBoxContainer.new();header.name="Header";root.add_child(header)
+	var title:=label("VITMORPH",17,GOLD);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL;header.add_child(title)
+	build_button=button("Build [B]",func():open_build(false),"Build");header.add_child(build_button)
+	collection_button=button("Bestias [C]",func():open_build(true),"Collection");header.add_child(collection_button)
+	diagnostic_button=button("Pruebas [F3]",toggle_diagnostics,"Diagnostics");header.add_child(diagnostic_button)
+	atb_strip=ATBStrip.new();atb_strip.name="ATB";atb_strip.profile=profile;atb_strip.combat=combat
+	atb_strip.custom_minimum_size.y=56;root.add_child(atb_strip)
+	feedback=VBoxContainer.new();feedback.name="Feedback";feedback.add_theme_constant_override("separation",0);root.add_child(feedback)
+	result_label=label("",12,MUTED);result_label.clip_text=true;feedback.add_child(result_label)
+	var action_row:=HBoxContainer.new();action_row.add_theme_constant_override("separation",4);feedback.add_child(action_row)
+	action_label=label("",16);action_label.clip_text=true;action_label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;action_row.add_child(action_label)
+	parry_notice=label("",12,GOLD);parry_notice.custom_minimum_size.x=210;parry_notice.clip_text=true;action_row.add_child(parry_notice)
+	# Keep notice geometry allocated: visibility changes must not move the puzzle.
+	parry_notice.show();parry_notice.text=" "
+	battle_region=BoxContainer.new();battle_region.name="BattleRegion";battle_region.size_flags_vertical=Control.SIZE_EXPAND_FILL;root.add_child(battle_region)
+	arena=ArenaScript.new();arena.name="Battlefield";arena.profile=profile;arena.combat=combat;arena.route=route
+	arena.custom_minimum_size=Vector2(0,140);arena.size_flags_horizontal=Control.SIZE_EXPAND_FILL;arena.size_flags_vertical=Control.SIZE_EXPAND_FILL;battle_region.add_child(arena)
+	matrix_view=preload("res://ui/combat_matrix_view.gd").new();matrix_view.controller=matrix;matrix_view.combat=combat;battle_region.add_child(matrix_view)
+	exploration_help=label("WASD / flechas · desplazarte",12,MUTED);exploration_help.clip_text=true;root.add_child(exploration_help)
+	intervention_strip=VBoxContainer.new();intervention_strip.name="Interventions";intervention_strip.add_theme_constant_override("separation",2);root.add_child(intervention_strip)
+	skill_row=GridContainer.new();skill_row.name="Skills";skill_row.columns=4;intervention_strip.add_child(skill_row)
 	for index in 4:
-		var slot := index
-		var skill: Dictionary = Fixture.abilities()[index]
-		var item := button(skill.name, func(): select_skill(equipped_skills()[slot].id), skill.id.capitalize())
-		item.toggle_mode = true
-		item.custom_minimum_size = Vector2(0,52)
-		item.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		item.tooltip_text = "Seleccionar %s para Priorizar o Retener" % skill.name
-		skill_row.add_child(item)
-		skill_buttons.append(item)
-	var command_row := HBoxContainer.new()
-	command_row.name = "Commands"
-	footer.add_child(command_row)
-	detail_label = label("Selecciona una habilidad para intervenir", 14, MUTED)
-	detail_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	detail_label.clip_text = true
-	command_row.add_child(detail_label)
-	priority_button = button("Priorizar  [P]", func(): toggle_command("priority"), "Prioritize")
-	command_row.add_child(priority_button)
-	retain_button = button("Retener  [R]", func(): toggle_command("retain"), "Retain")
-	command_row.add_child(retain_button)
-	var support := HBoxContainer.new()
-	footer.add_child(support)
-	copy_targets=OptionButton.new()
-	copy_targets.name="CopyTargets"
-	copy_targets.item_selected.connect(func(_i):refresh())
-	support.add_child(copy_targets)
-	copy_button=button("Copiar [X]",copy_selected,"Copy")
-	support.add_child(copy_button)
-	copy_label=label("",14,TEAL)
-	copy_label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	copy_label.clip_text=true
-	support.add_child(copy_label)
-	footer.add_child(label("1–4 seleccionar  ·  P priorizar  ·  R retener  ·  Tab navegar    /    Figuras y reglas provisionales", 12, MUTED))
-	# El diagnóstico se superpone; abrirlo no reduce el campo ni pausa el combate.
-	var diag_surface := PanelContainer.new()
-	diag_surface.name = "DiagnosticSurface"
-	diag_surface.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	diag_surface.offset_left = -470
-	diag_surface.offset_right = -24
-	diag_surface.offset_top = 155
-	diag_surface.offset_bottom = 395
-	var diag_style := StyleBoxFlat.new()
-	diag_style.bg_color = Color(0.09, 0.09, 0.12, 0.96)
-	diag_style.set_content_margin_all(16)
-	diag_surface.add_theme_stylebox_override("panel", diag_style)
-	add_child(diag_surface)
-	diagnostic_view = VBoxContainer.new()
-	diag_surface.add_child(diagnostic_view)
-	diagnostic_view.add_child(label("DIAGNÓSTICO · F3 para cerrar", 13, GOLD))
-	queue_label = label("", 13, MUTED)
-	queue_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	diagnostic_view.add_child(queue_label)
-	log_label = label("", 13)
-	log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	diagnostic_view.add_child(log_label)
-	diag_surface.hide()
+		var slot:=index;var skill: Dictionary=Fixture.abilities()[index]
+		var item:=button(skill.name,func():select_skill(equipped_skills()[slot].id),skill.id.capitalize())
+		item.toggle_mode=true;item.clip_text=true;item.custom_minimum_size=Vector2(0,40);item.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		item.add_theme_font_size_override("font_size",13);skill_row.add_child(item);skill_buttons.append(item)
+	var commands:=HBoxContainer.new();commands.name="Commands";intervention_strip.add_child(commands)
+	detail_label=label("",12,MUTED);detail_label.clip_text=true;detail_label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;commands.add_child(detail_label)
+	priority_button=button("Priorizar [P]",func():toggle_command("priority"),"Prioritize");commands.add_child(priority_button)
+	retain_button=button("Retener [R]",func():toggle_command("retain"),"Retain");commands.add_child(retain_button)
+	var context:=HBoxContainer.new();context.name="TargetContext";intervention_strip.add_child(context)
+	copy_targets=OptionButton.new();copy_targets.name="CopyTargets";copy_targets.size_flags_horizontal=Control.SIZE_EXPAND_FILL;copy_targets.clip_text=true
+	copy_targets.add_theme_font_size_override("font_size",13)
+	for state in ["normal","hover","pressed","disabled","focus"]:
+		var style: StyleBox=theme.get_stylebox(state,"OptionButton").duplicate();style.content_margin_top=4;style.content_margin_bottom=4;copy_targets.add_theme_stylebox_override(state,style)
+	copy_targets.item_selected.connect(func(_i):refresh());context.add_child(copy_targets)
+	matrix_button=button("Matriz · prueba",open_target_matrix,"OpenMatrix");context.add_child(matrix_button)
+	copy_button=button("Copiar [X]",copy_selected,"Copy");context.add_child(copy_button)
+	copy_label=label("",12,TEAL);copy_label.clip_text=true;intervention_strip.add_child(copy_label)
+	save_label=label("",11,MUTED);save_label.clip_text=true;root.add_child(save_label)
+	# Tools are a bounded optional surface, not a permanent toolbar.
+	var surface:=PanelContainer.new();surface.name="DiagnosticSurface"
+	surface.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	surface.offset_left=-370;surface.offset_right=-12;surface.offset_top=54;surface.offset_bottom=450
+	var style:=StyleBoxFlat.new();style.bg_color=Color(.09,.09,.12,.97);style.set_content_margin_all(12);surface.add_theme_stylebox_override("panel",style);add_child(surface)
+	var scroll:=ScrollContainer.new();scroll.name="Scroll";surface.add_child(scroll)
+	diagnostic_view=VBoxContainer.new();diagnostic_view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;scroll.add_child(diagnostic_view)
+	diagnostic_view.add_child(label("PRUEBAS · F3 cerrar",13,GOLD))
+	selection=OptionButton.new();selection.name="Scenario"
+	for value in Fixture.SCENARIOS: selection.add_item(value)
+	selection.add_item("Recorrido continuo");selection.select(3);selection.item_selected.connect(on_mode_selected);diagnostic_view.add_child(selection)
+	start_button=button("Comenzar",begin,"Start");diagnostic_view.add_child(start_button)
+	diagnostic_view.add_child(button("Matriz del principal · prueba",open_own_matrix,"OwnMatrix"))
+	diagnostic_view.add_child(button("Reiniciar matriz · prueba",matrix.reset,"ResetMatrix"))
+	diagnostic_view.add_child(button("Aviso Parry · prueba",show_parry_probe,"ParryProbe"))
+	queue_label=label("",12,MUTED);queue_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;diagnostic_view.add_child(queue_label)
+	log_label=label("",12);log_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;diagnostic_view.add_child(log_label)
+	surface.hide()
+	matrix.changed.connect(layout_hud)
+	matrix.closed.connect(func():copy_targets.call_deferred("grab_focus"))
+	resized.connect(layout_hud)
+	call_deferred("layout_hud")
+
+func diagnostic_surface() -> Control:
+	return diagnostic_view.get_parent().get_parent()
+
+func layout_hud() -> void:
+	if matrix_view==null: return
+	narrow_hud=size.x<1000
+	result_label.visible=not narrow_hud
+	if matrix.owner_id!="" and (size.x<640 or size.y<640):
+		matrix_notice="Amplía la ventana para editar la matriz";matrix.close()
+	battle_region.vertical=narrow_hud
+	matrix_view.set_compact(narrow_hud)
+	matrix_view.custom_minimum_size=Vector2(0,220) if narrow_hud else Vector2(320,0)
+	matrix_view.size_flags_horizontal=Control.SIZE_EXPAND_FILL if narrow_hud else Control.SIZE_FILL
+	matrix_view.size_flags_vertical=Control.SIZE_FILL if narrow_hud else Control.SIZE_EXPAND_FILL
+	skill_row.columns=4
+	detail_label.visible=not narrow_hud
+	copy_label.visible=not narrow_hud and copy_label.text!=""
+	if matrix_notice!="": save_label.text=matrix_notice
+	var surface:=diagnostic_surface()
+	surface.offset_left=-minf(370,size.x-24);surface.offset_bottom=minf(450,size.y-12)
+	if arena!=null: arena.queue_redraw()
+
+func open_matrix(actor_id: String) -> bool:
+	if size.x<640 or size.y<640:
+		matrix_notice="Amplía la ventana para editar la matriz";save_label.text=matrix_notice;return false
+	matrix_notice=""
+	if save_label.text=="Amplía la ventana para editar la matriz" and save_service!=null: save_label.text=save_service.status
+	var accepted: bool=matrix.open(actor_id,combat.actors)
+	if accepted:
+		diagnostic_surface().hide();matrix_view.rings.call_deferred("grab_focus");route.held_keys.clear()
+	return accepted
+
+func open_target_matrix() -> void:
+	if copy_targets.selected>=0 and copy_targets.selected<copy_target_ids.size(): open_matrix(copy_target_ids[copy_targets.selected])
+
+func open_own_matrix() -> void:
+	var actor: Dictionary=combat.principal_actor()
+	if not actor.is_empty(): open_matrix(actor.id)
+
+func show_parry_probe() -> void:
+	if not combat.running: return
+	parry_remaining=1.0;parry_answered=false
+	parry_notice.text="Prueba de aviso de Parry · Espacio"
+	parry_notice.tooltip_text="Prueba de aviso de Parry · Espacio · sin efecto mecánico"
+	diagnostic_surface().hide()
+	if matrix.owner_id!="" and is_instance_valid(matrix_view.last_focus): matrix_view.last_focus.grab_focus()
+
+func _input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.pressed or event.echo or not combat.running: return
+	if parry_remaining>0 and event.keycode==KEY_SPACE:
+		parry_answered=true;parry_notice.text="Respuesta registrada · sin efecto de combate";get_viewport().set_input_as_handled();return
+	if matrix.owner_id=="": return
+	var focused: Control=get_viewport().gui_get_focus_owner()
+	if event.keycode in [KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT] and focused!=null and not matrix_view.is_ancestor_of(focused): return
+	match event.keycode:
+		KEY_ESCAPE: matrix.close()
+		KEY_UP: matrix.select_ring(posmod(int(matrix.current().selected)-1,3))
+		KEY_DOWN: matrix.select_ring(posmod(int(matrix.current().selected)+1,3))
+		KEY_LEFT: matrix.rotate(-1)
+		KEY_RIGHT: matrix.rotate(1)
+		_: return
+	get_viewport().set_input_as_handled()
 
 func equipped_skills() -> Array[Dictionary]:
 	var actor: Dictionary = combat.actor_by_id("main") if combat.running else (route.actors[0] if route.visible_world else {})
@@ -332,11 +340,9 @@ func toggle_command(kind: String) -> void:
 	combat.command(kind, "" if current == selected_skill else selected_skill)
 
 func toggle_diagnostics() -> void:
-	if not combat.running:
-		return
-	var surface: Control = diagnostic_view.get_parent()
+	var surface: Control = diagnostic_surface()
 	surface.visible = not surface.visible
-	diagnostic_button.text = "Cerrar detalles" if surface.visible else "Detalles"
+	diagnostic_button.text = "Cerrar [F3]" if surface.visible else "Pruebas [F3]"
 	refresh()
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -371,6 +377,8 @@ func on_action(action: Dictionary) -> void:
 	action_label.text = "%s · %s" % [actor.name, "Esperar" if action.skill.is_empty() else action.skill.name]
 
 func on_finished(outcome: String) -> void:
+	matrix.sync(false,[])
+	parry_remaining=0;parry_notice.text=" "
 	action_label.text = outcome
 	if route.visible_world:
 		if outcome=="Derrota":
@@ -394,6 +402,7 @@ func refresh() -> void:
 		profile.record("ui/combat_screen.gd:refresh", Time.get_ticks_usec() - stamp)
 
 func refresh_body() -> void:
+	matrix.sync(combat.running,combat.actors)
 	var active: bool = combat.running or route.state == "aftermath"
 	session.combat_locked = active
 	build_button.disabled = active or not route.visible_world
@@ -402,9 +411,9 @@ func refresh_body() -> void:
 	intervention_strip.visible = combat.running
 	exploration_help.visible = route.visible_world and not combat.running
 	if not combat.running:
-		diagnostic_view.get_parent().hide()
-		diagnostic_button.text = "Detalles"
-	diagnostic_button.visible = combat.running
+		parry_remaining=0;parry_notice.text=" "
+	diagnostic_button.text="Cerrar [F3]" if diagnostic_surface().visible else "Pruebas [F3]"
+	diagnostic_button.visible = true
 	selection.disabled = active
 	start_button.disabled = active
 	if route.visible_world:
@@ -417,7 +426,7 @@ func refresh_body() -> void:
 		if combat.pending.is_empty():
 			action_label.text = ""
 			arena.reset_feedback()
-	if diagnostic_view.get_parent().visible:
+	if diagnostic_surface().visible:
 		queue_label.text = "Orden ATB: " + " → ".join(combat.upcoming(4))
 	if route.visible_world and not combat.running:
 		queue_label.text = "Recorrido: %d / %d encuentros superados" % [route.cleared,route.zones.size()]
@@ -428,6 +437,7 @@ func refresh_body() -> void:
 		elif route.state == "failed":
 			action_label.text = "Recorrido detenido"
 	refresh_copy()
+	layout_hud()
 	var skills := equipped_skills()
 	if selected_skill not in skills.map(func(skill):return skill.id): selected_skill=skills[0].id
 	for index in skill_buttons.size():
@@ -441,6 +451,7 @@ func refresh_body() -> void:
 		item.text = "%d  %s" % [index + 1, skill.name]
 		if not marks.is_empty():
 			item.text += "\n" + " · ".join(marks)
+		item.tooltip_text=skill.name+" · "+(" / ".join(marks) if not marks.is_empty() else "Sin marcas")
 		item.set_pressed_no_signal(skill.id == selected_skill)
 		item.add_theme_color_override("font_color", GOLD if skill.id == selected_skill else INK)
 	priority_button.text = "Quitar prioridad  [P]" if combat.priority == selected_skill else "Priorizar  [P]"
@@ -472,6 +483,9 @@ func _process(delta: float) -> void:
 		profile.record("ui/combat_screen.gd:_process", Time.get_ticks_usec() - stamp)
 
 func _process_body(delta: float) -> void:
+	if parry_remaining>0:
+		parry_remaining=maxf(0,parry_remaining-delta)
+		if parry_remaining==0: parry_notice.text=" "
 	copy_notice_seconds=maxf(0.0,copy_notice_seconds-delta)
 	if combat != null and combat.running:
 		if not combat.copy_service.process.is_empty():
@@ -495,6 +509,7 @@ func _process_body(delta: float) -> void:
 
 func snapshot() -> Dictionary:
 	var report: Dictionary = combat.snapshot()
+	report["matrix"]=matrix.snapshot()
 	report["session"] = session.export_data()
 	report["save"] = {"status":save_service.status,"confirmed":save_service.confirmed,"requested":save_service.sequence,"last_write_usec":save_service.last_write_usec,"diagnostic_profile":diagnostic_mode}
 	report["editor"] = {"visible":editor.visible,"exploration_paused":route.menu_paused,"draft":editor.draft.duplicate(true)}
@@ -532,6 +547,20 @@ func run_edge_checks() -> Dictionary:
 
 func run_assembly_checks() -> Dictionary:
 	return preload("res://tests/assembly_checks.gd").new().run()
+
+func matrix_performance() -> void:
+	var previous:=get_node_or_null("MatrixPerformance")
+	if previous!=null: previous.free()
+	var driver:=preload("res://tests/combat_matrix_runtime.gd").new()
+	driver.name="MatrixPerformance";add_child(driver);driver.start(self)
+
+func matrix_ui_validation() -> void:
+	if get_node_or_null("BuildIntentsDiagnostics")==null:
+		build_intents_diagnostics("combat")
+	var previous:=get_node_or_null("MatrixValidation")
+	if previous!=null: previous.free()
+	var driver:=preload("res://tests/combat_matrix_ui_validation.gd").new()
+	driver.name="MatrixValidation";add_child(driver);driver.run(self)
 
 func build_intents_diagnostics(mode: String) -> void:
 	var driver:=get_node_or_null("BuildIntentsDiagnostics")
@@ -628,6 +657,10 @@ func refresh_copy() -> void:
 	if copy_targets.selected>=0: reason=combat.copy_service.eligibility(combat.actor_by_id(copy_target_ids[copy_targets.selected]),main)
 	copy_button.disabled=not combat.running or busy or (combat.copy_service.pending_id=="" and (copy_targets.selected<0 or reason!=""))
 	copy_label.text=combat.copy_service.message if combat.copy_service.message!="" else reason
+	copy_button.tooltip_text=copy_label.text
+	matrix_button.disabled=not combat.running or copy_targets.selected<0
+	matrix_button.tooltip_text="Matriz de diagnóstico del objetivo; sin efecto de combate"
+	copy_label.visible=not narrow_hud and copy_label.text!=""
 
 func create_checkpoint() -> Dictionary:
 	if diagnostic_mode or save_service==null or not route.visible_world: return {"ok":false,"error":"Perfil de diagnóstico separado"}

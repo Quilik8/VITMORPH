@@ -23,6 +23,8 @@ Usar `ui-design-core` para objetivo y jerarquía, `godot-ui-design` para Control
 
 Para editor, colección y equipamiento, leer [references/assembly.md](references/assembly.md). Para HUD, leer [references/combat.md](references/combat.md). Para referencias o evaluación de propuestas importantes, leer [references/review.md](references/review.md).
 
+Los puzzles de Vitmorph son matrices manipulables **durante combate**, nunca interacciones de exploración. Reservar una región contextual que conviva con campo, comandos y aviso de defensa activa sin robar foco. La prueba autorizada en COMBAT_MATRIX_DESIGN.md no concede efectos de Vulnerabilidad, combos o Parry funcional; sus contratos mecánicos siguen pendientes.
+
 ## Composición y objetos
 
 La bestia debe ser protagonista perceptiva, además de estar centrada en coordenadas. Las piezas se reconocen antes de leer todos sus nombres. Integrar selección, destinos y cambios sin exigir comparar zonas fuera de vista. Usar imágenes con texto accesible; un icono mudo no debe exigir memorizar su efecto.

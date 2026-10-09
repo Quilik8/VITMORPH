@@ -97,7 +97,7 @@ func run() -> Dictionary:
 	smoke_engine.start(0);arena.combat=smoke_engine;arena.size=Vector2(760,600)
 	var label_position: Vector2=arena.actor_label_point(smoke_engine.actors[0],"Principal",16,Vector2(0,-62))
 	check("labels safe before first draw",label_position.is_finite())
-	check("narrow projection reserves HUD",arena.projection_height()==356.0)
+	check("projection uses allocated battlefield",arena.projection_height()==600.0)
 	arena.free();smoke_engine.free()
 	var variants: Array=[{"modular":["close","far"],"mods":["power_1","range_1"]},{"modular":["residual","far"],"mods":["duration_1","range_1"]},{"modular":["slow","close"],"mods":["duration_1","power_1"]}]
 	for variant in variants:
