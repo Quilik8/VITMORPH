@@ -8,6 +8,11 @@ signal damage_applied(target_id: String, damage: int, absorbed: int)
 signal combat_finished(result: String)
 signal message(text: String)
 signal intentions_changed
+signal rupture_changed(actor_id: String)
+signal damage_resolved(target_id: String, breakdown: Dictionary)
+const Damage = preload("res://systems/damage_resolution.gd")
+var encounter_serial := 0
+var last_damage: Dictionary = {}
 var intentions: Dictionary = {}
 var intentions_dirty := true
 var intention_buckets: Dictionary = {}
@@ -62,11 +67,16 @@ func start(which: int) -> void:
 	initialize_atb()
 
 func initialize_atb() -> void:
+	encounter_serial+=1
+	last_damage.clear()
 	copy_service.reset()
 	combat_clock = 0.0
 	time_debt = 0.0
 	resolved = true
 	for actor in actors:
+		assert(Damage.valid_defense(float(actor.get("defense",0.0))),"Defensa fuera de contrato")
+		actor["vulnerability_until"]=-1.0
+		actor["rupture_used"]=false
 		actor["states"] = {}
 		actor["atb"] = 0.0
 		actor["ready_time"] = -1.0
@@ -125,6 +135,8 @@ func advance(delta: float) -> void:
 		var step := left
 		for actor in actors:
 			if not Status.active(actor): continue
+			var rupture_end: float=float(actor.get("vulnerability_until",-1.0))
+			if rupture_end>combat_clock: step=minf(step,rupture_end-combat_clock)
 			if actor.ready_time<0 and (pending.is_empty() or pending.actor_id!=actor.id):
 				step=minf(step,maxf(0.0,(100.0-actor.atb)/Status.speed(actor,combat_clock)))
 				if actor.atb<50.0-EPS: step=minf(step,maxf(0.0,(50.0-actor.atb)/Status.speed(actor,combat_clock)))
@@ -158,6 +170,11 @@ func advance(delta: float) -> void:
 			check_finish()
 		if not running: break
 		for actor in actors:
+			if not Status.active(actor):
+				actor.vulnerability_until=-1.0;actor.rupture_used=false
+			if float(actor.get("vulnerability_until",-1.0))>=0 and actor.vulnerability_until<=combat_clock+EPS:
+				actor.vulnerability_until=-1.0;intentions_dirty=true
+				rupture_changed.emit(actor.id);state_changed.emit()
 			for kind in actor.states.keys():
 				if actor.states[kind].expires<=combat_clock+EPS:
 					actor.states.erase(kind); states_changed.emit(); state_changed.emit()
@@ -180,19 +197,44 @@ func principal_actor() -> Dictionary:
 
 func apply_damage(target: Dictionary, amount: int) -> void:
 	if not running or not Status.active(target): return
-	var absorbed: int = mini(int(target.shield),amount)
-	var damage := amount-absorbed
+	var breakdown:=Damage.preview(target,amount,combat_clock)
+	var absorbed: int=breakdown.absorbed
+	var damage: int=breakdown.damage
+	last_damage={"target_id":target.id,"clock":combat_clock,"breakdown":breakdown.duplicate(true)}
 	target.shield=0
 	intentions_dirty=true
 	target.hp=maxi(0,int(target.hp)-damage)
-	if target.hp==0: target.atb=0.0; target.ready_time=-1.0; target.states.clear()
+	if target.hp==0:
+		target.atb=0.0; target.ready_time=-1.0; target.states.clear();target.vulnerability_until=-1.0;target.rupture_used=false
 	if target.hp==0 and not copy_service.process.is_empty():
 		if target.id==copy_service.process.target_id: copy_service.fail("Objetivo derrotado")
 		elif target.get("is_principal",false): copy_service.fail("Principal derrotado")
 	damage_applied.emit(target.id,damage,absorbed)
+	damage_resolved.emit(target.id,breakdown)
 	message.emit("%s: −%d vida%s"%[target.name,damage," · protección %d"%absorbed if absorbed>0 else ""])
 	check_finish()
 	state_changed.emit()
+
+func request_rupture(target_id: String, token: int) -> Dictionary:
+	var target:=actor_by_id(target_id)
+	if not running or token!=encounter_serial: return {"ok":false,"error":"Encuentro no vigente"}
+	if target.is_empty() or not Status.active(target): return {"ok":false,"error":"Objetivo no activo"}
+	if target.team==principal_actor().team: return {"ok":false,"error":"La matriz propia no rompe defensa"}
+	if not target.get("matrix_enabled",false) or float(target.get("defense",0.0))<=0.0:
+		return {"ok":false,"error":"Matriz de diagnóstico sin efecto"}
+	if target.get("rupture_used",false): return {"ok":false,"error":"Ruptura utilizada"}
+	if time_debt>EPS: return {"ok":false,"error":"Simulación pendiente; vuelve a intentar"}
+	target.rupture_used=true;target.vulnerability_until=combat_clock+Damage.BREAK_SECONDS
+	intentions_dirty=true;refresh_intentions()
+	message.emit("%s · defensa rota durante 12 s"%target.name)
+	rupture_changed.emit(target.id);state_changed.emit()
+	return {"ok":true,"until":target.vulnerability_until}
+
+func defense_status(target_id: String) -> String:
+	var actor:=actor_by_id(target_id)
+	if actor.is_empty() or not Status.active(actor) or float(actor.get("defense",0.0))<=0: return ""
+	if Damage.vulnerable(actor,combat_clock): return "Defensa rota · %d s"%ceili(actor.vulnerability_until-combat_clock)
+	return "Defensa %d %% · %s"%[roundi(float(actor.defense)*100),"ruptura utilizada" if actor.get("rupture_used",false) else "matriz disponible"]
 
 func check_finish() -> void:
 	if not running: return
@@ -301,7 +343,8 @@ func resolve_pending() -> void:
 func finish(outcome: String) -> void:
 	running = false
 	if copy_service.pending_id!="" or not copy_service.process.is_empty(): copy_service.fail("Encuentro terminado")
-	for actor in actors: actor.states.clear()
+	for actor in actors:
+		actor.states.clear();actor.vulnerability_until=-1.0;actor.rupture_used=false
 	pending = {}
 	resolved = true
 	elapsed = 0.0

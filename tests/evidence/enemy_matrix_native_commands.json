@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"result\":[\"close\",\"close\",{\"positions\":[0,0,0],\"resolved\":true,\"selected\":2},true,{\"path\":\"/root/Main/Layout/Body/BattleRegion/Matrix/@BoxContainer@11/Info/@HBoxContainer@13/Left\",\"type\":\"NodePath\"}]}"
+    }
+  ]
+}

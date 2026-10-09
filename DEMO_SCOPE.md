@@ -4,7 +4,7 @@ Actualizado: 4 octubre 2026, después de checkpoint-v0.7.0. Autoridad: instrucci
 
 ## Estado del proyecto
 
-9 octubre 2026: siguiente contrato en revisión: ENEMY_MATRIX_PLAN.md. Autorizada su preparación; defensa 20 %, ventana de 12 s y una ruptura por enemigo son propuestas, no reglas implementadas ni aprobadas.
+9 octubre 2026: ENEMY_MATRIX_PLAN.md autorizado para programación con valores delegados por el usuario: defensa 20 %, ruptura 12 s y una ruptura por enemigo/encuentro. Implementación en ensayo aislado; no cambia encuentros normales. Matriz propia y Parry siguen sin efecto mecánico. Resultados y límites: ENEMY_MATRIX_DELIVERY.md.
 
 9 octubre 2026: aprobado HUD preparado para matrices de combate, contrato COMBAT_MATRIX_DESIGN.md. Prueba de Rotación de Anillos y aviso Parry sin efectos mecánicos; no Vulnerabilidad/combos/Parry funcional. Puzzles exclusivamente de combate. Mapa, recuperación de PV y sustitución en bloques posteriores.
 

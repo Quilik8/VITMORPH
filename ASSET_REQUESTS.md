@@ -4,6 +4,8 @@ Actualizado: 4 octubre 2026. Alcance vigente: [DEMO_SCOPE.md](DEMO_SCOPE.md). Es
 
 ## Reglas
 
+9 octubre 2026: ensayo de defensa/Vulnerabilidad autorizado e implementado mediante UI técnica existente (ENEMY_MATRIX_PLAN.md). No requiere nuevas imágenes. Assets de ruptura definitivos permanecen pendientes del usuario; no se convierte geometría de diagnóstico en arte final.
+
 9 octubre 2026: la matriz de anillos y el aviso Parry actuales son UI técnica de diagnóstico, no assets recibidos ni arte final. No solicitan aún efectos de Vulnerabilidad/combos; su comportamiento final debe cerrarse primero. Puzzles exclusivamente dentro del combate, contrato COMBAT_MATRIX_DESIGN.md.
 
 Bloque actual: builds e intenciones, sin integración de assets. Potencia y Duración disponen de IDs técnicos `power` y `duration`; imágenes/capas siguen pendientes y se incorporarán mediante la biblioteca visual existente cuando el usuario las aporte.

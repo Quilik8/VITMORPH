@@ -1,5 +1,12 @@
 # Registro de cambios
 
+## Defensa y matriz enemiga funcional · 9 octubre 2026
+
+- Adoptados valores delegados: defensa 20 %, ruptura 12 s y una por enemigo/encuentro. Resolución común de daño/Protección y estimación de IA con vencimientos; estados temporales excluidos del guardado.
+- Ensayo aislado desde F3 con retorno a la partida, defensa/ruptura contextuales y foco conservado. Matriz propia y Parry permanecen diagnóstico.
+- 247 comprobaciones mecánicas y 19 de runtime aprobadas. Tres variantes ganan sin puzzle; ruptura añade daño pero no reduce aún acciones para ganar. Ensayo ajustado a ataque 8 para evitar ciclo de Defensa en desgaste.
+- Corregida regresión de render mediante malla reutilizada y caché de textos: 143 → 110 llamadas de renderer en matriz activa; p95 mediano de intervalos cerrada/abierta +1,67 %. Tirones y límites registrados en ENEMY_MATRIX_DELIVERY.md. No cambia recorrido normal ni exportación.
+
 ## Plan de matriz enemiga · 9 octubre 2026
 
 - Registrada propuesta ENEMY_MATRIX_PLAN.md: separación de defensa/protección, cálculo candidato, ciclo de ruptura, integración, UI contextual y aceptación. Valores pendientes de aprobación; sin cambios de gameplay.

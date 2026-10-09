@@ -1,5 +1,7 @@
 # HUD y feedback
 
+Contrato posterior autorizado: ENEMY_MATRIX_PLAN.md. En el ensayo enemigo, resolución de anillos solicita ruptura al motor; estado compacto «Defensa rota» y detalle contextual explican mitigación, ventana y Protección. La matriz propia conserva diagnóstico sin efectos. El resto del texto sobre la prueba sin efectos describe COMBAT_MATRIX_DESIGN.md, no invalida este bloque posterior.
+
 Los puzzles arcanos pertenecen exclusivamente al combate: matriz enemiga rompe defensa general para Vulnerabilidad; matriz propia sostiene/amplifica combos ya producidos por la build. Son opcionales, el combate continúa y se manipula una matriz a la vez. No trasladarlos a exploración ni inventar matemática de combos/defensa para resolver la UI. Contrato de prueba: COMBAT_MATRIX_DESIGN.md; regiones distribuidas, matriz lateral/inferior y Parry sin quitar foco. Los anillos y aviso de esta prueba no tienen efectos mecánicos.
 
 Consultar parámetros vigentes en documentos y código; no convertir valores experimentales en reglas de esta skill.

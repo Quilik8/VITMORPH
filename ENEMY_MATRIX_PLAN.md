@@ -1,6 +1,6 @@
 # Matriz enemiga: defensa y Vulnerabilidad
 
-9 octubre 2026 · Propuesta para revisión. Autorizado preparar este plan; sus valores y nuevas reglas todavía no están aprobados para implementación.
+9 octubre 2026 · Contrato técnico autorizado. Tras revisar la propuesta, el usuario delegó los valores y pidió avanzar con programación. Se adoptan 20 % de defensa, 12 s de ruptura y una ruptura por enemigo/encuentro como parámetros experimentales. Las menciones a propuesta/candidato del texto original describen su procedencia, no un bloqueo actual. Evidencia: ENEMY_MATRIX_DELIVERY.md.
 
 ## 1. Fuente y objetivo
 
@@ -123,4 +123,4 @@ La primera evaluación debe comprobar que ignorar matriz permite una victoria no
 
 Paquete recomendado para la primera prueba: defensa porcentual 20 %, ruptura completa de esa mitigación durante 12 s, una ruptura por enemigo/encuentro, daño directo y periódico sujetos al mismo cálculo. Protección no se elimina.
 
-Estas decisiones son candidatas. Su aprobación autorizaría A–D, no combos, Parry funcional, nuevas familias de puzzle ni defensa en todo el recorrido. Valores anteriores permanecen vigentes mientras este documento sea propuesta.
+Autorizados A–D con los valores indicados. Combos, Parry funcional, nuevas familias de puzzle y defensa en todo el recorrido requieren sus propios bloques. Ajuste de ensayo: ataque del enemigo 14 → 8 para evitar un ciclo de defensa en la build de desgaste y conservar victoria sin puzzle; no cambia los fixtures históricos. Resolver al segundo 18 mejora daño en la ventana, aunque no necesariamente reduce el número de acciones requerido para ganar.

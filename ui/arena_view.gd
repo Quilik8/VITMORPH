@@ -18,6 +18,7 @@ var last_ground_world := false
 var last_projection_height := -1.0
 var presentation_transform := Transform2D.IDENTITY
 var drawn_label_bounds: Array[Rect2]=[]
+var label_positions: Dictionary={}
 var shadow_mesh: ArrayMesh
 var main_mesh: ArrayMesh
 var enemy_mesh: ArrayMesh
@@ -92,6 +93,7 @@ func intention_brief(actor_id: String) -> String:
 	return str(combat.actor_by_id(value.target_id).get("name","Sin objetivo"))+" · "+value.reason
 
 func sync_intentions() -> void:
+	label_positions.clear()
 	frame_combat()
 	var active := {}
 	if combat.running:
@@ -268,6 +270,7 @@ func projection_height() -> float:
 	return maxf(100.0,size.y)
 
 func frame_combat() -> void:
+	label_positions.clear()
 	if combat==null or not combat.running or combat.actors.is_empty(): return
 	var minimum:=Vector2(INF,INF);var maximum:=Vector2(-INF,-INF)
 	for actor in combat.actors:
@@ -320,6 +323,11 @@ func centered_body(font: Font, caption: String, at: Vector2, font_size: int, col
 
 func actor_label_point(actor: Dictionary, caption: String, font_size: int, offset: Vector2) -> Vector2:
 	var base:=point(actor)+offset
+	var key: String=str(actor.id)+"|"+caption+"|"+str(font_size)+str(offset)
+	if label_positions.has(key):
+		var cached: Dictionary=label_positions[key]
+		drawn_label_bounds.append(cached.bounds)
+		return cached.point
 	# Labels may be positioned before the first draw initializes the text cache.
 	var width:=ThemeDB.fallback_font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x
 	var candidates: Array[Vector2]=[base,base+Vector2(-110,0),base+Vector2(110,0),base+Vector2(180,62),base+Vector2(-180,62)]
@@ -340,7 +348,8 @@ func actor_label_point(actor: Dictionary, caption: String, font_size: int, offse
 			if bounds.intersects(previous): blocked=true
 		for button in intention_buttons.values():
 			if bounds.intersects(Rect2(button.position,button.size)): blocked=true
-		if not blocked: drawn_label_bounds.append(bounds);return at
+		if not blocked:
+			drawn_label_bounds.append(bounds);label_positions[key]={"point":at,"bounds":bounds};return at
 	return base
 
 func _draw() -> void:
@@ -393,6 +402,7 @@ func _draw_body() -> void:
 			var status_text: Array[String]=[]
 			if actor.get("states",{}).has("dot"): status_text.append("Residuo")
 			if actor.get("states",{}).has("slow"): status_text.append("ATB −25 %")
+			if combat.Damage.vulnerable(actor,combat.combat_clock): status_text.append("Defensa rota")
 			if not status_text.is_empty():
 				var caption: String=" · ".join(status_text)
 				centered(font,caption,actor_label_point(actor,caption,11 if small else 12,Vector2(0,60 if small else 112)),11 if small else 12,Color("a1bbd0"))

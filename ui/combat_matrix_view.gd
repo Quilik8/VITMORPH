@@ -9,6 +9,8 @@ var compact := false
 var content: BoxContainer
 var last_focus: Control
 var rotations: Array[Button]=[]
+var clock_bucket := -1
+var note: Label
 
 func _ready() -> void:
 	name="Matrix"
@@ -21,7 +23,7 @@ func _ready() -> void:
 	content=BoxContainer.new();content.vertical=true;content.size_flags_vertical=Control.SIZE_EXPAND_FILL;add_child(content)
 	rings=preload("res://ui/matrix_rings.gd").new();rings.name="Rings";rings.size_flags_vertical=Control.SIZE_EXPAND_FILL;rings.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_child(rings)
 	var info:=VBoxContainer.new();info.name="Info";info.add_theme_constant_override("separation",4);info.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_child(info)
-	var note:=Label.new();note.text="ANILLOS · diagnóstico";note.add_theme_font_size_override("font_size",11);info.add_child(note)
+	note=Label.new();note.text="ANILLOS · diagnóstico";note.add_theme_font_size_override("font_size",11);info.add_child(note)
 	rings.selected.connect(controller.select_ring)
 	rings.focus_entered.connect(func():last_focus=rings)
 	var row:=HBoxContainer.new();row.add_theme_constant_override("separation",4);row.alignment=BoxContainer.ALIGNMENT_CENTER;info.add_child(row)
@@ -39,6 +41,7 @@ func _ready() -> void:
 	status=Label.new();status.add_theme_font_size_override("font_size",12);status.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;info.add_child(status)
 	var help:=Label.new();help.text="↑↓ anillo · ←→ giro\nTab navegar";help.add_theme_font_size_override("font_size",11);info.add_child(help)
 	controller.changed.connect(update_view)
+	combat.rupture_changed.connect(func(_id):update_view())
 	update_view()
 
 func compact_button(button: Button) -> void:
@@ -65,4 +68,15 @@ func update_view() -> void:
 	for step in state.positions:
 		if step==0: count+=1
 	status.text="Matriz alineada — prueba sin efecto de combate" if state.resolved else "%d/3 alineados · destino: marcas superiores"%count
+	var defense: String=combat.defense_status(controller.owner_id)
+	note.text="ANILLOS · ruptura de defensa" if defense!="" else "ANILLOS · diagnóstico"
+	if defense!="":
+		status.text=defense+("\n%d/3 alineados"%count if not state.resolved else "")
+		status.tooltip_text="Rompe la mitigación durante 12 s; conserva Protección. Una ruptura por encuentro."
+		return
 	status.tooltip_text=status.text
+
+func update_clock() -> void:
+	if not visible: return
+	var bucket:=int(combat.combat_clock)
+	if bucket!=clock_bucket: clock_bucket=bucket;update_view()

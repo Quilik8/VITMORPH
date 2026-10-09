@@ -1,0 +1,37 @@
+[
+  {
+    "width": 1018,
+    "height": 696,
+    "file": "enemy_matrix_unsolved.png"
+  },
+  {
+    "width": 1018,
+    "height": 696,
+    "file": "enemy_matrix_solved_wide.png"
+  },
+  {
+    "width": 1017,
+    "height": 696,
+    "file": "enemy_matrix_solved_1018.png"
+  },
+  {
+    "width": 645,
+    "height": 696,
+    "file": "enemy_matrix_solved_narrow.png"
+  },
+  {
+    "width": 696,
+    "height": 696,
+    "file": "enemy_matrix_solved_minimum.png"
+  },
+  {
+    "width": 1018,
+    "height": 696,
+    "file": "enemy_matrix_impact.png"
+  },
+  {
+    "width": 1018,
+    "height": 696,
+    "file": "enemy_matrix_expired.png"
+  }
+]

@@ -213,16 +213,38 @@ func build_screen() -> void:
 	diagnostic_view.add_child(button("Matriz del principal · prueba",open_own_matrix,"OwnMatrix"))
 	diagnostic_view.add_child(button("Reiniciar matriz · prueba",matrix.reset,"ResetMatrix"))
 	diagnostic_view.add_child(button("Aviso Parry · prueba",show_parry_probe,"ParryProbe"))
+	diagnostic_view.add_child(button("Defensa y matriz enemiga · ensayo",start_enemy_matrix_trial,"EnemyMatrixTrial"))
+	diagnostic_view.add_child(button("Volver a la partida tras ensayo",end_enemy_matrix_trial,"EndEnemyMatrixTrial"))
 	queue_label=label("",12,MUTED);queue_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;diagnostic_view.add_child(queue_label)
 	log_label=label("",12);log_label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;diagnostic_view.add_child(log_label)
 	surface.hide()
 	matrix.changed.connect(layout_hud)
+	matrix.aligned.connect(func(actor_id):
+		var actor: Dictionary=combat.actor_by_id(actor_id)
+		if actor.get("matrix_enabled",false):
+			var response: Dictionary=combat.request_rupture(actor_id,combat.encounter_serial)
+			if not response.ok: add_message(response.error))
 	matrix.closed.connect(func():copy_targets.call_deferred("grab_focus"))
 	resized.connect(layout_hud)
 	call_deferred("layout_hud")
 
 func diagnostic_surface() -> Control:
 	return diagnostic_view.get_parent().get_parent()
+
+func start_enemy_matrix_trial() -> void:
+	if combat.running or editor.visible: return
+	build_intents_diagnostics("begin")
+	editor.close();route.visible_world=false;diagnostic_mode=true
+	combat.start(0)
+	var enemy: Dictionary=combat.actors[1]
+	enemy.name="Ensayo de defensa";enemy.defense=combat.Damage.TEST_DEFENSE;enemy.matrix_enabled=true
+	enemy.abilities[0].damage=8
+	combat.intentions_dirty=true;combat.refresh_intentions()
+	diagnostic_surface().hide();refresh()
+
+func end_enemy_matrix_trial() -> void:
+	if get_node_or_null("BuildIntentsDiagnostics")==null: return
+	build_intents_diagnostics("finish");matrix.sync(false,[]);refresh()
 
 func layout_hud() -> void:
 	if matrix_view==null: return
@@ -263,7 +285,7 @@ func open_own_matrix() -> void:
 func show_parry_probe() -> void:
 	if not combat.running: return
 	parry_remaining=1.0;parry_answered=false
-	parry_notice.text="Prueba de aviso de Parry · Espacio"
+	parry_notice.text="Prueba de aviso de Parry"
 	parry_notice.tooltip_text="Prueba de aviso de Parry · Espacio · sin efecto mecánico"
 	diagnostic_surface().hide()
 	if matrix.owner_id!="" and is_instance_valid(matrix_view.last_focus): matrix_view.last_focus.grab_focus()
@@ -271,7 +293,7 @@ func show_parry_probe() -> void:
 func _input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.pressed or event.echo or not combat.running: return
 	if parry_remaining>0 and event.keycode==KEY_SPACE:
-		parry_answered=true;parry_notice.text="Respuesta registrada · sin efecto de combate";get_viewport().set_input_as_handled();return
+		parry_answered=true;parry_notice.text="Respuesta registrada · prueba";get_viewport().set_input_as_handled();return
 	if matrix.owner_id=="": return
 	var focused: Control=get_viewport().gui_get_focus_owner()
 	if event.keycode in [KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT] and focused!=null and not matrix_view.is_ancestor_of(focused): return
@@ -488,6 +510,7 @@ func _process_body(delta: float) -> void:
 		if parry_remaining==0: parry_notice.text=" "
 	copy_notice_seconds=maxf(0.0,copy_notice_seconds-delta)
 	if combat != null and combat.running:
+		matrix_view.update_clock()
 		if not combat.copy_service.process.is_empty():
 			var percent: int = int(combat.copy_service.snapshot(combat.combat_clock).progress*100)
 			copy_label.text="Copiando · %d %% · mantener vivo"%percent
@@ -509,6 +532,8 @@ func _process_body(delta: float) -> void:
 
 func snapshot() -> Dictionary:
 	var report: Dictionary = combat.snapshot()
+	report["damage_breakdown"]=combat.last_damage.duplicate(true)
+	report["encounter_serial"]=combat.encounter_serial
 	report["matrix"]=matrix.snapshot()
 	report["session"] = session.export_data()
 	report["save"] = {"status":save_service.status,"confirmed":save_service.confirmed,"requested":save_service.sequence,"last_write_usec":save_service.last_write_usec,"diagnostic_profile":diagnostic_mode}
@@ -561,6 +586,18 @@ func matrix_ui_validation() -> void:
 	if previous!=null: previous.free()
 	var driver:=preload("res://tests/combat_matrix_ui_validation.gd").new()
 	driver.name="MatrixValidation";add_child(driver);driver.run(self)
+
+func enemy_matrix_validation() -> void:
+	var previous:=get_node_or_null("EnemyMatrixValidation")
+	if previous!=null: previous.free()
+	var driver:=preload("res://tests/enemy_matrix_runtime.gd").new()
+	driver.name="EnemyMatrixValidation";add_child(driver);driver.run(self)
+
+func enemy_matrix_performance() -> void:
+	var previous:=get_node_or_null("MatrixPerformance")
+	if previous!=null: previous.free()
+	var driver:=preload("res://tests/combat_matrix_runtime.gd").new()
+	driver.name="MatrixPerformance";add_child(driver);driver.start(self,true)
 
 func build_intents_diagnostics(mode: String) -> void:
 	var driver:=get_node_or_null("BuildIntentsDiagnostics")
@@ -649,9 +686,18 @@ func refresh_copy() -> void:
 	for actor in combat.actors:
 		if main.is_empty() or actor.team==main.team or actor.hp<=0 or actor.get("retired",false): continue
 		copy_target_ids.append(actor.id)
-		copy_targets.add_item(actor.name+" · %d PV"%actor.hp)
+		var caption: String=actor.name+" · %d PV"%actor.hp
+		if float(actor.get("defense",0.0))>0:
+			caption+=" · "+("Defensa rota" if combat.Damage.vulnerable(actor,combat.combat_clock) else "Defensa %d %%"%roundi(float(actor.defense)*100))
+		copy_targets.add_item(caption)
 		if actor.id==selected_id: copy_targets.select(copy_target_ids.size()-1)
 	var busy: bool = not combat.copy_service.process.is_empty()
+	copy_targets.tooltip_text="Sin objetivo"
+	if copy_targets.selected>=0:
+		var target: Dictionary=combat.actor_by_id(copy_target_ids[copy_targets.selected])
+		copy_targets.tooltip_text=str(target.get("name",""))
+		if float(target.get("defense",0.0))>0:
+			copy_targets.tooltip_text+=" · La matriz rompe la mitigación; conserva Protección."
 	copy_button.text="Cancelar solicitud [X]" if combat.copy_service.pending_id!="" else "Copiar [X]"
 	var reason := ""
 	if copy_targets.selected>=0: reason=combat.copy_service.eligibility(combat.actor_by_id(copy_target_ids[copy_targets.selected]),main)

@@ -1,6 +1,7 @@
 extends RefCounted
 const Status = preload("res://systems/status_system.gd")
 const Rules = preload("res://data/demo_rules.gd")
+const Damage = preload("res://systems/damage_resolution.gd")
 ## Selección determinista; nunca modifica el estado del combate.
 
 static func target_for(actor: Dictionary, skill: Dictionary, actors: Array[Dictionary]) -> Dictionary:
@@ -60,8 +61,8 @@ static func choose(actor: Dictionary, actors: Array[Dictionary], priority: Strin
 			if skill.damage<=0: continue
 			var target := target_for(actor,skill,actors)
 			var extra := 0.0
-			if skill.get("status","")=="dot": extra=Status.additional_dot(target,clock,float(skill.get("status_duration",Rules.DOT_DURATION)))
-			var benefit: float = minf(float(target.hp),maxf(0.0,float(skill.damage)-float(target.shield))+extra)
+			if skill.get("status","")=="dot": extra=Damage.additional_dot(target,clock,float(skill.get("status_duration",Rules.DOT_DURATION)))
+			var benefit: float = minf(float(target.hp),float(Damage.preview(target,int(skill.damage),clock).damage)+extra)
 			if benefit>highest:
 				selected=skill; highest=benefit
 				reason=("Extender desgaste" if target.get("states",{}).has("dot") else "Aplicar desgaste") if extra>0 else "Mayor daño aprovechable"

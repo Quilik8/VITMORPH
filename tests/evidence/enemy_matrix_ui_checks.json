@@ -1,0 +1,114 @@
+{
+	"checks": [
+		{
+			"name": "solving requests actual rupture",
+			"passed": true
+		},
+		{
+			"name": "solve preserves focus",
+			"passed": true
+		},
+		{
+			"name": "status explains rupture",
+			"passed": true
+		},
+		{
+			"name": "(1200, 820) commands inside",
+			"passed": true
+		},
+		{
+			"name": "(1200, 820) functional matrix inside",
+			"passed": true
+		},
+		{
+			"name": "(1018, 696) commands inside",
+			"passed": true
+		},
+		{
+			"name": "(1018, 696) functional matrix inside",
+			"passed": true
+		},
+		{
+			"name": "(760, 820) commands inside",
+			"passed": true
+		},
+		{
+			"name": "(760, 820) functional matrix inside",
+			"passed": true
+		},
+		{
+			"name": "(640, 640) commands inside",
+			"passed": true
+		},
+		{
+			"name": "(640, 640) functional matrix inside",
+			"passed": true
+		},
+		{
+			"name": "commands survive rupture",
+			"passed": true
+		},
+		{
+			"name": "marked commands inside minimum",
+			"passed": true
+		},
+		{
+			"name": "Parry preserves functional matrix focus",
+			"passed": true
+		},
+		{
+			"name": "expired status",
+			"passed": true
+		},
+		{
+			"name": "reopen remains aligned",
+			"passed": true
+		},
+		{
+			"name": "cannot repeat rupture",
+			"passed": true
+		},
+		{
+			"name": "initial progress distinct",
+			"passed": true
+		},
+		{
+			"name": "normal profile restored",
+			"passed": true
+		}
+	],
+	"count": 19,
+	"failures": [],
+	"layouts": [
+		{
+			"logical": [
+				1200.0,
+				820.0
+			],
+			"status": "Defensa rota · 12 s"
+		},
+		{
+			"logical": [
+				1018.0,
+				696.0
+			],
+			"status": "Defensa rota · 12 s"
+		},
+		{
+			"logical": [
+				760.0,
+				820.0
+			],
+			"status": "Defensa rota · 12 s"
+		},
+		{
+			"logical": [
+				640.0,
+				640.0
+			],
+			"status": "Defensa rota · 12 s"
+		}
+	],
+	"passed": true,
+	"running": false
+}

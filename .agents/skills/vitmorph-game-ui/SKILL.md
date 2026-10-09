@@ -25,6 +25,8 @@ Para editor, colección y equipamiento, leer [references/assembly.md](references
 
 Los puzzles de Vitmorph son matrices manipulables **durante combate**, nunca interacciones de exploración. Reservar una región contextual que conviva con campo, comandos y aviso de defensa activa sin robar foco. La prueba autorizada en COMBAT_MATRIX_DESIGN.md no concede efectos de Vulnerabilidad, combos o Parry funcional; sus contratos mecánicos siguen pendientes.
 
+Actualización posterior: ENEMY_MATRIX_PLAN.md autoriza el ensayo de matriz enemiga que rompe defensa. Consultar ese contrato y ENEMY_MATRIX_DELIVERY.md; distinguirlo de la matriz propia sin efecto y del aviso Parry de diagnóstico. No extender la defensa a todo el recorrido ni convertir parámetros experimentales en canon.
+
 ## Composición y objetos
 
 La bestia debe ser protagonista perceptiva, además de estar centrada en coordenadas. Las piezas se reconocen antes de leer todos sus nombres. Integrar selección, destinos y cambios sin exigir comparar zonas fuera de vista. Usar imágenes con texto accesible; un icono mudo no debe exigir memorizar su efecto.
