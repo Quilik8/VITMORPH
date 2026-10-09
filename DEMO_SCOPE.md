@@ -4,6 +4,8 @@ Actualizado: 4 octubre 2026, después de checkpoint-v0.7.0. Autoridad: instrucci
 
 ## Estado del proyecto
 
+9 octubre 2026: siguiente contrato en revisión: ENEMY_MATRIX_PLAN.md. Autorizada su preparación; defensa 20 %, ventana de 12 s y una ruptura por enemigo son propuestas, no reglas implementadas ni aprobadas.
+
 9 octubre 2026: aprobado HUD preparado para matrices de combate, contrato COMBAT_MATRIX_DESIGN.md. Prueba de Rotación de Anillos y aviso Parry sin efectos mecánicos; no Vulnerabilidad/combos/Parry funcional. Puzzles exclusivamente de combate. Mapa, recuperación de PV y sustitución en bloques posteriores.
 
 Actualización autorizada: la revisión carbón/cobre fue valorada positivamente por el usuario. Siguiente bloque aprobado en BUILD_INTENTS_IMPLEMENTATION.md: builds diferenciadas e intenciones enemigas. Assets aplazados por instrucción actual; la demo artística sigue pendiente. Los rechazos que siguen describen composiciones históricas.

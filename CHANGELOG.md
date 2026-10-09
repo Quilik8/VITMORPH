@@ -1,5 +1,9 @@
 # Registro de cambios
 
+## Plan de matriz enemiga · 9 octubre 2026
+
+- Registrada propuesta ENEMY_MATRIX_PLAN.md: separación de defensa/protección, cálculo candidato, ciclo de ruptura, integración, UI contextual y aceptación. Valores pendientes de aprobación; sin cambios de gameplay.
+
 ## HUD y matrices de combate · 9 octubre 2026
 
 - HUD por regiones, encuadre de presentación y lectura compacta; matriz lateral o inferior sin ocultar comandos. Revisión en cuatro tamaños lógicos hasta 640×640.
