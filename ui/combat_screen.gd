@@ -44,6 +44,7 @@ var copy_target_ids: Array[String] = []
 var copy_notice := ""
 var copy_notice_seconds := 0.0
 var selected_skill := "basic"
+var intention_context_id := ""
 var log_lines: Array[String] = []
 
 func _ready() -> void:
@@ -63,6 +64,7 @@ func _ready() -> void:
 	route.session = session
 	add_child(route)
 	build_screen()
+	arena.intention_focused.connect(func(id):intention_context_id=id;refresh())
 	editor = preload("res://ui/build_editor.gd").new()
 	editor.session = session
 	editor.visuals=arena.visuals
@@ -281,6 +283,7 @@ func equipped_skills() -> Array[Dictionary]:
 	return Fixture.abilities()
 
 func select_skill(id: String) -> void:
+	intention_context_id=""
 	selected_skill = id
 	refresh()
 
@@ -456,6 +459,10 @@ func refresh_body() -> void:
 			availability = "En curso; reutilización después"
 	detail_label.text = effect + (" · " + availability if not availability.is_empty() else "")
 	detail_label.tooltip_text = "%s · alcance %d · reutilización %d elecciones" % [effect, selected.range, selected.cooldown]
+	if not intention_context_id.is_empty():
+		var context_text: String=arena.intention_detail(intention_context_id)
+		if context_text!="": detail_label.text=arena.intention_brief(intention_context_id);detail_label.tooltip_text=context_text
+		else: intention_context_id=""
 	arena.queue_redraw()
 
 func _process(delta: float) -> void:
@@ -525,6 +532,16 @@ func run_edge_checks() -> Dictionary:
 
 func run_assembly_checks() -> Dictionary:
 	return preload("res://tests/assembly_checks.gd").new().run()
+
+func build_intents_diagnostics(mode: String) -> void:
+	var driver:=get_node_or_null("BuildIntentsDiagnostics")
+	if driver==null:
+		driver=preload("res://tests/build_intents_runtime.gd").new()
+		driver.name="BuildIntentsDiagnostics";add_child(driver);driver.begin(self)
+	match mode:
+		"combat": driver.combat_view()
+		"finish": driver.finish();driver.queue_free()
+		"cycles": driver.cycles()
 
 func assembly_diagnostics(mode: String) -> void:
 	var previous:=get_node_or_null("AssemblyDiagnostics")

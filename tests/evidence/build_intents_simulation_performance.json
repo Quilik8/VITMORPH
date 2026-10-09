@@ -1,0 +1,76 @@
+{
+	"limits": "headless CPU, not rendered frames or GPU; 120 warmup updates then 2280 samples; no nested scopes summed",
+	"reference": "dc485aa engine; same current AI/fixture/status dependencies; isolates intent integration overhead, not complete historical binary",
+	"repetitions": [
+		{
+			"baseline": {
+				"max": 656,
+				"mean": 103.689473684211,
+				"p50": 97,
+				"p95": 145,
+				"p99": 329
+			},
+			"current": {
+				"max": 2368,
+				"mean": 142.489035087719,
+				"p50": 126,
+				"p95": 217,
+				"p99": 501
+			},
+			"states_active": {
+				"max": 1182,
+				"mean": 142.930701754386,
+				"p50": 133,
+				"p95": 217,
+				"p99": 464
+			}
+		},
+		{
+			"baseline": {
+				"max": 1294,
+				"mean": 104.294736842105,
+				"p50": 97,
+				"p95": 149,
+				"p99": 293
+			},
+			"current": {
+				"max": 2306,
+				"mean": 132.0,
+				"p50": 127,
+				"p95": 193,
+				"p99": 470
+			},
+			"states_active": {
+				"max": 2716,
+				"mean": 152.754385964912,
+				"p50": 137,
+				"p95": 236,
+				"p99": 482
+			}
+		},
+		{
+			"baseline": {
+				"max": 2590,
+				"mean": 116.817105263158,
+				"p50": 100,
+				"p95": 171,
+				"p99": 392
+			},
+			"current": {
+				"max": 12660,
+				"mean": 214.184649122807,
+				"p50": 133,
+				"p95": 353,
+				"p99": 2207
+			},
+			"states_active": {
+				"max": 8277,
+				"mean": 187.95701754386,
+				"p50": 139,
+				"p95": 370,
+				"p99": 881
+			}
+		}
+	],
+	"unit": "microseconds per advance"
+}

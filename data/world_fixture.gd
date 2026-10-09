@@ -26,7 +26,7 @@ static func populate() -> Array[Dictionary]:
 	var result: Array[Dictionary] = [Fixture.actor("main","Principal",10.0,START_POSITION,Fixture.abilities())]
 	for zone in locations():
 		for index in zone.enemies.size():
-			var definition_id := "residual_beast" if zone.id=="zone_1" or (zone.id=="zone_2" and index==0) else "ranged_beast"
+			var definition_id := "pressure_beast" if zone.id=="zone_3" else ("residual_beast" if zone.id=="zone_1" or index==0 else "ranged_beast")
 			var definition: Dictionary = catalog.beast(definition_id)
 			var beast := {"id":"world_"+zone.id+str(index),"definition_id":definition_id}
 			var build: Dictionary = builds.empty_build(definition.modular)

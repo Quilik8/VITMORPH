@@ -40,6 +40,8 @@ func run() -> Dictionary:
 	check("migration preserves copy",restored.principal_id==session.principal_id and restored.principal().hp==39 and restored.principal().ready_at.close==7)
 	var upgraded := restored.export_data();upgraded.inventory.erase("duration_1")
 	check("migration not repeated",restored.restore_data(upgraded).ok and not restored.inventory.has("duration_1"))
+	upgraded.build_content_version=2
+	check("future content rejected",not restored.restore_data(upgraded).ok)
 	check("shared timing",Fixture.ACTION_SECONDS==3.8 and Fixture.RESOLVE_SECONDS==2.2)
 	var engine := EngineScript.new()
 	var actors := Fixture.actors(0)
@@ -59,5 +61,48 @@ func run() -> Dictionary:
 	check("slow derived duration intensity",actors[0].states.slow.expires==32.0 and Status.speed(actors[0],20.0)==7.5)
 	check("slow expires",Status.speed(actors[0],32.0)==10.0)
 	engine.free()
+	engine=EngineScript.new();actors=Fixture.actors(0)
+	actors[0].abilities=[]
+	actors[1].abilities=[session.catalog.skill("slow"),session.catalog.skill("far")]
+	actors[0].position=Vector2.ZERO;actors[1].position=Vector2(200,0)
+	engine.begin_encounter(actors)
+	check("intention starts with charge",engine.intentions.has(actors[1].id) and engine.intentions[actors[1].id].provisional)
+	var unchanged := engine.snapshot()
+	for index in 200: engine.query_intention(actors[1].id)
+	check("queries do not mutate",engine.snapshot()==unchanged)
+	actors[0].atb=49.0
+	engine.intentions_dirty=true;engine.refresh_intentions()
+	check("offense below control threshold",engine.intentions[actors[1].id].skill.id=="far")
+	engine.advance(0.1)
+	check("control threshold refresh",engine.intentions[actors[1].id].skill.id=="slow")
+	var update_count: int=engine.intention_updates
+	for index in 20: engine.advance(0.001)
+	check("no choice recalculation every frame",engine.intention_updates==update_count)
+	actors[0].atb=100.0;actors[0].ready_time=engine.combat_clock
+	actors[1].atb=100.0;actors[1].ready_time=engine.combat_clock+0.001
+	engine.choose_next();engine.intentions_dirty=true;engine.refresh_intentions()
+	check("ready queued enemy retains intention",engine.intentions.has(actors[1].id))
+	var anticipated := engine.query_intention(actors[1].id)
+	engine.advance(3.8)
+	check("unchanged intent matches dispatch",engine.pending.actor_id==actors[1].id and engine.pending.skill.id==anticipated.skill.id)
+	check("executing no provisional intent",not engine.intentions.has(actors[1].id))
+	engine.apply_damage(actors[1],1000)
+	check("death clears intentions",engine.intentions.is_empty())
+	engine.free()
+	var world := preload("res://data/world_fixture.gd").populate()
+	check("distinct encounter kits",world[1].abilities[2].id=="residual" and world[3].abilities[2].id=="slow" and world[4].abilities[2].id=="close")
+	check("distinct speeds",world[1].speed==8 and world[3].speed==12 and world[4].speed==10)
+	var arena := preload("res://ui/arena_view.gd").new()
+	var smoke_engine := EngineScript.new()
+	smoke_engine.start(0);arena.combat=smoke_engine;arena.size=Vector2(760,600)
+	var label_position: Vector2=arena.actor_label_point(smoke_engine.actors[0],"Principal",16,Vector2(0,-62))
+	check("labels safe before first draw",label_position.is_finite())
+	check("narrow projection reserves HUD",arena.projection_height()==356.0)
+	arena.free();smoke_engine.free()
+	var variants: Array=[{"modular":["close","far"],"mods":["power_1","range_1"]},{"modular":["residual","far"],"mods":["duration_1","range_1"]},{"modular":["slow","close"],"mods":["duration_1","power_1"]}]
+	for variant in variants:
+		var draft: Dictionary=session.builds.empty_build(variant.modular)
+		for index in variant.mods.size(): draft.normal[index]=variant.mods[index]
+		check("diagnostic variant "+str(variant.modular),session.validate_build(beast.id,draft).ok)
 	var failures: Array = checks.filter(func(row):return not row.passed)
 	return {"passed":failures.is_empty(),"count":checks.size(),"checks":checks,"failures":failures}

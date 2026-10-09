@@ -108,7 +108,12 @@ func lower() -> void:
 	var es = _editor_settings()
 	if es == null:
 		return
-	var live := int(es.get_setting(_UNFOCUSED_SLEEP_KEY))
+	# EditorSettings may not have populated this preference during early startup.
+	# Keep transport usable and leave the preference untouched until available.
+	var live_value = es.get_setting(_UNFOCUSED_SLEEP_KEY)
+	if live_value == null:
+		return
+	var live := int(live_value)
 	var boosted := _configured_responsive_usec()
 	# Machine-wide first-writer-wins backup of the TRUE original, under the
 	# registry lock so a concurrent instance can't capture an already-boosted
@@ -138,7 +143,11 @@ func restore() -> void:
 	var ver := _UnfocusedBackup.version_key()
 	RegistryClient.acquire_lock()
 	var backup := _UnfocusedBackup.read_backup(dir, ver)
-	var current := int(es.get_setting(_UNFOCUSED_SLEEP_KEY))
+	var current_value = es.get_setting(_UNFOCUSED_SLEEP_KEY)
+	if current_value == null:
+		RegistryClient.release_lock()
+		return
+	var current := int(current_value)
 	var decision := _UnfocusedBackup.resolve_restore(current, backup)
 	if decision["restore"]:
 		es.set_setting(_UNFOCUSED_SLEEP_KEY, int(decision["value"]))
@@ -170,7 +179,11 @@ func self_heal(authed_peer_count: int) -> void:
 		return
 	RegistryClient.acquire_lock()
 	var backup := _UnfocusedBackup.read_backup(dir, ver)
-	var current := int(es.get_setting(_UNFOCUSED_SLEEP_KEY))
+	var current_value = es.get_setting(_UNFOCUSED_SLEEP_KEY)
+	if current_value == null:
+		RegistryClient.release_lock()
+		return
+	var current := int(current_value)
 	var decision := _UnfocusedBackup.resolve_restore(current, backup)
 	if decision["restore"]:
 		es.set_setting(_UNFOCUSED_SLEEP_KEY, int(decision["value"]))

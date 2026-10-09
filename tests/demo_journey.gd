@@ -30,8 +30,11 @@ func run() -> Dictionary:
 	check("new game completes copy",session.collection.size()==2 and enemy.retired and engine.result=="Victoria")
 	session.sync_actor(main,engine.priority,engine.retained)
 	build=session.principal().build.duplicate(true)
-	build.modular=["residual","slow"]
+	build.modular=["residual","far"]
+	build.normal[1]="power_1";build.normal[2]="duration_1"
 	check("copied library incorporated",session.apply_build(session.principal_id,build).ok)
+	# Rest is an existing player option, not a combat heal or hidden balance change.
+	session.recover()
 	main=session.actor_at(Vector2(2240,130))
 	var final: Dictionary=World.populate()[-1]
 	participants=[main,final]
@@ -55,7 +58,7 @@ func run() -> Dictionary:
 	engine.apply_damage(principal,1000)
 	check("resolved defeat preserves acquired copies",engine.result=="Derrota" and reloaded.collection.size()==kept)
 	reloaded.recover()
-	check("refuge recovery retains builds",reloaded.principal().hp==100 and reloaded.principal().build.modular==["residual","slow"] and reloaded.objectives.completed)
+	check("refuge recovery retains builds",reloaded.principal().hp==100 and reloaded.principal().build.modular==["residual","far"] and reloaded.objectives.completed)
 	engine.free()
 	var failures:=checks.filter(func(row):return not row.passed)
 	return {"passed":failures.is_empty(),"count":checks.size(),"checks":checks,"failures":failures}

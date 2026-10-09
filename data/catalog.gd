@@ -15,8 +15,9 @@ func _init() -> void:
 	add("modifier:power", "modifier", {"id":"power", "name":"Potencia", "property":"damage", "percent":0.20})
 	add("modifier:duration", "modifier", {"id":"duration", "name":"Duración", "property":"status_duration", "percent":0.50})
 	add_beast("starter", "Principal inicial", 10.0, ["basic","guard"], ["close","far"])
-	add_beast("residual_beast", "Bestia residual", 8.0, ["enemy_hit","enemy_guard"], ["residual","slow"])
-	add_beast("ranged_beast", "Bestia distante", 12.0, ["enemy_hit","enemy_guard"], ["close","far"])
+	add_beast("residual_beast", "Bestia de desgaste", 8.0, ["enemy_hit","enemy_guard"], ["residual","far"])
+	add_beast("ranged_beast", "Bestia de control", 12.0, ["enemy_hit","enemy_guard"], ["slow","far"])
+	add_beast("pressure_beast", "Bestia de presión", 10.0, ["enemy_hit","enemy_guard"], ["close","far"])
 
 func add(key: String, domain: String, payload: Dictionary) -> void:
 	var definition := Definition.new()

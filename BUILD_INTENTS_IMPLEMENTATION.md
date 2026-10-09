@@ -17,3 +17,6 @@ Conservar carbón/marfil/cobre y montaje existente. Cambios relevantes en detall
 ## Validación y límites
 
 Suite nueva de propiedades, migración, estados, comandos e intenciones y suites mecánicas existentes. MCP con probe de lectura; capturas en tres tamaños, entradas reales, tres repeticiones de rendimiento y veinte ciclos de editor. Medir condiciones equivalentes; no sumar scopes anidados. Regresión p95 >10 % exige corrección o justificación. Assets, Parry, aliados, mapa, refugio e historia fuera del bloque. Documentar evidencia observada y límites por entrega.
+# Cierre
+
+Implementación y evidencias de las entregas A/B/C cerradas el 9 octubre 2026 en [BUILD_INTENTS_DELIVERY.md](BUILD_INTENTS_DELIVERY.md). Valoración final de claridad y utilidad pendiente de jugar con el usuario.

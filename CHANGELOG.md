@@ -1,5 +1,13 @@
 # Registro de cambios
 
+## Builds e intenciones · entrega C y cierre · 9 octubre 2026
+
+- Kits de desgaste/control/presión e intenciones provisionales durante carga y cola; consulta sin mutaciones, actualización por condiciones, nueva elección al despachar y detalle por foco.
+- Corregidos nombres recortados, reserva del HUD estrecho, colisiones con aviso de acción y lectura de fuente antes del primer dibujo. Cola abreviada conserva secuencia con repeticiones.
+- Pool acotado del detalle del editor: p95 mediano de apertura −20,6 % y actualización −22,7 %. Simulación +45,6 % (+0,068 ms) justificada por intenciones; p95 absoluto inferior a 1 ms en los casos pequeños medidos.
+- Ocho suites, 176 comprobaciones aprobadas. MCP real, capturas y tres mediciones continuas. Resultados y límites en BUILD_INTENTS_DELIVERY.md; assets y valoración final jugando pendientes.
+- Addon MCP protege preferencia nula durante arranque; configuración y conexión preservadas. No se reexportó ejecutable.
+
 ## Builds e intenciones · entrega B · 4 octubre 2026
 
 - Editor compara Daño, Alcance y Duración y explica incompatibilidades. Selección resalta compatibilidad sin cambiar composición aprobada.

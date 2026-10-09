@@ -51,6 +51,7 @@ func _draw_body() -> void:
 		var color := GOLD if row.id == "main" else Color("bc8875")
 		var caption: String = "Ahora" if row.current else "en %d s" % ceili(row.time)
 		var actor_name: String = row.name.replace("Enemigo ", "En. ")
+		if width<130.0: actor_name=actor_name.replace("Bestia de ","").replace("Principal inicial","Principal")
 		draw_string(font, Vector2(x, 24), actor_name, HORIZONTAL_ALIGNMENT_LEFT, width - 30, 15, color)
 		draw_string(font, Vector2(x, 45), caption, HORIZONTAL_ALIGNMENT_LEFT, width - 30, 12, MUTED)
 		if row.current:

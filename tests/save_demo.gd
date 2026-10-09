@@ -82,7 +82,7 @@ func run() -> Dictionary:
 	route.state="battle"
 	route.actors[0].hp=0
 	route.on_combat_finished("Derrota")
-	check("resolved defeat keeps collection in world controller",session.collection.size()==2 and session.library.size()==4)
+	check("resolved defeat keeps collection in world controller",session.collection.size()==2 and session.library.size()==3)
 	check("resolved defeat returns refuge and resets groups",route.at_refuge() and route.actors[0].hp==100 and route.cleared_groups.is_empty())
 	engine.free();route.free();save.free()
 	var failures:=checks.filter(func(row):return not row.passed)

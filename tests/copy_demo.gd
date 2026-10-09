@@ -34,12 +34,12 @@ func run() -> Dictionary:
 	engine.advance(0.1)
 	check("copy success and live withdrawal",session.collection.size()==2 and target.retired and target.hp==30)
 	check("last withdrawal wins",not engine.running and engine.result=="Victoria")
-	check("unlocks deduplicated library",session.library.size()==4 and "residual" in session.library)
+	check("unlocks deduplicated library",session.library.size()==3 and "residual" in session.library and "far" in session.library)
 	var copied: Dictionary=session.collection[1]
 	check("copy starts clean",copied.hp==100 and copied.shield==0 and copied.ready_at.is_empty() and copied.build==target.build)
 	check("unique owned identity",copied.id!=session.principal_id)
 	session.acquire_actor(target)
-	check("repeat acquires new instance no library duplicate",session.collection.size()==3 and session.library.size()==4 and session.collection[1].id!=session.collection[2].id)
+	check("repeat acquires new instance no library duplicate",session.collection.size()==3 and session.library.size()==3 and session.collection[1].id!=session.collection[2].id)
 	engine.begin_encounter(pair(session))
 	target=engine.actors[1]; target.hp=20
 	engine.request_copy(target.id); target.hp=40

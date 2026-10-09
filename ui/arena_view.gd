@@ -1,6 +1,8 @@
 extends Control
 var visuals: RefCounted=preload("res://systems/visual_catalog.gd").new()
 var actor_visuals: Dictionary={}
+signal intention_focused(actor_id: String)
+var intention_buttons: Dictionary = {}
 var profile: Node
 ## Campo 2D y siluetas geométricas de prueba; no son criaturas ni arte final.
 var combat: Node
@@ -13,6 +15,7 @@ var cached_font: Font
 var text_widths: Dictionary = {}
 var ground: Node2D
 var last_ground_world := false
+var last_projection_height := -1.0
 var shadow_mesh: ArrayMesh
 var main_mesh: ArrayMesh
 var enemy_mesh: ArrayMesh
@@ -66,6 +69,69 @@ func _ready() -> void:
 	route.world_rebuilt.connect(ground.queue_redraw)
 	route.world_rebuilt.connect(func():sync_visuals(true))
 	resized.connect(func(): ground.queue_redraw(); queue_redraw())
+	combat.intentions_changed.connect(sync_intentions)
+	combat.action_chosen.connect(func(_value):sync_intentions())
+	combat.action_executed.connect(func(_value):sync_intentions())
+	combat.state_changed.connect(sync_intentions)
+
+func intention_detail(actor_id: String) -> String:
+	var value: Dictionary=combat.intentions.get(actor_id,{})
+	var chosen: bool=not combat.pending.is_empty() and combat.pending.actor_id==actor_id
+	if chosen: value=combat.pending
+	if value.is_empty(): return ""
+	var target: Dictionary=combat.actor_by_id(value.target_id)
+	return ("Acción elegida" if chosen else "Intención provisional; puede cambiar")+" · Objetivo: "+str(target.get("name","ninguno"))+" · "+value.reason
+
+func intention_brief(actor_id: String) -> String:
+	var value: Dictionary=combat.intentions.get(actor_id,{})
+	if not combat.pending.is_empty() and combat.pending.actor_id==actor_id: value=combat.pending
+	if value.is_empty(): return ""
+	return str(combat.actor_by_id(value.target_id).get("name","Sin objetivo"))+" · "+value.reason
+
+func sync_intentions() -> void:
+	var active := {}
+	if combat.running:
+		for actor in combat.actors:
+			if actor.get("is_principal",false) or actor.hp<=0 or actor.get("retired",false): continue
+			active[actor.id]=true
+			if not intention_buttons.has(actor.id):
+				var button := Button.new()
+				button.name="Intent_"+actor.id
+				button.flat=true;button.clip_text=true;button.focus_mode=Control.FOCUS_ALL
+				button.add_theme_font_size_override("font_size",13)
+				button.add_theme_color_override("font_color",INK)
+				button.focus_entered.connect(func():intention_focused.emit(actor.id))
+				button.pressed.connect(func():intention_focused.emit(actor.id))
+				add_child(button);intention_buttons[actor.id]=button
+			var value: Dictionary=combat.intentions.get(actor.id,{})
+			var chosen: bool=not combat.pending.is_empty() and combat.pending.actor_id==actor.id
+			if chosen: value=combat.pending
+			var caption := "Sin opción válida"
+			if not value.is_empty() and not value.skill.is_empty():
+				caption=("! " if value.skill.damage>=30 else "")+value.skill.name
+			var button: Button=intention_buttons[actor.id]
+			button.text=("Ejecuta: " if chosen else "Prevé: ")+caption
+			button.tooltip_text=intention_detail(actor.id)
+	for id in intention_buttons.keys():
+		if not active.has(id): intention_buttons[id].queue_free();intention_buttons.erase(id)
+	position_intentions()
+
+func position_intentions() -> void:
+	for id in intention_buttons:
+		var actor: Dictionary=combat.actor_by_id(id)
+		if actor.is_empty(): continue
+		var button: Button=intention_buttons[id]
+		button.size=Vector2(minf(230,size.x-16),26)
+		var base:=point(actor)
+		var candidates: Array[Vector2]=[base+Vector2(-button.size.x/2.0,-105),base+Vector2(-button.size.x-62,-16),base+Vector2(62,-16),base+Vector2(-button.size.x/2.0,-175),base+Vector2(-button.size.x/2.0,-230),base+Vector2(-button.size.x-62,-105),base+Vector2(62,-105)]
+		for location in candidates:
+			location=Vector2(clampf(location.x,8,size.x-button.size.x-8),clampf(location.y,150,size.y-30))
+			var bounds:=Rect2(location,button.size)
+			var blocked: bool=bounds.end.y>size.y-(224 if size.x<950 else 170)
+			for other in combat.actors:
+				if other.id!=id and other.hp>0 and not other.get("retired",false) and bounds.intersects(Rect2(point(other)+Vector2(-62,-78),Vector2(124,174))): blocked=true;break
+			button.position=location
+			if not blocked: break
 
 func polygon_mesh(points: PackedVector2Array) -> ArrayMesh:
 	var arrays := []
@@ -140,6 +206,9 @@ func _process(delta: float) -> void:
 
 func _process_body(delta: float) -> void:
 	sync_visuals()
+	position_intentions()
+	if not is_equal_approx(last_projection_height,projection_height()):
+		last_projection_height=projection_height();ground.queue_redraw();queue_redraw()
 	if combat.running and not combat.pending.is_empty() and not combat.resolved:
 		var actor: Dictionary = combat.actor_by_id(combat.pending.actor_id)
 		anticipation_arc.update_progress(screen_actor(actor), clampf(combat.elapsed / combat.resolve_seconds, 0.0, 1.0))
@@ -150,7 +219,7 @@ func _process_body(delta: float) -> void:
 		last_ground_world = world_visible
 		ground.queue_redraw()
 	if world_visible:
-		ground.position = Vector2(-route.camera_x * size.x / 800.0, -route.camera_y * (size.y - 130.0) * 0.70 / 430.0)
+		ground.position = Vector2(-route.camera_x * size.x / 800.0, -route.camera_y * projection_height() * 0.70 / 430.0)
 	else:
 		ground.position = Vector2.ZERO
 	var had_popups := not popups.is_empty()
@@ -176,10 +245,14 @@ func _process_body(delta: float) -> void:
 func point(actor: Dictionary) -> Vector2:
 	if route != null and route.visible_world:
 		return world_point(actor.position)
-	return Vector2((actor.position.x + 55.0) / 800.0 * size.x, (size.y - 130.0) * (0.20 + actor.position.y / 430.0 * 0.70))
+	return Vector2((actor.position.x + 55.0) / 800.0 * size.x, projection_height() * (0.20 + actor.position.y / 430.0 * 0.70))
+
+func projection_height() -> float:
+	# Reserve the two-row narrow HUD; transform presentation only, not world positions.
+	return maxf(100.0,size.y-(244.0 if combat.running and size.x<950 else 130.0))
 
 func world_point(position: Vector2) -> Vector2:
-	return Vector2((position.x - route.camera_x) / 800.0 * size.x, (size.y - 130.0) * (0.20 + (position.y - route.camera_y) / 430.0 * 0.70))
+	return Vector2((position.x - route.camera_x) / 800.0 * size.x, projection_height() * (0.20 + (position.y - route.camera_y) / 430.0 * 0.70))
 
 func screen_actor(actor: Dictionary) -> Vector2:
 	var center := point(actor)
@@ -214,6 +287,20 @@ func centered_body(font: Font, caption: String, at: Vector2, font_size: int, col
 		text_widths[key] = font.get_string_size(caption, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 	var width: float = text_widths[key]
 	draw_string(font, at - Vector2(width / 2, 0), caption, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
+
+func actor_label_point(actor: Dictionary, caption: String, font_size: int, offset: Vector2) -> Vector2:
+	var base:=point(actor)+offset
+	# Labels may be positioned before the first draw initializes the text cache.
+	var width:=ThemeDB.fallback_font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x
+	var candidates: Array[Vector2]=[base,base+Vector2(-110,0),base+Vector2(110,0),base+Vector2(180,62),base+Vector2(-180,62)]
+	for at in candidates:
+		at.x=clampf(at.x,width/2.0+8,size.x-width/2.0-8)
+		var bounds:=Rect2(at-Vector2(width/2.0,font_size),Vector2(width,font_size+4))
+		var blocked: bool=offset.y<0 and bounds.position.y<150
+		for other in combat.actors:
+			if other.hp>0 and not other.get("retired",false) and bounds.intersects(Rect2(point(other)-Vector2(38,38),Vector2(76,76))): blocked=true;break
+		if not blocked: return at
+	return base
 
 func _draw() -> void:
 	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
@@ -252,10 +339,10 @@ func _draw_body() -> void:
 			if actor.shield > 0:
 				draw_mesh(shield_mesh, null, Transform2D(0.0, center), Color("a1bbd0"))
 				centered(font, "Protección %d" % actor.shield, base + Vector2(0,91), 14, Color("a1bbd0"))
-			centered(font, actor.name, base + Vector2(0,-62), 16, INK)
+			centered(font, actor.name, actor_label_point(actor,actor.name,16,Vector2(0,-62)), 16, INK)
 			draw_line(base + Vector2(-45,53), base + Vector2(45,53), Color("25242b"), 4)
 			draw_line(base + Vector2(-45,53), base + Vector2(-45 + 90.0 * actor.hp / actor.max_hp,53), color, 4)
-			centered(font, "%d PV" % actor.hp, base + Vector2(0,75), 14, INK)
+			centered(font, "%d PV" % actor.hp, actor_label_point(actor,"%d PV"%actor.hp,14,Vector2(0,75)), 14, INK)
 			var status_text: Array[String]=[]
 			if actor.get("states",{}).has("dot"): status_text.append("Residuo")
 			if actor.get("states",{}).has("slow"): status_text.append("ATB −25 %")

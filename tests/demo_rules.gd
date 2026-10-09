@@ -38,6 +38,7 @@ func run() -> Dictionary:
 	check("swap accepted",session.apply_build(id,build).ok)
 	check("swap marks and health",beast.priority=="close" and beast.retained=="far" and beast.hp==33 and beast.ready_at.close==6)
 	session.acquire("residual_beast")
+	session.acquire("ranged_beast")
 	build.modular = ["residual","slow"]
 	session.apply_build(id,build)
 	check("removed marks clear",beast.priority=="" and beast.retained=="")

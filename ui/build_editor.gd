@@ -30,6 +30,9 @@ var beast_visual: Node2D
 var skills: GridContainer
 var library: GridContainer
 var detail: VBoxContainer
+var detail_labels: Array[Label] = []
+var detail_cursor := 0
+var detail_remove: Button
 var apply_button: Button
 var discard_button: Button
 var principal_button: Button
@@ -150,7 +153,8 @@ func render() -> void:
 	var focus_name: String=focus.name if focus!=null and is_ancestor_of(focus) else ""
 	owned_id=controller.owned_id;draft=controller.build
 	var beast: Dictionary=session.owned(owned_id)
-	clear(detail)
+	detail_cursor=0
+	if detail_remove!=null: detail_remove.hide()
 	heading.text=beast.name
 	subtitle.text="ENSAMBLAJE  /  Copia %s  /  %s"%[owned_id.trim_prefix("copy_"),"Principal" if owned_id==session.principal_id else "Colección"]
 	refresh_selector()
@@ -181,6 +185,7 @@ func render() -> void:
 			var chosen: bool=not selection.is_empty() and button.payload.get("id","")==selection.get("id","")
 			button.add_theme_stylebox_override("normal",Palette.tile(Palette.GOLD if chosen else Palette.LINE,Color("3b2d29") if chosen else Palette.SURFACE))
 	show_detail()
+	for index in range(detail_cursor,detail_labels.size()): detail_labels[index].hide()
 	principal_button.disabled=owned_id==session.principal_id
 	principal_button.text="Principal actual" if principal_button.disabled else "Elegir como principal"
 	apply_button.disabled=not controller.dirty();discard_button.disabled=not controller.dirty()
@@ -245,20 +250,32 @@ func mod_name(instance: String) -> String:
 	var mod: Dictionary=session.catalog.get_value("modifier:"+session.inventory.get(instance,""))
 	return mod.get("name","Modificador")+" +%d %%"%roundi(mod.get("percent",0.0)*100)
 
+func detail_line(value: String, font_size := 16, color := Palette.INK) -> Label:
+	if detail_cursor>=detail_labels.size():
+		var created:=text("",font_size,color)
+		detail_labels.append(created);detail.add_child(created)
+	var label: Label=detail_labels[detail_cursor]
+	detail_cursor+=1
+	if label.text!=value: label.text=value;label.tooltip_text=""
+	if label.get_theme_font_size("font_size")!=font_size: label.add_theme_font_size_override("font_size",font_size)
+	if label.get_theme_color("font_color")!=color: label.add_theme_color_override("font_color",color)
+	label.show()
+	return label
+
 func show_detail() -> void:
 	if selection.is_empty() and selected<0:
-		detail.add_child(text("Selecciona una pieza",18,Palette.INK))
-		detail.add_child(text("Elige una habilidad o un mod. Después selecciona su destino, o arrástralo hasta él.",14,Palette.MUTED))
+		detail_line("Selecciona una pieza",18,Palette.INK)
+		detail_line("Elige una habilidad o un mod. Después selecciona su destino, o arrástralo hasta él.",14,Palette.MUTED)
 		return
-	detail.add_child(text("RESULTADO DEL ENSAMBLAJE",12,Palette.GOLD))
+	detail_line("RESULTADO DEL ENSAMBLAJE",12,Palette.GOLD)
 	if not selection.is_empty():
-		if selection.kind=="normal": detail.add_child(text(mod_name(selection.id)+" · "+property_caption(selected_property()),14))
+		if selection.kind=="normal": detail_line(mod_name(selection.id)+" · "+property_caption(selected_property()),14)
 		else:
 			var skill: Dictionary=session.catalog.skill(selection.id)
-			detail.add_child(text("%s · %d daño · reutilización %d"%[skill.name,skill.damage,skill.cooldown],14))
-			if skill.status!="": detail.add_child(text("Aplica "+("Residuo" if skill.status=="dot" else "ralentización ATB"),13,Palette.MUTED))
-	elif selected>=0: detail.add_child(text("Destino: "+("montaje %d"%(selected+1) if selected_kind=="normal" else "modular %d"%(selected+1)),14))
-	else: detail.add_child(text("Elige una mejora o un punto de montaje.",14,Palette.MUTED))
+			detail_line("%s · %d daño · reutilización %d"%[skill.name,skill.damage,skill.cooldown],14)
+			if skill.status!="": detail_line("Aplica "+("Residuo" if skill.status=="dot" else "ralentización ATB"),13,Palette.MUTED)
+	elif selected>=0: detail_line("Destino: "+("montaje %d"%(selected+1) if selected_kind=="normal" else "modular %d"%(selected+1)),14)
+	else: detail_line("Elige una mejora o un punto de montaje.",14,Palette.MUTED)
 	var before: Dictionary=session.preview_build(owned_id,session.owned(owned_id).build)
 	var after: Dictionary=controller.preview()
 	var tentative := false
@@ -268,7 +285,7 @@ func show_detail() -> void:
 			var result: Dictionary=controller.candidate(selection,"normal",destination)
 			if result.ok:
 				after=session.preview_build(owned_id,result.build);tentative=true
-	if tentative: detail.add_child(text("Al montar el mod seleccionado · sin aplicar",12,Palette.TEAL))
+	if tentative: detail_line("Al montar el mod seleccionado · sin aplicar",12,Palette.TEAL)
 	for row in after.changes:
 		for property in row.properties:
 			var values: Dictionary=row.properties[property]
@@ -278,9 +295,12 @@ func show_detail() -> void:
 			var chosen: bool=not selection.is_empty() and selection.kind=="normal" and property==selected_property()
 			if not chosen and is_equal_approx(original,float(values.result)): continue
 			var description: String=values.reason if not values.compatible else ("%s %.0f → %.0f%s"%[property_caption(property),original,values.result," s" if property=="status_duration" else ""])
-			var label:=text(("› " if chosen and values.compatible else "")+row.name+": "+description,13,Palette.TEAL if values.compatible else Palette.MUTED)
-			label.tooltip_text="Base %s · contribuciones: %s · resultado %s"%[values.base,str(values.contributions),values.result];detail.add_child(label)
-	if selected_kind=="normal" and selected>=0 and selected<8 and draft.normal[selected]!="": detail.add_child(choice("Retirar del montaje %d"%(selected+1),func():controller.remove(selected)))
+			var label:=detail_line(("› " if chosen and values.compatible else "")+row.name+": "+description,13,Palette.TEAL if values.compatible else Palette.MUTED)
+			label.tooltip_text="Base %s · contribuciones: %s · resultado %s"%[values.base,str(values.contributions),values.result]
+	if selected_kind=="normal" and selected>=0 and selected<8 and draft.normal[selected]!="":
+		if detail_remove==null:
+			detail_remove=choice("",func():controller.remove(selected));detail.add_child(detail_remove)
+		detail_remove.text="Retirar del montaje %d"%(selected+1);detail_remove.show();detail.move_child(detail_remove,-1)
 
 func selected_property() -> String:
 	return session.catalog.get_value("modifier:"+session.inventory.get(selection.get("id",""),"")).get("property","")
@@ -319,7 +339,10 @@ func highlight_targets(data: Dictionary) -> void:
 	for button in mounts:
 		if button.target_kind=="normal": button.modulate=Palette.GOLD if controller.candidate(data,"normal",button.target_index).ok else Color(.6,.6,.6,.65)
 	for button in skills.get_children():
-		if button is Item: button.modulate=Palette.GOLD if controller.candidate(data,"modular",button.target_index).ok else Color(.6,.6,.6,.65)
+		if not button is Item: continue
+		if data.get("kind","")=="normal":
+			button.modulate=Color.WHITE if session.builds.compatible(session.catalog.skill(button.payload.get("id","")),selected_property()) else Color(.8,.8,.8,.8)
+		else: button.modulate=Palette.GOLD if controller.candidate(data,"modular",button.target_index).ok else Color(.6,.6,.6,.65)
 	controller.last_error=""
 
 func restore_highlights() -> void:

@@ -7,6 +7,11 @@ signal action_executed(action: Dictionary)
 signal damage_applied(target_id: String, damage: int, absorbed: int)
 signal combat_finished(result: String)
 signal message(text: String)
+signal intentions_changed
+var intentions: Dictionary = {}
+var intentions_dirty := true
+var intention_buckets: Dictionary = {}
+var intention_updates := 0
 
 const Fixture = preload("res://data/combat_fixture.gd")
 const Status = preload("res://systems/status_system.gd")
@@ -65,7 +70,40 @@ func initialize_atb() -> void:
 		actor["states"] = {}
 		actor["atb"] = 0.0
 		actor["ready_time"] = -1.0
+	intentions_dirty=true
+	intention_buckets.clear()
+	refresh_intentions()
 	state_changed.emit()
+
+func query_intention(actor_id: String) -> Dictionary:
+	# A detached actor prevents consuming opportunities/cooldowns during preview.
+	var actor := actor_by_id(actor_id)
+	if not running or actor.is_empty() or not Status.active(actor) or actor.get("is_principal",false): return {}
+	if not pending.is_empty() and pending.actor_id==actor_id: return {}
+	# AI only reads nested data; detach the top-level turn counter, not the whole kit.
+	var future := actor.duplicate()
+	future.turns+=1
+	var choice := AI.choose(future,actors,"","",combat_clock)
+	choice["provisional"]=true
+	return choice
+
+func refresh_intentions() -> void:
+	var buckets := {}
+	for actor in actors:
+		if Status.active(actor): buckets[actor.id]=int(float(actor.get("atb",0.0))/50.0)
+	if buckets!=intention_buckets:
+		intention_buckets=buckets; intentions_dirty=true
+	if not intentions_dirty: return
+	intentions_dirty=false
+	intention_updates+=1
+	var next := {}
+	if running:
+		for actor in actors:
+			var value := query_intention(actor.id)
+			if not value.is_empty(): next[actor.id]=value
+	if next!=intentions:
+		intentions=next
+		intentions_changed.emit()
 
 func _process(delta: float) -> void:
 	var stamp: int = Time.get_ticks_usec() if profile != null and profile.active else 0
@@ -89,6 +127,7 @@ func advance(delta: float) -> void:
 			if not Status.active(actor): continue
 			if actor.ready_time<0 and (pending.is_empty() or pending.actor_id!=actor.id):
 				step=minf(step,maxf(0.0,(100.0-actor.atb)/Status.speed(actor,combat_clock)))
+				if actor.atb<50.0-EPS: step=minf(step,maxf(0.0,(50.0-actor.atb)/Status.speed(actor,combat_clock)))
 			for state in actor.states.values():
 				step=minf(step,maxf(0.0,state.expires-combat_clock))
 				if state.next<=state.expires+EPS: step=minf(step,maxf(0.0,state.next-combat_clock))
@@ -110,6 +149,7 @@ func advance(delta: float) -> void:
 			if not dot.is_empty() and dot.next<=combat_clock+EPS and dot.next<=dot.expires+EPS:
 				dot.next+=4.0
 				apply_damage(actor,int(dot.intensity))
+				intentions_dirty=true
 		if not running: break
 		if not pending.is_empty() and not resolved and elapsed>=resolve_seconds-EPS: resolve_pending()
 		if not running: break
@@ -121,12 +161,15 @@ func advance(delta: float) -> void:
 			for kind in actor.states.keys():
 				if actor.states[kind].expires<=combat_clock+EPS:
 					actor.states.erase(kind); states_changed.emit(); state_changed.emit()
+					intentions_dirty=true
 		if not pending.is_empty() and elapsed>=action_seconds-EPS:
 			var actor := actor_by_id(pending.actor_id)
 			actor.atb=0.0; actor.ready_time=-1.0
 			pending={}; elapsed=0.0; resolved=true
+			intentions_dirty=true
 			state_changed.emit()
 		choose_next()
+		refresh_intentions()
 	# Preserve unconsumed simulation time rather than skip events on extreme deltas.
 	if running: time_debt=left
 
@@ -140,6 +183,7 @@ func apply_damage(target: Dictionary, amount: int) -> void:
 	var absorbed: int = mini(int(target.shield),amount)
 	var damage := amount-absorbed
 	target.shield=0
+	intentions_dirty=true
 	target.hp=maxi(0,int(target.hp)-damage)
 	if target.hp==0: target.atb=0.0; target.ready_time=-1.0; target.states.clear()
 	if target.hp==0 and not copy_service.process.is_empty():
@@ -223,6 +267,7 @@ func choose_next() -> void:
 	actor.ready_time = -1.0
 	elapsed = 0.0
 	resolved = false
+	intentions_dirty=true
 	action_chosen.emit(pending.duplicate(true))
 	var skill_label: String = "Esperar" if pending.skill.is_empty() else pending.skill.name
 	message.emit("%s → %s · %s" % [actor.name, skill_label, pending.reason])
@@ -245,6 +290,7 @@ func resolve_pending() -> void:
 				if running and Status.active(target) and skill.get("status","")!="":
 					Status.apply(target,skill.status,combat_clock,-1.0,float(skill.get("status_duration",-1.0))); states_changed.emit()
 		actor.ready_at[skill.id]=actor.turns+skill.cooldown+1
+	intentions_dirty=true
 	action_count+=1
 	if history.size()>=HISTORY_LIMIT: history.pop_front()
 	history.append(completed)
@@ -260,6 +306,8 @@ func finish(outcome: String) -> void:
 	resolved = true
 	elapsed = 0.0
 	result = outcome
+	intentions_dirty=true
+	refresh_intentions()
 	message.emit("%s · prueba finalizada. Puedes repetir o elegir otro escenario." % outcome)
 	combat_finished.emit(outcome)
 
@@ -325,5 +373,5 @@ func forecast(count: int = 7) -> Array[Dictionary]:
 	return sequence
 
 func snapshot() -> Dictionary:
-	return {"copy":copy_service.snapshot(combat_clock),"running": running, "result": result, "priority": priority, "retained": retained,
+	return {"intentions":intentions.duplicate(true),"intention_updates":intention_updates,"copy":copy_service.snapshot(combat_clock),"running": running, "result": result, "priority": priority, "retained": retained,
 		"clock": combat_clock, "atb": atb_snapshot(), "elapsed": elapsed, "resolved": resolved, "pending": pending.duplicate(true), "actors": actors.duplicate(true), "actions": action_count, "history_retained": history.size(), "history_limit": HISTORY_LIMIT, "scenario": scenario}

@@ -159,6 +159,10 @@
 					"passed": true
 				},
 				{
+					"name": "future content rejected",
+					"passed": true
+				},
+				{
 					"name": "shared timing",
 					"passed": true
 				},
@@ -197,9 +201,73 @@
 				{
 					"name": "slow expires",
 					"passed": true
+				},
+				{
+					"name": "intention starts with charge",
+					"passed": true
+				},
+				{
+					"name": "queries do not mutate",
+					"passed": true
+				},
+				{
+					"name": "offense below control threshold",
+					"passed": true
+				},
+				{
+					"name": "control threshold refresh",
+					"passed": true
+				},
+				{
+					"name": "no choice recalculation every frame",
+					"passed": true
+				},
+				{
+					"name": "ready queued enemy retains intention",
+					"passed": true
+				},
+				{
+					"name": "unchanged intent matches dispatch",
+					"passed": true
+				},
+				{
+					"name": "executing no provisional intent",
+					"passed": true
+				},
+				{
+					"name": "death clears intentions",
+					"passed": true
+				},
+				{
+					"name": "distinct encounter kits",
+					"passed": true
+				},
+				{
+					"name": "distinct speeds",
+					"passed": true
+				},
+				{
+					"name": "labels safe before first draw",
+					"passed": true
+				},
+				{
+					"name": "narrow projection reserves HUD",
+					"passed": true
+				},
+				{
+					"name": "diagnostic variant [\"close\", \"far\"]",
+					"passed": true
+				},
+				{
+					"name": "diagnostic variant [\"residual\", \"far\"]",
+					"passed": true
+				},
+				{
+					"name": "diagnostic variant [\"slow\", \"close\"]",
+					"passed": true
 				}
 			],
-			"count": 25,
+			"count": 42,
 			"failures": [],
 			"passed": true
 		},

@@ -1,5 +1,7 @@
 # Vitmorph — contrato aprobado de demo técnica
 
+> Ritmo sustituido el 4 octubre: acciones 3,8 s e impacto 2,2 s. Builds Potencia/Duración y kits/intenciones según BUILD_INTENTS_IMPLEMENTATION.md. Assets aplazados para este bloque; cifras anteriores de 4,8 s son antecedente histórico.
+
 > Antecedente implementado en checkpoint-v0.7.0. Correcciones posteriores en DEMO_SCOPE.md: el refugio final será grande, con personajes y entrada a otra instancia; la historia es única y la demo integrará assets del usuario. La ubicación del refugio en el mismo mapa descrita debajo corresponde al prototipo anterior. Las reglas mecánicas no sustituidas conservan vigencia; UI y mapa requieren revisión.
 
 4 octubre 2026. El usuario autorizó implementar el plan completo, pruebas automáticas, MCP y versionado. Valores técnicos provisionales; no son balance de campaña.

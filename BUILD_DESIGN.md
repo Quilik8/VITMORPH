@@ -1,5 +1,7 @@
 # Editor de ensamblaje · contrato aprobado, 4 octubre 2026
 
+Actualización vigente: usuario valoró positivamente la revisión carbón/cobre. Builds diferenciadas autorizadas en BUILD_INTENTS_IMPLEMENTATION.md: comparar daño/alcance/duración y compatibilidad sin sustituir la composición. Assets aplazados; los rechazos siguientes son históricos.
+
 **Revisión posterior del usuario:** la composición implementada fue rechazada por seguir siendo casi la misma UI. El contrato de reglas sigue vigente; la aceptación de UX y dirección visual está pendiente de rediseño, no únicamente de assets. Investigación y propuesta de skill especializada: [GAME_UI_RESEARCH.md](GAME_UI_RESEARCH.md).
 
 Capa específica ya creada: [vitmorph-game-ui](.agents/skills/vitmorph-game-ui/SKILL.md), exigida por AGENTS.md para próximos cambios UI/UX. Investigación ampliada: [GAME_UI_RESEARCH_EXTENDED.md](GAME_UI_RESEARCH_EXTENDED.md). Esto no aprueba una nueva composición.

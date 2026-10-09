@@ -4,6 +4,8 @@ Actualizado: 4 octubre 2026. Alcance vigente: [DEMO_SCOPE.md](DEMO_SCOPE.md). Es
 
 ## Reglas
 
+Bloque actual: builds e intenciones, sin integración de assets. Potencia y Duración disponen de IDs técnicos `power` y `duration`; imágenes/capas siguen pendientes y se incorporarán mediante la biblioteca visual existente cuando el usuario las aporte.
+
 El ensamblaje técnico ya admite recursos de presentación editables. Pasos de integración y campos exactos: [ASSEMBLY_DELIVERY.md](ASSEMBLY_DELIVERY.md). La biblioteca `data/visual_library.tres` está vacía; esta entrega no registra imágenes ni efectos finales recibidos.
 
 - Todos los assets los aporta el usuario. No generar imágenes ni inventar contenido final.

@@ -90,6 +90,8 @@ func export_data() -> Dictionary:
 	return {"build_content_version":build_content_version,"collection":collection.duplicate(true),"library":library.duplicate(),"inventory":inventory.duplicate(),"principal_id":principal_id,"next_id":next_id,"objectives":objectives.duplicate(),"copied_skills":copied_skills.duplicate()}
 
 func validate_data(data: Dictionary) -> Dictionary:
+	if data.has("build_content_version") and (not number(data.build_content_version) or data.build_content_version<0 or data.build_content_version>1 or floor(data.build_content_version)!=data.build_content_version):
+		return {"ok":false,"error":"Versión de contenido incompatible"}
 	for key in ["collection","library","copied_skills"]:
 		if not data.get(key) is Array: return {"ok":false,"error":"Lista persistente inválida: "+key}
 	for key in ["inventory","objectives"]:

@@ -5,7 +5,7 @@ var route: Node
 var profile: Node
 
 func project(point: Vector2) -> Vector2:
-	return Vector2(point.x / 800.0 * arena.size.x, (arena.size.y - 130.0) * (0.20 + point.y / 430.0 * 0.70))
+	return Vector2(point.x / 800.0 * arena.size.x, arena.projection_height() * (0.20 + point.y / 430.0 * 0.70))
 
 func polygon(points: Array[Vector2], color: Color) -> void:
 	var projected := PackedVector2Array()
